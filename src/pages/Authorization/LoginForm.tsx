@@ -29,7 +29,7 @@ function LoginForm() {
         }}
         validationSchema={LoginSchema}
         onSubmit={({ email, password, rememberMe }, { setSubmitting }) => {
-          console.log(email, password, rememberMe);
+          console.log(email, password, rememberMe, setSubmitting);
 
           // signin(
           //   email,
