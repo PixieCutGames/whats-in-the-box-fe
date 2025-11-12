@@ -1,59 +1,80 @@
-import { Checkbox } from "@headlessui/react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Link } from "react-router-dom";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import Card from "./Card";
 import * as Yup from "yup";
 import PasswordInput from "../../shared/components/PasswordInput";
-import { AlertCircle, CheckIcon } from "lucide-react";
-import Card from "./Card";
 import useAuth from "./useAuth";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+import { AlertCircle } from "lucide-react";
 
 // Validation schema using Yup
-const LoginSchema = Yup.object().shape({
+const SignUpSchema = Yup.object().shape({
+  name: Yup.string().required("Your name is required!"),
   email: Yup.string()
     .email("Enter a valid email address!")
     .required("Email is required!"),
-  password: Yup.string().required("Password is required!"),
-  rememberMe: Yup.boolean(),
+  password: Yup.string()
+    .min(8, "Password must be 8 charactes atleast!")
+    .required("Password is required!"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), ""], "Passwords must match!")
+    .required("Password is required!"),
 });
 
-function LoginForm() {
-  const { login, loginError } = useAuth();
+function RegisterForm() {
+  const { register, registerError } = useAuth();
   const navigate = useNavigate();
   return (
     <Card
-      title="Welcome back"
-      description="Enter your credentials to access your files"
+      title="Create an account"
+      description="Start sharing files securely in minutes"
     >
       <Formik
         initialValues={{
+          name: "",
           email: "",
           password: "",
-          rememberMe: false,
+          confirmPassword: "",
         }}
-        validationSchema={LoginSchema}
-        onSubmit={({ email, password, rememberMe }, { setSubmitting }) => {
-          console.log(email, password, rememberMe);
-
-          setSubmitting(true);
-          login(
+        validationSchema={SignUpSchema}
+        onSubmit={({ email, password, name }, { setSubmitting }) => {
+          console.log(email, password, name, setSubmitting);
+          register(
+            name,
             email,
             password,
-            rememberMe,
             () => navigate("/"),
             () => setSubmitting(false)
           );
         }}
       >
-        {({
-          isSubmitting,
-          setFieldValue,
-          values,
-          errors,
-          touched,
-          isValid,
-        }) => (
+        {({ isSubmitting, errors, touched, isValid }) => (
           <Form className="space-y-4 px-6 last:pb-6">
+            {/* Name */}
+            <div className="space-y-2">
+              <label
+                htmlFor="name"
+                className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
+              >
+                Name
+              </label>
+              <Field
+                name="name"
+                placeholder="John Doe"
+                id="name"
+                className={`placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 flex h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base bg-input-background transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]
+           ${
+             errors.name && touched.name
+               ? "ring-destructive/20 dark:ring-destructive/40 border-destructive"
+               : "border-input"
+           } `}
+              />
+              <ErrorMessage
+                name="name"
+                component="p"
+                className="text-sm text-destructive"
+              />
+            </div>
+
             {/* Email */}
             <div className="space-y-2">
               <label
@@ -101,29 +122,24 @@ function LoginForm() {
               />
             </div>
 
-            {/* Remember Me */}
-            <div className="flex items-center justify-between pt-2">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  checked={values.rememberMe}
-                  onChange={(value) => setFieldValue("rememberMe", value)}
-                  name="rememberMe"
-                  value={values.rememberMe}
-                  className="flex items-center justify-center group size-4 p-0 shrink-0 shadow-xs transition-shadow outline-none bg-input-background dark:bg-input/30 rounded-sm border border-border ring-1 ring-white/15 ring-inset focus:not-data-focus:outline-none data-checked:bg-primary data-checked:text-primary-foreground dark:data-checked:bg-primary data-checked:border-primary data-focus:outline data-focus:border-ring data-focus:ring-ring/50 data-focus:ring-[3px]"
-                >
-                  <CheckIcon className="size-3.5 hidden group-data-checked:block" />
-                </Checkbox>
-                <label htmlFor="rememberMe" className="text-sm leading-none">
-                  Remember me
-                </label>
-              </div>
-              <Link
-                to="/forgot-password"
-                className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] text-primary underline-offset-4 h-9 py-2 has-[>svg]:px-3 px-0 text-sm"
-                aria-label="forgot password?"
+            {/* Confiem Password */}
+            <div className="space-y-2">
+              <label
+                htmlFor="confirmPassword"
+                className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50"
               >
-                Forgot password?
-              </Link>
+                Confirm Password
+              </label>
+              <PasswordInput
+                name="confirmPassword"
+                id="confirmPassword"
+                placeholder="********"
+              />
+              <ErrorMessage
+                name="confirmPassword"
+                component="div"
+                className="text-sm text-destructive"
+              />
             </div>
 
             {/* Submit */}
@@ -135,20 +151,20 @@ function LoginForm() {
                   !isValid && "opacity-50"
                 }`}
               >
-                {isSubmitting ? "Signing In..." : "Sign In"}
+                {isSubmitting ? "Creating account..." : "Create account"}
               </button>
             </div>
           </Form>
         )}
       </Formik>
-      {!!loginError && (
+      {!!registerError && (
         <div
           role="alert"
           className="relative w-full rounded-lg border-t border-t-border px-4 py-3 text-sm flex items-center translate-y-0.5 text-destructive [&amp;&gt;svg]:text-current mt-4"
         >
           <AlertCircle className="size-4" />
           <div className="text-destructive/90 text-sm leading-relaxed ml-5">
-            Error: Wrong username or password
+            Error: {registerError.message}
           </div>
         </div>
       )}
@@ -156,4 +172,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

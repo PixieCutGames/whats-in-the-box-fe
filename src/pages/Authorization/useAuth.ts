@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { loginFn } from "./apis";
+import { loginFn, registerationFn } from "./apis";
 import { tokenManager } from "../../lib/tokenManager";
 
 function useAuth() {
@@ -9,6 +9,13 @@ function useAuth() {
     status: loginStatus,
     error: loginError,
   } = useMutation({ mutationFn: loginFn });
+
+  const {
+    mutate: registerMutate,
+    data: registerData,
+    status: registerStatus,
+    error: registerError,
+  } = useMutation({ mutationFn: registerationFn });
 
   const login = (
     email: string,
@@ -36,11 +43,41 @@ function useAuth() {
     );
   };
 
+  const register = (
+    name: string,
+    email: string,
+    password: string,
+    onSuccess: () => void,
+    onError: () => void
+  ) => {
+    registerMutate(
+      { name, email, password },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+          tokenManager.setTokens(
+            {
+              accessToken: data.accessToken,
+              refreshToken: data.refreshToken,
+            },
+            false
+          );
+          onSuccess();
+        },
+        onError,
+      }
+    );
+  };
+
   return {
     login,
     loginData,
     loadingLogin: loginStatus === "pending",
     loginError,
+    register,
+    registerData,
+    registerError,
+    loadingRegister: registerStatus === "pending",
   };
 }
 
