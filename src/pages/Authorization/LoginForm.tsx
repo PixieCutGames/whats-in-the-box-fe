@@ -5,17 +5,21 @@ import * as Yup from "yup";
 import PasswordInput from "../../shared/components/PasswordInput";
 import { AlertCircle, CheckIcon } from "lucide-react";
 import Card from "./Card";
+import useAuth from "./useAuth";
+import { useNavigate } from "react-router";
 
 // Validation schema using Yup
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
     .email("Enter a valid email address!")
     .required("Email is required!"),
-  password: Yup.string().min(8).required("Password is required!"),
+  password: Yup.string().required("Password is required!"),
   rememberMe: Yup.boolean(),
 });
 
 function LoginForm() {
+  const { login, loginError } = useAuth();
+  const navigate = useNavigate();
   return (
     <Card
       title="Welcome back"
@@ -29,7 +33,16 @@ function LoginForm() {
         }}
         validationSchema={LoginSchema}
         onSubmit={({ email, password, rememberMe }, { setSubmitting }) => {
-          console.log(email, password, rememberMe, setSubmitting);
+          console.log(email, password, rememberMe);
+
+          setSubmitting(true);
+          login(
+            email,
+            password,
+            rememberMe,
+            () => navigate("/"),
+            () => setSubmitting(false)
+          );
 
           // signin(
           //   email,
@@ -150,15 +163,17 @@ function LoginForm() {
           </Form>
         )}
       </Formik>
-      <div
-        role="alert"
-        className="relative w-full rounded-lg border-t border-t-border px-4 py-3 text-sm flex items-center translate-y-0.5 text-destructive [&amp;&gt;svg]:text-current mt-4"
-      >
-        <AlertCircle className="size-4" />
-        <div className="text-destructive/90 text-sm leading-relaxed ml-5">
-          Error: invalid username or password
+      {!!loginError && (
+        <div
+          role="alert"
+          className="relative w-full rounded-lg border-t border-t-border px-4 py-3 text-sm flex items-center translate-y-0.5 text-destructive [&amp;&gt;svg]:text-current mt-4"
+        >
+          <AlertCircle className="size-4" />
+          <div className="text-destructive/90 text-sm leading-relaxed ml-5">
+            Error: Wrong username or password
+          </div>
         </div>
-      </div>
+      )}
     </Card>
   );
 }
