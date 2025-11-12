@@ -1,6 +1,7 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { useLocation, useNavigate } from "react-router";
 import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 
 function AuthForms() {
   const location = useLocation();
@@ -38,17 +39,8 @@ function AuthForms() {
 
             {/* Register Form */}
             <TabPanel className="flex-1 outline-none">
-              {/* <Card
-                title="Create an account"
-                description="Start sharing files securely in minutes"
-              ></Card> */}
+              <RegisterForm />
               {/* <Card>
-              <CardHeader>
-                <CardTitle>Create an account</CardTitle>
-                <CardDescription>
-                  Start sharing files securely in minutes
-                </CardDescription>
-              </CardHeader>
               <form onSubmit={handleRegister}>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">

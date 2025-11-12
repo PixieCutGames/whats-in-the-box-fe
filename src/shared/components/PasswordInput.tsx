@@ -8,9 +8,6 @@ function PasswordInput(
     FieldHookConfig<string>
 ) {
   const [field, { error, touched }] = useField(props.name);
-  console.log(props);
-  console.log(field);
-  console.log(error, touched);
 
   const [showPassword, setShowPassword] = useState(false);
   return (
