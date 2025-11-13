@@ -10,7 +10,7 @@ import { AlertCircle, CheckCircle, Mail } from "lucide-react";
 import { Button } from "../../shared/components/Button";
 import { useEffect, useState } from "react";
 import { tokenManager } from "../../lib/tokenManager";
-import useVerify from "./useVerify";
+import useVerify from "../../shared/hooks/useVerify";
 
 function VerificationSection() {
   const { loadingResend, resendVerification, resendData, resendError } =
@@ -44,6 +44,12 @@ function VerificationSection() {
       () => setResendCooldown(30),
       () => setResendCooldown(30)
     );
+  };
+
+  const getHandleResendVerificationText = () => {
+    if (resendCooldown > 0) return `Resend in ${resendCooldown}s`;
+    if (loadingResend) return "Resending verification email...";
+    return "Resend verification email";
   };
 
   return (
@@ -105,9 +111,7 @@ function VerificationSection() {
               variant="outline"
               className={`w-full ${loadingResend && "disabled:opacity-100"}`}
             >
-              {resendCooldown > 0
-                ? `Resend in ${resendCooldown}s`
-                : "Resend verification email"}
+              {getHandleResendVerificationText()}
             </Button>
             <Button
               onClick={() => {

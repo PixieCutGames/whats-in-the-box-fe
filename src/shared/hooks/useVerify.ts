@@ -1,7 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
-import { resendVerificationFn } from "./apis";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { resendVerificationFn, verifyEmailFn } from "../apis/verificationApis";
 
-function useVerify() {
+function useVerify(token?: string) {
   const {
     mutate: resendVerificationMutate,
     data: resendData,
@@ -23,11 +23,24 @@ function useVerify() {
     });
   };
 
+  const {
+    data: verifyDetails,
+    error: verifyError,
+    isLoading: verifyIsLoading,
+  } = useQuery({
+    queryKey: ["verify-email", token],
+    queryFn: () => verifyEmailFn(token!),
+    enabled: !!token, // don't run if no token
+  });
+
   return {
     resendVerification,
     resendData,
     loadingResend: resendStatus === "pending",
     resendError,
+    verifyDetails,
+    verifyError,
+    loadingVerify: verifyIsLoading,
   };
 }
 
