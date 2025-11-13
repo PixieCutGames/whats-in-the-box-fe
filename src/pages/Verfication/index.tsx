@@ -1,13 +1,13 @@
 import Branding from "../../shared/components/Branding";
-import AuthForms from "./AuthForms";
+import VerificationSection from "./VerificationSection";
 
-function AuthorizationPage() {
+function VerficationPage() {
   return (
     <div className="min-h-screen lg:flex lg:flex-row bg-background">
       <Branding />
-      <AuthForms />
+      <VerificationSection />
     </div>
   );
 }
 
-export default AuthorizationPage;
+export default VerficationPage;
