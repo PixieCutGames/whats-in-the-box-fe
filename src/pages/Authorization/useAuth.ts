@@ -55,13 +55,6 @@ function useAuth() {
       {
         onSuccess: (data) => {
           console.log(data);
-          tokenManager.setTokens(
-            {
-              accessToken: data.accessToken,
-              refreshToken: data.refreshToken,
-            },
-            false
-          );
           onSuccess();
         },
         onError,

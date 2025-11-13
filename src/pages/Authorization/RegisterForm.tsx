@@ -1,9 +1,14 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import Card from "./Card";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../shared/components/Card";
 import * as Yup from "yup";
 import PasswordInput from "../../shared/components/PasswordInput";
 import useAuth from "./useAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router";
 import { AlertCircle } from "lucide-react";
 
 // Validation schema using Yup
@@ -22,12 +27,16 @@ const SignUpSchema = Yup.object().shape({
 
 function RegisterForm() {
   const { register, registerError } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
   return (
-    <Card
-      title="Create an account"
-      description="Start sharing files securely in minutes"
-    >
+    <Card>
+      <CardHeader>
+        <CardTitle>Create an account</CardTitle>
+        <CardDescription>
+          Start sharing files securely in minutes
+        </CardDescription>
+      </CardHeader>
       <Formik
         initialValues={{
           name: "",
@@ -37,12 +46,14 @@ function RegisterForm() {
         }}
         validationSchema={SignUpSchema}
         onSubmit={({ email, password, name }, { setSubmitting }) => {
-          console.log(email, password, name, setSubmitting);
           register(
             name,
             email,
             password,
-            () => navigate("/"),
+            () =>
+              navigate("/verification", {
+                state: { prevPath: location.pathname, email },
+              }),
             () => setSubmitting(false)
           );
         }}

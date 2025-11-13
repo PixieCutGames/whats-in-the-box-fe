@@ -5,6 +5,8 @@ import AuthorizationPage from "./pages/Authorization";
 import { ProtectedRoute } from "./shared/components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import { AuthRedirect } from "./shared/components/AuthRedirect";
+import VerficationPage from "./pages/Verfication";
+import VerifyEmailPage from "./pages/VerifyEmail";
 
 function App() {
   const queryClient = new QueryClient({
@@ -26,7 +28,8 @@ function App() {
             <Route path="/login" element={<AuthorizationPage />} />
             <Route path="/register" element={<AuthorizationPage />} />
           </Route>
-
+          <Route path="/verification" element={<VerficationPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
           {/* Routes for authenticated users */}
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Dashboard />} />

@@ -1,13 +1,13 @@
 import Branding from "../../shared/components/Branding";
-import AuthForms from "./AuthForms";
+import VerifyEmailSection from "./VerifyEmailSection";
 
-function AuthorizationPage() {
+function VerifyEmailPage() {
   return (
     <div className="min-h-screen lg:flex lg:flex-row bg-background">
       <Branding />
-      <AuthForms />
+      <VerifyEmailSection />
     </div>
   );
 }
 
-export default AuthorizationPage;
+export default VerifyEmailPage;

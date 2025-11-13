@@ -13,7 +13,9 @@ function useUser() {
     queryKey: ["me"],
     queryFn: async () => {
       if (!tokens?.accessToken) throw new Error("No token");
-      return apiClient<{ user: { name: string } }>("/auth/me");
+      return apiClient<{
+        user: { name: string; isVerified: boolean; email: string };
+      }>("/auth/me");
     },
     enabled: !!tokens?.accessToken, // don't run if no token
     retry: false,
@@ -27,6 +29,8 @@ function useUser() {
     userError,
     userIsLoading,
     userIsAuthenticated: !!userDetails,
+    userIsVerified: userDetails?.user.isVerified,
+    userEmail: userDetails?.user.email,
     logout,
   };
 }

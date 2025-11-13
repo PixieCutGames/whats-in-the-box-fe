@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import PasswordInput from "../../shared/components/PasswordInput";
 import { AlertCircle, CheckIcon } from "lucide-react";
-import Card from "./Card";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../../shared/components/Card";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router";
 
@@ -21,10 +26,13 @@ function LoginForm() {
   const { login, loginError } = useAuth();
   const navigate = useNavigate();
   return (
-    <Card
-      title="Welcome back"
-      description="Enter your credentials to access your files"
-    >
+    <Card>
+      <CardHeader>
+        <CardTitle>Welcome back</CardTitle>
+        <CardDescription>
+          Enter your credentials to access your files
+        </CardDescription>
+      </CardHeader>
       <Formik
         initialValues={{
           email: "",
