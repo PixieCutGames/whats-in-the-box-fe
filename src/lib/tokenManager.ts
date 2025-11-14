@@ -31,4 +31,6 @@ export const tokenManager = {
     sessionStorage.removeItem(ACCESS_KEY);
     sessionStorage.removeItem(REFRESH_KEY);
   },
+
+  isSavedLocaly: () => !!localStorage.getItem(ACCESS_KEY),
 };
