@@ -7,6 +7,8 @@ import Dashboard from "./pages/Dashboard";
 import { AuthRedirect } from "./shared/components/AuthRedirect";
 import VerficationPage from "./pages/Verfication";
 import VerifyEmailPage from "./pages/VerifyEmail";
+import ForgotPasswordPage from "./pages/ForgotPassword";
+import ResetPasswordPage from "./pages/ResetPassword";
 
 function App() {
   const queryClient = new QueryClient({
@@ -27,6 +29,8 @@ function App() {
           <Route element={<AuthRedirect />}>
             <Route path="/login" element={<AuthorizationPage />} />
             <Route path="/register" element={<AuthorizationPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
           </Route>
           <Route path="/verification" element={<VerficationPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
