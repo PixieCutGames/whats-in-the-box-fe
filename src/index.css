@@ -13,6 +13,8 @@
 @theme {
   --font-size: 16px;
   --color-background: #f8fafc;
+  --color-background-surface: #ffffff;
+  --color-background-accent: #eff6ff;
   --color-foreground: #0f172a;
   --color-card: #ffffff;
   --color-card-foreground: #0f172a;
@@ -20,6 +22,9 @@
   --color-popover-foreground: #0f172a;
   --color-primary: #3b82f6;
   --color-primary-foreground: #ffffff;
+  --color-primary-hover: #2563eb;
+  --color-primary-active: #1d4ed8;
+  --color-primary-surface: #eff6ff;
   --color-secondary: #f1f5f9;
   --color-secondary-foreground: #0f172a;
   --color-muted: #f1f5f9;
@@ -51,4 +56,8 @@
   --color-sidebar-accent-foreground: #0f172a;
   --color-sidebar-border: #e2e8f0;
   --color-sidebar-ring: #3b82f6;
+
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-inverse: #ffffff;
 }

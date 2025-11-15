@@ -9,6 +9,7 @@ import VerficationPage from "./pages/Verfication";
 import VerifyEmailPage from "./pages/VerifyEmail";
 import ForgotPasswordPage from "./pages/ForgotPassword";
 import ResetPasswordPage from "./pages/ResetPassword";
+import Logout from "./shared/components/Logout";
 
 function App() {
   const queryClient = new QueryClient({
@@ -37,6 +38,7 @@ function App() {
           {/* Routes for authenticated users */}
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Dashboard />} />
+            <Route path="/logout" element={<Logout />} />
           </Route>
           <Route path="/*" element={<AuthorizationPage />} />
         </Routes>
