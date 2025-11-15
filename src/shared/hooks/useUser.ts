@@ -28,7 +28,7 @@ function useUser() {
     userDetails,
     userError,
     userIsLoading,
-    userIsAuthenticated: !!userDetails,
+    userIsAuthenticated: !!userDetails && !!tokenManager.getTokens(),
     userIsVerified: userDetails?.user.isVerified,
     userEmail: userDetails?.user.email,
     logout,
