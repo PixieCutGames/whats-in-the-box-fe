@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import Header from "./Header";
 
@@ -6,13 +6,17 @@ function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
   const { pathname } = location;
 
-  const [pageTitle, setPageTitle] = useState<string>("Dashboard");
+  const [pageTitle, setPageTitle] = useState<string>("");
 
   const navigationItems = [
     { label: "Dashboard", href: "/", pageTitle: "Dashboard" },
     { label: "Boxes", href: "/boxes", pageTitle: "Boxes" },
   ];
-  console.log(location.pathname, location.pathname === navigationItems[0].href);
+
+  useEffect(() => {
+    const item = navigationItems.find((i) => i.href === pathname);
+    if (item) setPageTitle(item.pageTitle);
+  }, [pathname]);
   return (
     <div className="min-h-screen">
       <div className="min-h-screen bg-background">
