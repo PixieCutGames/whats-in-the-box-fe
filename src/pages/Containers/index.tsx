@@ -1,4 +1,4 @@
-import { Grid3x3, List, Package, Plus } from "lucide-react";
+import { Grid3x3, List, Plus } from "lucide-react";
 import { useState } from "react";
 import useContainers from "./useContainers";
 import { useMediaQuery } from "@uidotdev/usehooks";
@@ -11,8 +11,8 @@ import ListView from "./ListView";
 function ContainersPage() {
   const navigate = useNavigate();
   const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
-  const { containersDetails, containersError, containersIsLoading } =
-    useContainers();
+  // TODO: handle containersError
+  const { containersDetails, containersIsLoading } = useContainers();
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
 
