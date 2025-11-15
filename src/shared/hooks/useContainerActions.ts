@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { apiClient } from "../../lib/apiClient";
+import { Container, CreateContainerProps } from "../../types";
 
 function useContainerActions() {
   const {
@@ -8,8 +9,8 @@ function useContainerActions() {
     status: newContainerStatus,
     error: newContainerError,
   } = useMutation({
-    mutationFn: async (data: any) => {
-      return apiClient<{ container: { id: string } }>("/container/", {
+    mutationFn: async (data: CreateContainerProps) => {
+      return apiClient<{ container: Container }>("/container/", {
         method: "POST",
         body: JSON.stringify(data),
       });
@@ -18,8 +19,8 @@ function useContainerActions() {
   });
 
   const createNewContainer = (
-    data: { name: string; description?: string; location?: string },
-    onSuccess: (newData: { container: { id: string } }) => void,
+    data: CreateContainerProps,
+    onSuccess: (newData: { container: Container }) => void,
     onError: () => void
   ) => {
     createContainerMutate(data, {

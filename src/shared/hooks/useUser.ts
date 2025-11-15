@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { tokenManager } from "../../lib/tokenManager";
 import { apiClient } from "../../lib/apiClient";
+import { User } from "../../types";
 
 function useUser() {
   const tokens = tokenManager.getTokens();
@@ -14,7 +15,7 @@ function useUser() {
     queryFn: async () => {
       if (!tokens?.accessToken) throw new Error("No token");
       return apiClient<{
-        user: { name: string; isVerified: boolean; email: string };
+        user: User;
       }>("/auth/me");
     },
     enabled: !!tokens?.accessToken, // don't run if no token

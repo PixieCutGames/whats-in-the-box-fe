@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiClient } from "../../lib/apiClient";
+import { Container } from "../../types";
 
 function useContainers() {
   const {
@@ -9,7 +10,7 @@ function useContainers() {
   } = useQuery({
     queryKey: ["getContainers"],
     queryFn: async () => {
-      return apiClient<{ containers: any[] }>("/containers/");
+      return apiClient<{ containers: Container[] }>("/containers/");
     },
     retry: true,
   });
