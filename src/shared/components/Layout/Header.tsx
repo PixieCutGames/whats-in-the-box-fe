@@ -14,7 +14,6 @@ type HeaderProps = {
   navigationItems: {
     label: string;
     href: string;
-    pageTitle: string;
   }[];
   pathname: string;
 };

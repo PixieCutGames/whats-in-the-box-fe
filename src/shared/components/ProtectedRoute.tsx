@@ -1,7 +1,7 @@
 // src/components/ProtectedRoute.tsx
 import { Navigate, Outlet } from "react-router-dom";
 import useUser from "../hooks/useUser";
-import Layout from "./Layout";
+import Layout from "./Layout/Layout";
 
 export function ProtectedRoute() {
   const { userIsLoading, userIsAuthenticated, userIsVerified, userEmail } =

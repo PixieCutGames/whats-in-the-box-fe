@@ -16,7 +16,7 @@ function PasswordInput(
         {...field}
         {...props}
         type={showPassword ? "text" : "password"}
-        className={`placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 flex h-9 w-full min-w-0 rounded-md border px-3 py-1 pr-10 text-base bg-input-background transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm ${
+        className={`placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 flex h-9 w-full min-w-0 rounded-md border px-3 py-2 pr-10 text-base bg-input-background transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:pointer-events-none disabled:opacity-50 md:text-sm ${
           error && touched
             ? "border-destructive focus-visible:border-destructive focus-visible:ring-destructive/20"
             : "border-input"

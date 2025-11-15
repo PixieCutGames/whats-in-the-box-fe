@@ -7,6 +7,7 @@ function Dashboard() {
 
   return (
     <div>
+      <h1 className="text-text-primary text-2xl font-medium">Dashboard</h1>
       {userDetails?.user.name}
       <div className="mt-4">
         <button
