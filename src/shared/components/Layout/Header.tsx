@@ -5,10 +5,13 @@ import {
   MenuItems,
   MenuSeparator,
 } from "@headlessui/react";
-import { ChevronDown, Menu as MenuIcon, Search } from "lucide-react";
+import { ArrowLeft, ChevronDown, Menu as MenuIcon, Search } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router";
 import MobileSidebar from "./MobileSideBar";
+import { useMediaQuery } from "@uidotdev/usehooks";
+
+const NESTED_ROUTES = ["/box/new"];
 
 type HeaderProps = {
   navigationItems: {
@@ -20,6 +23,31 @@ type HeaderProps = {
 function Header({ navigationItems, pathname }: HeaderProps) {
   const [searchOpen, setSearchOpen] = useState<boolean>();
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+
+  const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(
+    location,
+    NESTED_ROUTES.find((r) => r === location.pathname),
+    notDesktop
+  );
+
+  if (notDesktop && NESTED_ROUTES.find((r) => r === location.pathname))
+    return (
+      <div className="bg-background-surface border-b border-border px-4 py-4">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 -ml-2 hover:bg-background-accent rounded-lg transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5 text-text-primary" />
+          </button>
+          <h1 className="text-text-primary">Create New Box</h1>
+        </div>
+      </div>
+    );
+
   return (
     <nav className="bg-background-surface border-b border-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

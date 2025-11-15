@@ -10,6 +10,7 @@ import ForgotPasswordPage from "./pages/ForgotPassword";
 import ResetPasswordPage from "./pages/ResetPassword";
 import Logout from "./shared/components/Logout";
 import ContainersPage from "./pages/Containers";
+import NewContainer from "./pages/Container/NewContainer";
 
 function App() {
   const queryClient = new QueryClient({
@@ -39,6 +40,10 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/boxes" element={<ContainersPage />} />
+            <Route path="/box">
+              {/* <Route index element={<Menu />} /> */}
+              <Route path="new" element={<NewContainer />} />
+            </Route>
             <Route path="/logout" element={<Logout />} />
           </Route>
           <Route path="/*" element={<AuthorizationPage />} />

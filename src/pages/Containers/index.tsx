@@ -15,7 +15,7 @@ function ContainersPage() {
 
   const createNewContainer = () => {
     if (notDesktop) {
-      navigate("/boxes/new");
+      navigate("/box/new");
       return;
     }
     setOpenCreateDialog(true);

@@ -1,5 +1,4 @@
-// src/components/ProtectedRoute.tsx
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router";
 import useUser from "../hooks/useUser";
 import Layout from "./Layout/Layout";
 
