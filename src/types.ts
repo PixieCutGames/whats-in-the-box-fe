@@ -23,7 +23,7 @@ export type Container = {
   imageUrl: null;
   updatedAt: Date;
   createdAt: Date;
-  items: Item[];
+  items: { id: string }[];
 };
 
 export type Item = {
