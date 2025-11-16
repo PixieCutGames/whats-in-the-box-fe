@@ -1,18 +1,22 @@
+import { lazy } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router";
-import AuthorizationPage from "./pages/Authorization";
 import { ProtectedRoute } from "./shared/components/ProtectedRoute";
-import Dashboard from "./pages/Dashboard";
 import { AuthRedirect } from "./shared/components/AuthRedirect";
-import VerficationPage from "./pages/Verfication";
-import VerifyEmailPage from "./pages/VerifyEmail";
-import ForgotPasswordPage from "./pages/ForgotPassword";
-import ResetPasswordPage from "./pages/ResetPassword";
 import Logout from "./shared/components/Logout";
-import ContainersPage from "./pages/Containers";
-import NewContainer from "./pages/Container/NewContainer";
-import ContainerDetails from "./pages/Container/ContainerDetails";
-import EditContainer from "./pages/Container/EditContainer";
+
+const AuthorizationPage = lazy(() => import("./pages/Authorization"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const VerficationPage = lazy(() => import("./pages/Verfication"));
+const VerifyEmailPage = lazy(() => import("./pages/VerifyEmail"));
+const ForgotPasswordPage = lazy(() => import("./pages/ForgotPassword"));
+const ResetPasswordPage = lazy(() => import("./pages/ResetPassword"));
+const ContainersPage = lazy(() => import("./pages/Containers"));
+const NewContainer = lazy(() => import("./pages/Container/NewContainer"));
+const ContainerDetails = lazy(
+  () => import("./pages/Container/ContainerDetails")
+);
+const EditContainer = lazy(() => import("./pages/Container/EditContainer"));
 
 function App() {
   const queryClient = new QueryClient({
