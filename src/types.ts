@@ -1,3 +1,5 @@
+import * as Yup from "yup";
+
 export type User = {
   id: string;
   email: string;
@@ -24,6 +26,14 @@ export type Container = {
   updatedAt: Date;
   createdAt: Date;
   items: { id: string }[];
+};
+
+export type ContainerFormValues = {
+  name: string;
+  description?: string;
+  location?: string;
+  imageUrl?: Yup.Maybe<string>;
+  id: string;
 };
 
 export type Item = {

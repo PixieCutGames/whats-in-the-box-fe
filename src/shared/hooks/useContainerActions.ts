@@ -1,6 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { apiClient } from "../../lib/apiClient";
-import { Container, CreateContainerProps } from "../../types";
+import {
+  Container,
+  ContainerFormValues,
+  CreateContainerProps,
+} from "../../types";
 
 function useContainerActions() {
   const {
@@ -12,6 +16,35 @@ function useContainerActions() {
     mutationFn: async (data: CreateContainerProps) => {
       return apiClient<{ container: Container }>("/container/", {
         method: "POST",
+        body: JSON.stringify(data),
+      });
+    },
+    retry: true,
+  });
+
+  const {
+    mutate: deleteContainerMutate,
+    data: deleteContainerData,
+    status: deleteContainerStatus,
+    error: deleteContainerError,
+  } = useMutation({
+    mutationFn: async (id: string) => {
+      return apiClient<{ container: Container }>(`/container/${id}`, {
+        method: "DELETE",
+      });
+    },
+    retry: true,
+  });
+
+  const {
+    mutate: editContainerMutate,
+    data: editContainerData,
+    status: editContainerStatus,
+    error: editContainerError,
+  } = useMutation({
+    mutationFn: async (data: ContainerFormValues) => {
+      return apiClient<{ container: Container }>(`/container/${data.id}`, {
+        method: "PATCH",
         body: JSON.stringify(data),
       });
     },
@@ -32,11 +65,44 @@ function useContainerActions() {
     });
   };
 
+  const deleteContainer = (
+    id: string,
+    onSuccess: () => void,
+    onError: () => void
+  ) => {
+    deleteContainerMutate(id, {
+      onSuccess,
+      onError,
+    });
+  };
+
+  const editContainer = (
+    data: ContainerFormValues,
+    onSuccess: (newData: { container: Container }) => void,
+    onError: () => void
+  ) => {
+    editContainerMutate(data, {
+      onSuccess: (newData) => {
+        console.log(newData);
+        onSuccess(newData);
+      },
+      onError,
+    });
+  };
+
   return {
     createNewContainer,
     createNewLoading: newContainerStatus === "pending",
     newContainerError,
     newContainerData,
+    deleteContainer,
+    deleteContainerLoading: deleteContainerStatus === "pending",
+    deleteContainerData,
+    deleteContainerError,
+    editContainer,
+    editContainerLoading: editContainerStatus === "pending",
+    editContainerError,
+    editContainerData,
   };
 }
 

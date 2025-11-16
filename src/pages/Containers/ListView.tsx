@@ -1,6 +1,7 @@
 import { ChevronRight, Package } from "lucide-react";
 import { Container } from "../../types";
 import DaysAgo from "../../shared/components/DaysAgo";
+import { Link } from "react-router-dom";
 
 type ListViewProps = {
   containers: Container[];
@@ -9,9 +10,10 @@ function ListView({ containers }: ListViewProps) {
   return (
     <div className="bg-background-surface border border-border rounded-lg overflow-hidden">
       {containers.map((container, index) => (
-        <div
+        <Link
+          to={`/box/${container.id}`}
           key={container.id}
-          className={`flex items-center gap-4 p-4 hover:bg-background-accent transition-colors cursor-pointer ${
+          className={`flex items-center gap-4 p-4 hover:bg-background-accent transition-colors no-underline ${
             index !== containers.length - 1
               ? "border-b border-border-light"
               : ""
@@ -53,7 +55,7 @@ function ListView({ containers }: ListViewProps) {
 
           {/* Chevron */}
           <ChevronRight className="h-5 w-5 text-text-secondary shrink-0" />
-        </div>
+        </Link>
       ))}
     </div>
   );

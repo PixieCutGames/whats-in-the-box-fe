@@ -3,37 +3,69 @@ import * as Yup from "yup";
 import useContainerActions from "../hooks/useContainerActions";
 import { AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router";
+import { useState } from "react";
+import { ContainerFormValues } from "../../types";
 
 // Validation schema using Yup
 const schema = Yup.object().shape({
   name: Yup.string().required("Your name is required!"),
   description: Yup.string(),
   location: Yup.string(),
+  imageUrl: Yup.string().url().nullable(),
 });
 
-type CreateContainerFormProps = {
-  onClose?: () => void;
+type AddEditContainerFormProps = {
+  onClose?: (refetch?: boolean) => void;
+  details?: ContainerFormValues;
 };
-function CreateContainerForm({ onClose }: CreateContainerFormProps) {
+function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
   const navigate = useNavigate();
-  const { newContainerError, createNewContainer } = useContainerActions();
+  const {
+    newContainerError,
+    createNewContainer,
+    editContainerError,
+    editContainer,
+  } = useContainerActions();
+  const [initialValues] = useState<ContainerFormValues>(
+    details ?? {
+      name: "",
+      description: "",
+      location: "",
+      id: "",
+      imageUrl: null,
+    }
+  );
+  const [submitValues] = useState({
+    loading: details ? "Saving Changes..." : "Creating Box...",
+    normal: details ? "Save Changes" : "Create Box",
+  });
   return (
     <>
       <Formik
-        initialValues={{
-          name: "",
-          description: "",
-          location: "",
-        }}
+        initialValues={initialValues}
         validationSchema={schema}
-        onSubmit={({ name, description, location }, { setSubmitting }) => {
+        onSubmit={(
+          { name, description, location, imageUrl },
+          { setSubmitting }
+        ) => {
           console.log(name, description, location);
           setSubmitting(true);
-          createNewContainer(
-            { name, description, location },
-            (data) => navigate(`/box/${data.container.id}`),
-            () => setSubmitting(false)
-          );
+          if (details) {
+            editContainer(
+              { id: details.id, name, description, location, imageUrl },
+              (data) => {
+                if (onClose) onClose(true);
+                else navigate(`/box/${data.container.id}`);
+              },
+              () => setSubmitting(false)
+            );
+          } else {
+            createNewContainer(
+              { name, description, location },
+              (data) => navigate(`/box/${data.container.id}`),
+              () => setSubmitting(false)
+            );
+          }
         }}
       >
         {({ isSubmitting, errors, touched, isValid }) => (
@@ -130,7 +162,9 @@ function CreateContainerForm({ onClose }: CreateContainerFormProps) {
             <div className="lg:flex flex-row justify-end gap-2 hidden">
               <button
                 type="button"
-                onClick={onClose}
+                onClick={() => {
+                  if (onClose) onClose();
+                }}
                 className="px-6 py-2 border border-border hover:bg-background-accent text-text-primary rounded-lg transition-colors"
               >
                 Cancel
@@ -142,7 +176,7 @@ function CreateContainerForm({ onClose }: CreateContainerFormProps) {
                   !isValid && "opacity-50"
                 }`}
               >
-                {isSubmitting ? "Creating Box..." : "Create Box"}
+                {isSubmitting ? submitValues.loading : submitValues.normal}
               </button>
             </div>
           </Form>
@@ -159,8 +193,19 @@ function CreateContainerForm({ onClose }: CreateContainerFormProps) {
           </div>
         </div>
       )}
+      {!!editContainerError && (
+        <div
+          role="alert"
+          className="relative w-full rounded-lg border-t border-t-border px-4 py-3 text-sm flex items-center translate-y-0.5 text-destructive [&amp;&gt;svg]:text-current mt-4"
+        >
+          <AlertCircle className="size-4" />
+          <div className="text-destructive/90 text-sm leading-relaxed ml-5">
+            Error: {editContainerError.message}
+          </div>
+        </div>
+      )}
     </>
   );
 }
 
-export default CreateContainerForm;
+export default AddEditContainerForm;

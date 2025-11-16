@@ -61,4 +61,7 @@
   --color-text-primary: #0f172a;
   --color-text-secondary: #475569;
   --color-text-inverse: #ffffff;
+
+  --color-error: #ef4444;
+  --color-error-hover: #dc2626;
 }
