@@ -5,13 +5,14 @@ import { AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { ContainerFormValues } from "../../types";
+import ImageUpload from "./ImageUpload";
 
 // Validation schema using Yup
 const schema = Yup.object().shape({
   name: Yup.string().required("Your name is required!"),
   description: Yup.string(),
   location: Yup.string(),
-  imageUrl: Yup.string().url().nullable(),
+  imageId: Yup.string().nullable(),
 });
 
 type AddEditContainerFormProps = {
@@ -32,7 +33,7 @@ function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
       description: "",
       location: "",
       id: "",
-      imageUrl: null,
+      imageId: null,
     }
   );
   const [submitValues] = useState({
@@ -45,14 +46,14 @@ function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
         initialValues={initialValues}
         validationSchema={schema}
         onSubmit={(
-          { name, description, location, imageUrl },
+          { name, description, location, imageId },
           { setSubmitting }
         ) => {
           console.log(name, description, location);
           setSubmitting(true);
           if (details) {
             editContainer(
-              { id: details.id, name, description, location, imageUrl },
+              { id: details.id, name, description, location, imageId },
               (data) => {
                 if (onClose) onClose(true);
                 else navigate(`/box/${data.container.id}`);
@@ -61,7 +62,7 @@ function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
             );
           } else {
             createNewContainer(
-              { name, description, location },
+              { name, description, location, imageId },
               (data) => navigate(`/box/${data.container.id}`),
               () => setSubmitting(false)
             );
@@ -70,6 +71,8 @@ function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
       >
         {({ isSubmitting, errors, touched, isValid }) => (
           <Form className="space-y-6">
+            {/* Photo upload */}
+            <ImageUpload id="imageId" name="imageId" />
             {/* Name */}
             <div className="space-y-2">
               <label
