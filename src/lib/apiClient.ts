@@ -50,9 +50,12 @@ export async function apiClient<T>(
 
   // Base headers
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
     ...(options.headers as Record<string, string>),
   };
+
+  if (options.body) {
+    headers["Content-Type"] = "application/json";
+  }
 
   // Attach access token if available
   if (tokens?.accessToken) {

@@ -11,6 +11,7 @@ import ResetPasswordPage from "./pages/ResetPassword";
 import Logout from "./shared/components/Logout";
 import ContainersPage from "./pages/Containers";
 import NewContainer from "./pages/Container/NewContainer";
+import ContainerDetails from "./pages/Container/ContainerDetails";
 
 function App() {
   const queryClient = new QueryClient({
@@ -43,6 +44,7 @@ function App() {
             <Route path="/box">
               {/* <Route index element={<Menu />} /> */}
               <Route path="new" element={<NewContainer />} />
+              <Route path=":id" element={<ContainerDetails />} />
             </Route>
             <Route path="/logout" element={<Logout />} />
           </Route>

@@ -18,6 +18,20 @@ function useContainerActions() {
     retry: true,
   });
 
+  const {
+    mutate: deleteContainerMutate,
+    data: deleteContainerData,
+    status: deleteContainerStatus,
+    error: deleteContainerError,
+  } = useMutation({
+    mutationFn: async (id: string) => {
+      return apiClient<{ container: Container }>(`/container/${id}`, {
+        method: "DELETE",
+      });
+    },
+    retry: true,
+  });
+
   const createNewContainer = (
     data: CreateContainerProps,
     onSuccess: (newData: { container: Container }) => void,
@@ -32,11 +46,26 @@ function useContainerActions() {
     });
   };
 
+  const deleteContainer = (
+    id: string,
+    onSuccess: () => void,
+    onError: () => void
+  ) => {
+    deleteContainerMutate(id, {
+      onSuccess,
+      onError,
+    });
+  };
+
   return {
     createNewContainer,
     createNewLoading: newContainerStatus === "pending",
     newContainerError,
     newContainerData,
+    deleteContainer,
+    deleteContainerLoading: deleteContainerStatus === "pending",
+    deleteContainerData,
+    deleteContainerError,
   };
 }
 

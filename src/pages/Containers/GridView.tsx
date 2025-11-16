@@ -1,6 +1,7 @@
 import { Package } from "lucide-react";
 import { Container } from "../../types";
 import DaysAgo from "../../shared/components/DaysAgo";
+import { Link } from "react-router-dom";
 
 type GridViewProps = {
   containers: Container[];
@@ -9,9 +10,10 @@ function GridView({ containers }: GridViewProps) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
       {containers.map((container) => (
-        <div
+        <Link
+          to={`/box/${container.id}`}
           key={container.id}
-          className="bg-background-surface border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all cursor-pointer group"
+          className="bg-background-surface border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all cursor-pointer group no-underline"
         >
           {/* Image/Icon */}
           <div className="aspect-square bg-background-accent flex items-center justify-center group-hover:bg-primary-surface/20 transition-colors">
@@ -38,7 +40,7 @@ function GridView({ containers }: GridViewProps) {
               Updated: <DaysAgo date={container.updatedAt} />
             </p>
           </div>
-        </div>
+        </Link>
       ))}
     </div>
   );
