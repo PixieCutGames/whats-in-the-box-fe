@@ -13,6 +13,7 @@ export type CreateContainerProps = {
   name: string;
   description?: string;
   location?: string;
+  imageId?: Yup.Maybe<string>;
 };
 
 export type Container = {
@@ -32,7 +33,7 @@ export type ContainerFormValues = {
   name: string;
   description?: string;
   location?: string;
-  imageUrl?: Yup.Maybe<string>;
+  imageId?: Yup.Maybe<string>;
   id: string;
 };
 

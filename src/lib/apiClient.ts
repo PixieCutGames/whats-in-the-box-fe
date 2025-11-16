@@ -44,7 +44,8 @@ const refreshToken = async () => {
 
 export async function apiClient<T>(
   endpoint: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  isFile?: boolean
 ): Promise<T> {
   const tokens = tokenManager.getTokens();
 
@@ -53,7 +54,7 @@ export async function apiClient<T>(
     ...(options.headers as Record<string, string>),
   };
 
-  if (options.body) {
+  if (options.body && !isFile) {
     headers["Content-Type"] = "application/json";
   }
 
