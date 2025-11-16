@@ -1,7 +1,7 @@
-import CreateContainerForm from "../../../shared/components/CreateContainerForm";
+import AddEditContainerForm from "../../../shared/components/AddEditContainerForm";
 
 function NewContainer() {
-  return <CreateContainerForm />;
+  return <AddEditContainerForm />;
 }
 
 export default NewContainer;

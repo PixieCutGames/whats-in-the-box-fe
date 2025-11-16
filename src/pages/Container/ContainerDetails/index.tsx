@@ -1,5 +1,5 @@
 import { Grid3x3, List, Package, Plus } from "lucide-react";
-import { Link, useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import useContainerDetails from "./useContainerDetails";
 import DaysAgo from "../../../shared/components/DaysAgo";
 import { useState } from "react";
@@ -7,15 +7,16 @@ import ContainerImage from "./ContainerImage";
 import ContainerHeader from "./ContainerHeader";
 
 function ContainerDetails() {
-  const navigate = useNavigate();
   const { id } = useParams();
-  const { container, isLoading, error } = useContainerDetails(id);
+  // TODO: handle containersError
+  const { container, isLoading, refetch } = useContainerDetails(id);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+
   if (isLoading) return <div>Loading</div>;
   return (
     <div className="space-y-6">
       {/* Header */}
-      <ContainerHeader container={container} />
+      <ContainerHeader container={container} onUpdate={() => refetch()} />
       {/* Container details */}
       <div className="lg:hidden">
         {/* Box Photo */}

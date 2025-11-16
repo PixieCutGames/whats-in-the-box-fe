@@ -3,7 +3,7 @@ import { useState } from "react";
 import useContainers from "./useContainers";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useNavigate } from "react-router";
-import CreateNewContainerDialog from "./CreateNewContainerDialog";
+import AddEditContainerDialog from "../../shared/components/AddEditContainerDialog";
 import EmptyState from "./EmptyState";
 import GridView from "./GridView";
 import ListView from "./ListView";
@@ -79,7 +79,7 @@ function ContainersPage() {
         )}
       </div>
       {getView()}
-      <CreateNewContainerDialog
+      <AddEditContainerDialog
         isOpen={openCreateDialog}
         onClose={() => setOpenCreateDialog(false)}
       />

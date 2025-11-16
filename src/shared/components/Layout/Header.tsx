@@ -11,7 +11,10 @@ import { Link, useLocation, useNavigate } from "react-router";
 import MobileSidebar from "./MobileSideBar";
 import { useMediaQuery } from "@uidotdev/usehooks";
 
-const NESTED_ROUTES = ["/box/new"];
+const NESTED_ROUTES = [
+  { path: "/box/new", title: "Create New Box" },
+  { path: "/box/edit", title: "Edit Box" },
+];
 
 type HeaderProps = {
   navigationItems: {
@@ -27,13 +30,9 @@ function Header({ navigationItems, pathname }: HeaderProps) {
   const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(
-    location,
-    NESTED_ROUTES.find((r) => r === location.pathname),
-    notDesktop
-  );
+  const nestedRoute = NESTED_ROUTES.find((r) => r.path === location.pathname);
 
-  if (notDesktop && NESTED_ROUTES.find((r) => r === location.pathname))
+  if (notDesktop && nestedRoute) {
     return (
       <div className="bg-background-surface border-b border-border px-4 py-4">
         <div className="flex items-center gap-4">
@@ -43,10 +42,11 @@ function Header({ navigationItems, pathname }: HeaderProps) {
           >
             <ArrowLeft className="h-5 w-5 text-text-primary" />
           </button>
-          <h1 className="text-text-primary">Create New Box</h1>
+          <h1 className="text-text-primary">{nestedRoute.title}</h1>
         </div>
       </div>
     );
+  }
 
   return (
     <nav className="bg-background-surface border-b border-border sticky top-0 z-50">

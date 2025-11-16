@@ -1,6 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { apiClient } from "../../lib/apiClient";
-import { Container, CreateContainerProps } from "../../types";
+import {
+  Container,
+  ContainerFormValues,
+  CreateContainerProps,
+} from "../../types";
 
 function useContainerActions() {
   const {
@@ -32,6 +36,21 @@ function useContainerActions() {
     retry: true,
   });
 
+  const {
+    mutate: editContainerMutate,
+    data: editContainerData,
+    status: editContainerStatus,
+    error: editContainerError,
+  } = useMutation({
+    mutationFn: async (data: ContainerFormValues) => {
+      return apiClient<{ container: Container }>(`/container/${data.id}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      });
+    },
+    retry: true,
+  });
+
   const createNewContainer = (
     data: CreateContainerProps,
     onSuccess: (newData: { container: Container }) => void,
@@ -57,6 +76,20 @@ function useContainerActions() {
     });
   };
 
+  const editContainer = (
+    data: ContainerFormValues,
+    onSuccess: (newData: { container: Container }) => void,
+    onError: () => void
+  ) => {
+    editContainerMutate(data, {
+      onSuccess: (newData) => {
+        console.log(newData);
+        onSuccess(newData);
+      },
+      onError,
+    });
+  };
+
   return {
     createNewContainer,
     createNewLoading: newContainerStatus === "pending",
@@ -66,6 +99,10 @@ function useContainerActions() {
     deleteContainerLoading: deleteContainerStatus === "pending",
     deleteContainerData,
     deleteContainerError,
+    editContainer,
+    editContainerLoading: editContainerStatus === "pending",
+    editContainerError,
+    editContainerData,
   };
 }
 

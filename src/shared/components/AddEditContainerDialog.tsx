@@ -7,16 +7,19 @@ import {
 } from "@headlessui/react";
 import { XIcon } from "lucide-react";
 import { Fragment } from "react/jsx-runtime";
-import CreateContainerForm from "../../shared/components/CreateContainerForm";
+import AddEditContainerForm from "./AddEditContainerForm";
+import { ContainerFormValues } from "../../types";
 
-type CreateNewContainerDialogProps = {
+type AddEditContainerDialogProps = {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (refetch?: boolean) => void;
+  details?: ContainerFormValues;
 };
-function CreateNewContainerDialog({
+function AddEditContainerDialog({
+  details,
   isOpen,
   onClose,
-}: CreateNewContainerDialogProps) {
+}: AddEditContainerDialogProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -50,14 +53,16 @@ function CreateNewContainerDialog({
                   Create New Box
                 </DialogTitle>
                 <button
-                  onClick={onClose}
+                  onClick={() => {
+                    if (onClose) onClose();
+                  }}
                   className="text-foreground rounded-xs opacity-70 transition-opacity hover:opacity-100 ring-offset-background focus:ring-ring focus:ring-2 focus:ring-offset-2 focus:outline-hidden"
                 >
                   <XIcon className="size-4" />
                   <span className="sr-only">Close</span>
                 </button>
               </div>
-              <CreateContainerForm onClose={onClose} />
+              <AddEditContainerForm onClose={onClose} details={details} />
             </DialogPanel>
           </TransitionChild>
         </div>
@@ -66,4 +71,4 @@ function CreateNewContainerDialog({
   );
 }
 
-export default CreateNewContainerDialog;
+export default AddEditContainerDialog;
