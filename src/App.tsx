@@ -1,4 +1,4 @@
-import { lazy } from "react";
+import { Suspense, lazy } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { ProtectedRoute } from "./shared/components/ProtectedRoute";
@@ -35,26 +35,110 @@ function App() {
         <Routes>
           {/* Routes for unauthenticated users */}
           <Route element={<AuthRedirect />}>
-            <Route path="/login" element={<AuthorizationPage />} />
-            <Route path="/register" element={<AuthorizationPage />} />
-            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route
+              path="/login"
+              element={
+                <Suspense>
+                  <AuthorizationPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                <Suspense>
+                  <AuthorizationPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/forgot-password"
+              element={
+                <Suspense>
+                  <ForgotPasswordPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/reset-password"
+              element={
+                <Suspense>
+                  <ResetPasswordPage />
+                </Suspense>
+              }
+            />
           </Route>
-          <Route path="/verification" element={<VerficationPage />} />
-          <Route path="/verify-email" element={<VerifyEmailPage />} />
+          <Route
+            path="/verification"
+            element={
+              <Suspense>
+                <VerficationPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/verify-email"
+            element={
+              <Suspense>
+                <VerifyEmailPage />
+              </Suspense>
+            }
+          />
           {/* Routes for authenticated users */}
           <Route element={<ProtectedRoute />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/boxes" element={<ContainersPage />} />
+            <Route
+              path="/"
+              element={
+                <Suspense>
+                  <Dashboard />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/boxes"
+              element={
+                <Suspense>
+                  <ContainersPage />
+                </Suspense>
+              }
+            />
             <Route path="/box">
               {/* <Route index element={<Menu />} /> */}
-              <Route path="new" element={<NewContainer />} />
-              <Route path="edit" element={<EditContainer />} />
-              <Route path=":id" element={<ContainerDetails />} />
+              <Route
+                path="new"
+                element={
+                  <Suspense>
+                    <NewContainer />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="edit"
+                element={
+                  <Suspense>
+                    <EditContainer />
+                  </Suspense>
+                }
+              />
+              <Route
+                path=":id"
+                element={
+                  <Suspense>
+                    <ContainerDetails />
+                  </Suspense>
+                }
+              />
             </Route>
             <Route path="/logout" element={<Logout />} />
           </Route>
-          <Route path="/*" element={<AuthorizationPage />} />
+          <Route
+            path="/*"
+            element={
+              <Suspense>
+                <AuthorizationPage />
+              </Suspense>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
