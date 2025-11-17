@@ -9,6 +9,7 @@ function Layout({ children }: PropsWithChildren) {
   const navigationItems = [
     { label: "Dashboard", href: "/" },
     { label: "Boxes", href: "/boxes" },
+    { label: "Items", href: "/items" },
   ];
 
   return (

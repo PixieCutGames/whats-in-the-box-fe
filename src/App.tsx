@@ -18,6 +18,7 @@ const ContainerDetails = lazy(
 );
 const EditContainer = lazy(() => import("./pages/Container/EditContainer"));
 
+const ItemsPage = lazy(() => import("./pages/Items"));
 const NewItem = lazy(() => import("./pages/Item/NewItem"));
 const ItemDetails = lazy(() => import("./pages/Item/ItemDetails"));
 const EditItem = lazy(() => import("./pages/Item/EditItem"));
@@ -103,6 +104,14 @@ function App() {
               element={
                 <Suspense>
                   <ContainersPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/items"
+              element={
+                <Suspense>
+                  <ItemsPage />
                 </Suspense>
               }
             />
