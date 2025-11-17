@@ -8,6 +8,8 @@ import { XIcon } from "lucide-react";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 
+import Logo from "/assets/Logo.png";
+
 interface MobileSidebarProps {
   isOpen: boolean;
   onClose: () => void;
@@ -55,7 +57,7 @@ export default function MobileSidebar({
               {/* HEADER */}
               <div className="flex justify-between gap-1.5 p-4">
                 <div className="rounded-lg bg-primary flex items-center justify-center">
-                  <img src="/assets/Logo.png" alt="Logo" className="h-8" />
+                  <img src={Logo} alt="Logo" className="h-8" />
                 </div>
                 <button
                   onClick={onClose}

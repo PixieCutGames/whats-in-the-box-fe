@@ -1,4 +1,5 @@
 import { Download, Share2, Upload } from "lucide-react";
+import Logo from "/assets/white-logo.png";
 
 const Branding = () => {
   const items = [
@@ -23,7 +24,7 @@ const Branding = () => {
       <div className="lg:w-1/2 bg-primary p-8 lg:p-12 hidden lg:flex flex-col justify-between text-white">
         <div>
           <div className="flex items-center gap-3 mb-8">
-            <img src="/assets/Logo.png" alt="Logo" className="h-10" />
+            <img src={Logo} alt="Logo" className="h-10" />
             <h1 className="text-3xl">Whats in the box</h1>
           </div>
 
