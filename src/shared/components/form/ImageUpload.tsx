@@ -1,15 +1,19 @@
 import { Upload, X } from "lucide-react";
 import { ClassAttributes, InputHTMLAttributes, useRef, useState } from "react";
-import useMedia from "../hooks/useMedia";
+import useMedia from "../../hooks/useMedia";
 import { FieldHookConfig, useField } from "formik";
+import { Maybe } from "yup";
 
-function ImageUpload(
-  props: InputHTMLAttributes<HTMLInputElement> &
-    ClassAttributes<HTMLInputElement> &
-    FieldHookConfig<string>
-) {
+function ImageUpload({
+  imageUrl,
+  ...props
+}: InputHTMLAttributes<HTMLInputElement> &
+  ClassAttributes<HTMLInputElement> &
+  FieldHookConfig<string> & { imageUrl?: Maybe<string> }) {
   //   const [photo, setPhoto] = useState<File | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(
+    imageUrl ? imageUrl : null
+  );
   const [isDragging, setIsDragging] = useState<boolean>();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -64,7 +68,7 @@ function ImageUpload(
   };
 
   const handleRemovePhoto = () => {
-    // setPhoto(null);
+    setValue(null);
     setPhotoPreview(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -76,13 +80,13 @@ function ImageUpload(
         htmlFor={field.name}
         className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
       >
-        Box Photo
+        Photo
       </label>
       {photoPreview ? (
         <div className="relative">
           <img
-            src={photoPreview}
-            alt="Box preview"
+            src={photoPreview ?? ""}
+            alt="preview"
             className="w-full h-48 object-cover rounded-lg border border-border"
           />
           <button
@@ -120,6 +124,7 @@ function ImageUpload(
             ref={fileInputRef}
             {...field}
             {...props}
+            value={field.value ?? ""}
             type="file"
             accept="image/*"
             onChange={(e) => handleFileChange(e.target.files?.[0] || null)}

@@ -23,10 +23,10 @@ export type Container = {
   name: string;
   description?: string;
   location?: string;
-  imageUrl: null;
+  imageUrl: Yup.Maybe<string>;
   updatedAt: Date;
   createdAt: Date;
-  items: { id: string }[];
+  items: ContainerItem[];
 };
 
 export type ContainerFormValues = {
@@ -34,11 +34,46 @@ export type ContainerFormValues = {
   description?: string;
   location?: string;
   imageId?: Yup.Maybe<string>;
+  imageUrl?: Yup.Maybe<string>;
   id: string;
+};
+
+export type ContainerItem = {
+  id: string;
+  name: string;
+  quantity: number;
+  updatedAt: Date;
+  imageUrl: Yup.Maybe<string>;
 };
 
 export type Item = {
   id: string;
+  name: string;
+  description?: string;
+  imageUrl: Yup.Maybe<string>;
+  quantity: number;
+  containerId: string;
+  container: Container;
+  updatedAt: Date;
+  createdAt: Date;
+};
+
+export type CreateItemProps = {
+  name: string;
+  description?: string;
+  imageId?: Yup.Maybe<string>;
+  quantity: number;
+  containerId: string;
+};
+
+export type ItemFormValues = {
+  id: string;
+  name: string;
+  description?: string;
+  imageId?: Yup.Maybe<string>;
+  imageUrl?: Yup.Maybe<string>;
+  quantity: number;
+  containerId: string;
 };
 
 export enum ContainerType {

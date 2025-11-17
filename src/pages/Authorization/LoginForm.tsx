@@ -2,14 +2,14 @@ import { Checkbox } from "@headlessui/react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
-import PasswordInput from "../../shared/components/PasswordInput";
+import PasswordInput from "../../shared/components/form/PasswordInput";
 import { AlertCircle, CheckIcon } from "lucide-react";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../shared/components/Card";
+} from "../../shared/components/ui/Card";
 import useAuth from "./useAuth";
 import { useNavigate } from "react-router";
 

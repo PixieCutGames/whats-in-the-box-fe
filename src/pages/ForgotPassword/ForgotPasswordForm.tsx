@@ -5,9 +5,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../shared/components/Card";
+} from "../../shared/components/ui/Card";
 import * as Yup from "yup";
-import { Button } from "../../shared/components/Button";
+import { Button } from "../../shared/components/ui/Button";
 import { Link } from "react-router-dom";
 import useResetPassword from "../../shared/hooks/useResetPassword";
 import { AlertCircle, Mail } from "lucide-react";

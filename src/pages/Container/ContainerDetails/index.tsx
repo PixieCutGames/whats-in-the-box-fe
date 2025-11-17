@@ -1,10 +1,13 @@
-import { Grid3x3, List, Package, Plus } from "lucide-react";
+import { Grid3x3, List } from "lucide-react";
 import { useParams } from "react-router";
 import useContainerDetails from "./useContainerDetails";
-import DaysAgo from "../../../shared/components/DaysAgo";
+import DaysAgo from "../../../shared/components/ui/DaysAgo";
 import { useState } from "react";
-import ContainerImage from "./ContainerImage";
+import ContainerImage from "../../../shared/components/ContainerImage";
 import ContainerHeader from "./ContainerHeader";
+import EmptyState from "./EmptyState";
+import GridView from "./GridView";
+import ListView from "./ListView";
 
 function ContainerDetails() {
   const { id } = useParams();
@@ -57,8 +60,8 @@ function ContainerDetails() {
         </div>
       </div>
 
-      {/* Items Section Header */}
       <div className="border-t border-border pt-6">
+        {/* Items Section Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-text-primary">Items</h2>
           {!!container?.items.length && (
@@ -88,23 +91,15 @@ function ContainerDetails() {
             </div>
           )}
         </div>
-        {container?.items.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-16 px-4 bg-background-surface border border-border rounded-lg">
-            <div className="h-20 w-20 rounded-full bg-background-accent flex items-center justify-center mb-6">
-              <Package className="h-10 w-10 text-text-secondary" />
-            </div>
-            <h3 className="text-text-primary mb-2">No items yet</h3>
-            <p className="text-text-secondary text-center mb-6 max-w-md">
-              Start adding items to this box to keep track of what's inside
-            </p>
-            <button
-              onClick={() => {}}
-              className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors"
-            >
-              <Plus className="h-5 w-5" />
-              Add Your First Item
-            </button>
-          </div>
+        {/* EMPTY STATE */}
+        {container?.items.length === 0 && <EmptyState />}
+        {/* GRID VIEW */}
+        {!!container?.items.length && viewMode === "grid" && (
+          <GridView items={container.items} />
+        )}
+        {/* LIST VIEW */}
+        {!!container?.items.length && viewMode === "list" && (
+          <ListView items={container.items} />
         )}
       </div>
     </div>

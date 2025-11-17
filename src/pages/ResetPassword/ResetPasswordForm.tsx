@@ -5,14 +5,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../shared/components/Card";
+} from "../../shared/components/ui/Card";
 import { ErrorMessage, Form, Formik } from "formik";
-import PasswordInput from "../../shared/components/PasswordInput";
+import PasswordInput from "../../shared/components/form/PasswordInput";
 import { Navigate, useSearchParams, useNavigate, Link } from "react-router";
 import useResetPassword from "../../shared/hooks/useResetPassword";
 import { AlertCircle, CheckCircle } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Button } from "../../shared/components/Button";
+import { Button } from "../../shared/components/ui/Button";
 
 // Validation schema using Yup
 const passwordSchema = Yup.object().shape({

@@ -1,30 +1,28 @@
 import { ChevronRight, Package } from "lucide-react";
-import { Container } from "../../types";
-import DaysAgo from "../../shared/components/ui/DaysAgo";
 import { Link } from "react-router-dom";
+import { ContainerItem } from "../../../types";
+import DaysAgo from "../../../shared/components/ui/DaysAgo";
 
 type ListViewProps = {
-  containers: Container[];
+  items: ContainerItem[];
 };
-function ListView({ containers }: ListViewProps) {
+function ListView({ items }: ListViewProps) {
   return (
     <div className="bg-background-surface border border-border rounded-lg overflow-hidden">
-      {containers.map((container, index) => (
+      {items.map((item, index) => (
         <Link
-          to={`/box/${container.id}`}
-          key={container.id}
+          to={`/item/${item.id}`}
+          key={item.id}
           className={`flex items-center gap-4 p-4 hover:bg-background-accent transition-colors no-underline ${
-            index !== containers.length - 1
-              ? "border-b border-border-light"
-              : ""
+            index !== items.length - 1 ? "border-b border-border-light" : ""
           }`}
         >
           {/* Image/Icon */}
           <div className="h-12 w-12 rounded-lg bg-background-accent flex items-center justify-center shrink-0">
-            {container.imageUrl ? (
+            {item.imageUrl ? (
               <img
-                src={container.imageUrl}
-                alt={container.name}
+                src={item.imageUrl}
+                alt={item.name}
                 className="w-full h-full object-cover rounded-lg"
               />
             ) : (
@@ -35,21 +33,21 @@ function ListView({ containers }: ListViewProps) {
           {/* Name */}
           <div className="flex-1 min-w-0">
             <h3 className="text-text-primary truncate  text-lg font-medium">
-              {container.name}
+              {item.name}
             </h3>
           </div>
 
           {/* Items Count */}
           <div>
             <p className="text-text-secondary whitespace-nowrap">
-              Items: {container.items.length}
+              Qty: {item.quantity}
             </p>
           </div>
 
           {/* Updated Date */}
           <div className="hidden md:block">
             <p className="text-text-secondary whitespace-nowrap">
-              Updated: <DaysAgo date={container.updatedAt} />
+              Updated: <DaysAgo date={item.updatedAt} />
             </p>
           </div>
 

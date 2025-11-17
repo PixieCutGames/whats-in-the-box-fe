@@ -3,10 +3,10 @@ import { Container } from "../../../types";
 import { ArrowLeft, ChevronDown, MoreVertical, Plus } from "lucide-react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Maybe } from "yup";
-import ConfirmationDialog from "../../../shared/components/ConfirmationDialog";
+import ConfirmationDialog from "../../../shared/components/ui/ConfirmationDialog";
 import { useState } from "react";
 import useContainerActions from "../../../shared/hooks/useContainerActions";
-import AddEditContainerDialog from "../../../shared/components/AddEditContainerDialog";
+import AddEditDialog from "../../../shared/components/AddEditDialog";
 import { useMediaQuery } from "@uidotdev/usehooks";
 
 type ContainerHeaderProps = {
@@ -19,6 +19,7 @@ function ContainerHeader({ container, onUpdate }: ContainerHeaderProps) {
   const [openDeleteConfirmation, setOpenDeleteConfirmation] =
     useState<boolean>(false);
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
+  const [openAddItemDialog, setOpenAddItemDialog] = useState<boolean>(false);
 
   const { deleteContainer } = useContainerActions();
 
@@ -63,7 +64,7 @@ function ContainerHeader({ container, onUpdate }: ContainerHeaderProps) {
       <div className="lg:flex shrink-0 hidden">
         {/* Add Item Button */}
         <button
-          onClick={() => {}}
+          onClick={() => setOpenAddItemDialog(true)}
           className="flex items-center gap-2 p-2 pl-4 bg-primary hover:bg-primary-hover text-text-inverse rounded-bl-lg rounded-tl-lg transition-colors"
         >
           <Plus className="h-4 w-4" />
@@ -112,7 +113,14 @@ function ContainerHeader({ container, onUpdate }: ContainerHeaderProps) {
             className="mt-2 min-w-32 bg-popover text-popover-foreground border border-border rounded-md p-1 shadow-md focus:outline-none"
           >
             <MenuItem>
-              <button className="block w-full rounded-sm px-2 py-1.5 text-sm text-start outline-hidden focus:bg-accent focus:text-accent-foreground text-text-primary hover:bg-background-accent hover:text-text-primary transition-colors no-underline">
+              <button
+                onClick={() =>
+                  navigate("/item/new", {
+                    state: { containerId: container?.id },
+                  })
+                }
+                className="block w-full rounded-sm px-2 py-1.5 text-sm text-start outline-hidden focus:bg-accent focus:text-accent-foreground text-text-primary hover:bg-background-accent hover:text-text-primary transition-colors no-underline"
+              >
                 Add item
               </button>
             </MenuItem>
@@ -155,13 +163,23 @@ function ContainerHeader({ container, onUpdate }: ContainerHeaderProps) {
           undone.
         </p>
       </ConfirmationDialog>
-      <AddEditContainerDialog
+      <AddEditDialog
         isOpen={openEditDialog}
         onClose={(refetch) => {
           setOpenEditDialog(false);
           if (refetch) onUpdate();
         }}
         details={container ?? undefined}
+        type="container"
+      />
+      <AddEditDialog
+        isOpen={openAddItemDialog}
+        onClose={(refetch) => {
+          setOpenAddItemDialog(false);
+          if (refetch) onUpdate();
+        }}
+        containerId={container?.id}
+        type="item"
       />
     </div>
   );

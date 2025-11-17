@@ -18,6 +18,11 @@ const ContainerDetails = lazy(
 );
 const EditContainer = lazy(() => import("./pages/Container/EditContainer"));
 
+const ItemsPage = lazy(() => import("./pages/Items"));
+const NewItem = lazy(() => import("./pages/Item/NewItem"));
+const ItemDetails = lazy(() => import("./pages/Item/ItemDetails"));
+const EditItem = lazy(() => import("./pages/Item/EditItem"));
+
 function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -102,8 +107,42 @@ function App() {
                 </Suspense>
               }
             />
+            <Route
+              path="/items"
+              element={
+                <Suspense>
+                  <ItemsPage />
+                </Suspense>
+              }
+            />
+            <Route path="/item">
+              <Route
+                path="new"
+                element={
+                  <Suspense>
+                    <NewItem />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="edit"
+                element={
+                  <Suspense>
+                    <EditItem />
+                  </Suspense>
+                }
+              />
+              <Route
+                path=":id"
+                element={
+                  <Suspense>
+                    <ItemDetails />
+                  </Suspense>
+                }
+              />
+              {/* TODO: add wildcard to reroute to items */}
+            </Route>
             <Route path="/box">
-              {/* <Route index element={<Menu />} /> */}
               <Route
                 path="new"
                 element={
@@ -128,6 +167,7 @@ function App() {
                   </Suspense>
                 }
               />
+              {/* TODO: add wildcard to reroute to boxex */}
             </Route>
             <Route path="/logout" element={<Logout />} />
           </Route>

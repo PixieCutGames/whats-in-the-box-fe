@@ -1,4 +1,4 @@
-import Branding from "../../shared/components/Branding";
+import Branding from "../../shared/components/ui/Branding";
 import VerifyEmailSection from "./VerifyEmailSection";
 
 function VerifyEmailPage() {
