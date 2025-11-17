@@ -1,6 +1,6 @@
 import { Upload, X } from "lucide-react";
 import { ClassAttributes, InputHTMLAttributes, useRef, useState } from "react";
-import useMedia from "../hooks/useMedia";
+import useMedia from "../../hooks/useMedia";
 import { FieldHookConfig, useField } from "formik";
 
 function ImageUpload(
@@ -81,7 +81,7 @@ function ImageUpload(
       {photoPreview ? (
         <div className="relative">
           <img
-            src={photoPreview}
+            src={photoPreview ?? ""}
             alt="preview"
             className="w-full h-48 object-cover rounded-lg border border-border"
           />
@@ -120,6 +120,7 @@ function ImageUpload(
             ref={fileInputRef}
             {...field}
             {...props}
+            value={field.value ?? ""}
             type="file"
             accept="image/*"
             onChange={(e) => handleFileChange(e.target.files?.[0] || null)}

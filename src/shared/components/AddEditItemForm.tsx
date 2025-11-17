@@ -4,8 +4,10 @@ import { AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { ItemFormValues } from "../../types";
-import ImageUpload from "./ImageUpload";
+import ImageUpload from "./form/ImageUpload";
 import useItemActions from "../hooks/useItemActions";
+import useContainers from "../hooks/useContainers";
+import AutoComplete from "./form/AutoComplete";
 
 // Validation schema using Yup
 const schema = Yup.object().shape({
@@ -13,6 +15,7 @@ const schema = Yup.object().shape({
   description: Yup.string(),
   quantity: Yup.number().min(1).required(),
   imageId: Yup.string().nullable(),
+  containerId: Yup.string().min(3).required("Location is required!"),
 });
 
 type AddEditItemFormProps = {
@@ -28,6 +31,8 @@ function AddEditItemForm({
   const navigate = useNavigate();
   const { newItemError, createNewItem, editItemError, editItem } =
     useItemActions();
+  const { containersDetails } = useContainers();
+
   const [initialValues] = useState<ItemFormValues>(
     details ?? {
       name: "",
@@ -108,6 +113,31 @@ function AddEditItemForm({
               />
             </div>
 
+            {/* Container */}
+            <div className="space-y-2">
+              <label
+                htmlFor="containerId"
+                className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
+              >
+                Location
+              </label>
+              <AutoComplete
+                name="containerId"
+                id="containerId"
+                options={
+                  containersDetails?.containers.map((c) => ({
+                    value: c.id,
+                    label: c.name,
+                  })) ?? []
+                }
+              />
+              <ErrorMessage
+                name="containerId"
+                component="p"
+                className="text-sm text-destructive"
+              />
+            </div>
+
             {/* Quantity */}
             <div className="space-y-2">
               <label
@@ -123,7 +153,7 @@ function AddEditItemForm({
                 id="quantity"
                 className={`placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 flex h-9 w-full min-w-0 rounded-md border px-3 py-2 text-base bg-input-background transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]
            ${
-             errors.name && touched.name
+             errors.quantity && touched.quantity
                ? "ring-destructive/20 dark:ring-destructive/40 border-destructive"
                : "border-input"
            } `}

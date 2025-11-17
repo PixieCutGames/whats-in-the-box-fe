@@ -1,6 +1,6 @@
 import { Grid3x3, List, Plus } from "lucide-react";
 import { useState } from "react";
-import useContainers from "./useContainers";
+import useContainers from "../../shared/hooks/useContainers";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useNavigate } from "react-router";
 import AddEditContainerDialog from "../../shared/components/AddEditDialog";

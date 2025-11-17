@@ -1,7 +1,7 @@
 import { ChevronRight, Package } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ContainerItem } from "../../../types";
-import DaysAgo from "../../../shared/components/DaysAgo";
+import DaysAgo from "../../../shared/components/ui/DaysAgo";
 
 type ListViewProps = {
   items: ContainerItem[];

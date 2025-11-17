@@ -5,7 +5,7 @@ import { AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { ContainerFormValues } from "../../types";
-import ImageUpload from "./ImageUpload";
+import ImageUpload from "./form/ImageUpload";
 
 // Validation schema using Yup
 const schema = Yup.object().shape({

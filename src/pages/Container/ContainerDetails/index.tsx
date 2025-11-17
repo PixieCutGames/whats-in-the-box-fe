@@ -1,7 +1,7 @@
 import { Grid3x3, List } from "lucide-react";
 import { useParams } from "react-router";
 import useContainerDetails from "./useContainerDetails";
-import DaysAgo from "../../../shared/components/DaysAgo";
+import DaysAgo from "../../../shared/components/ui/DaysAgo";
 import { useState } from "react";
 import ContainerImage from "./ContainerImage";
 import ContainerHeader from "./ContainerHeader";

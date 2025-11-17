@@ -1,6 +1,6 @@
 import { Package } from "lucide-react";
 import { Container } from "../../types";
-import DaysAgo from "../../shared/components/DaysAgo";
+import DaysAgo from "../../shared/components/ui/DaysAgo";
 import { Link } from "react-router-dom";
 
 type GridViewProps = {

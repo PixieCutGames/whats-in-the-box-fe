@@ -5,8 +5,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../shared/components/Card";
-import { Button } from "../../shared/components/Button";
+} from "../../shared/components/ui/Card";
+import { Button } from "../../shared/components/ui/Button";
 import { Navigate, useNavigate, useSearchParams } from "react-router";
 import useVerify from "../../shared/hooks/useVerify";
 import { useEffect, useState } from "react";

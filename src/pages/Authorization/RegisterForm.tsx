@@ -4,9 +4,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../shared/components/Card";
+} from "../../shared/components/ui/Card";
 import * as Yup from "yup";
-import PasswordInput from "../../shared/components/PasswordInput";
+import PasswordInput from "../../shared/components/form/PasswordInput";
 import useAuth from "./useAuth";
 import { useNavigate, useLocation } from "react-router";
 import { AlertCircle } from "lucide-react";

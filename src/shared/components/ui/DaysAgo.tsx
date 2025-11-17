@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { calculateDays } from "../../lib/calculateDays";
+import { calculateDays } from "../../../lib/calculateDays";
 
 type DaysAgoProps = {
   date: Date;

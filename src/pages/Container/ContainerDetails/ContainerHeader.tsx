@@ -3,7 +3,7 @@ import { Container } from "../../../types";
 import { ArrowLeft, ChevronDown, MoreVertical, Plus } from "lucide-react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Maybe } from "yup";
-import ConfirmationDialog from "../../../shared/components/ConfirmationDialog";
+import ConfirmationDialog from "../../../shared/components/ui/ConfirmationDialog";
 import { useState } from "react";
 import useContainerActions from "../../../shared/hooks/useContainerActions";
 import AddEditDialog from "../../../shared/components/AddEditDialog";

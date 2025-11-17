@@ -5,9 +5,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../shared/components/Card";
+} from "../../shared/components/ui/Card";
 import { AlertCircle, CheckCircle, Mail } from "lucide-react";
-import { Button } from "../../shared/components/Button";
+import { Button } from "../../shared/components/ui/Button";
 import { useEffect, useState } from "react";
 import { tokenManager } from "../../lib/tokenManager";
 import useVerify from "../../shared/hooks/useVerify";
