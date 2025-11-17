@@ -11,6 +11,8 @@ import { Link, useLocation, useNavigate } from "react-router";
 import MobileSidebar from "./MobileSideBar";
 import { useMediaQuery } from "@uidotdev/usehooks";
 
+import Logo from "/assets/Logo.png";
+
 const NESTED_ROUTES = [
   { path: "/box/new", title: "Create New Box" },
   { path: "/box/edit", title: "Edit Box" },
@@ -74,7 +76,7 @@ function Header({ navigationItems, pathname }: HeaderProps) {
             {/* Logo */}
             <div className="flex items-center">
               <div className="rounded-lg bg-primary flex items-center justify-center">
-                <img src="/assets/Logo.png" alt="Logo" className="h-8" />
+                <img src={Logo} alt="Logo" className="h-8" />
               </div>
             </div>
 

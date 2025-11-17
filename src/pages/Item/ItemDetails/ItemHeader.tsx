@@ -73,7 +73,7 @@ function ItemHeader({ item, onUpdate }: ItemHeaderProps) {
                 onClick={onEdit}
                 className="block w-full rounded-sm px-2 py-1.5 text-sm text-start outline-hidden focus:bg-accent focus:text-accent-foreground text-text-primary hover:bg-background-accent hover:text-text-primary transition-colors no-underline"
               >
-                Edit Box
+                Edit Item
               </button>
             </MenuItem>
 
@@ -82,7 +82,7 @@ function ItemHeader({ item, onUpdate }: ItemHeaderProps) {
                 onClick={() => setOpenDeleteConfirmation(true)}
                 className="block w-full rounded-sm px-2 py-1.5 text-sm text-start outline-hidden text-destructive focus:bg-destructive/10 dark:focus:bg-destructive/20 focus:text-destructive hover:bg-destructive/10 dark:hover:bg-destructive/20 hover:text-destructive transition-colors no-underline"
               >
-                Delete Box
+                Delete Item
               </button>
             </MenuItem>
           </MenuItems>
