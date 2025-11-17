@@ -14,6 +14,8 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 const NESTED_ROUTES = [
   { path: "/box/new", title: "Create New Box" },
   { path: "/box/edit", title: "Edit Box" },
+  { path: "/item/new", title: "Create New Item" },
+  { path: "/item/edit", title: "Edit Item" },
 ];
 
 type HeaderProps = {

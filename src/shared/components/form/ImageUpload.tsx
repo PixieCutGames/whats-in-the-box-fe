@@ -2,14 +2,17 @@ import { Upload, X } from "lucide-react";
 import { ClassAttributes, InputHTMLAttributes, useRef, useState } from "react";
 import useMedia from "../../hooks/useMedia";
 import { FieldHookConfig, useField } from "formik";
+import { Maybe } from "yup";
 
 function ImageUpload(
   props: InputHTMLAttributes<HTMLInputElement> &
     ClassAttributes<HTMLInputElement> &
-    FieldHookConfig<string>
+    FieldHookConfig<string> & { imageUrl?: Maybe<string> }
 ) {
   //   const [photo, setPhoto] = useState<File | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(
+    props.imageUrl ? props.imageUrl : null
+  );
   const [isDragging, setIsDragging] = useState<boolean>();
   const fileInputRef = useRef<HTMLInputElement>(null);
 

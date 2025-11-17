@@ -19,6 +19,8 @@ const ContainerDetails = lazy(
 const EditContainer = lazy(() => import("./pages/Container/EditContainer"));
 
 const NewItem = lazy(() => import("./pages/Item/NewItem"));
+const ItemDetails = lazy(() => import("./pages/Item/ItemDetails"));
+const EditItem = lazy(() => import("./pages/Item/EditItem"));
 
 function App() {
   const queryClient = new QueryClient({
@@ -113,6 +115,23 @@ function App() {
                   </Suspense>
                 }
               />
+              <Route
+                path="edit"
+                element={
+                  <Suspense>
+                    <EditItem />
+                  </Suspense>
+                }
+              />
+              <Route
+                path=":id"
+                element={
+                  <Suspense>
+                    <ItemDetails />
+                  </Suspense>
+                }
+              />
+              {/* TODO: add wildcard to reroute to items */}
             </Route>
             <Route path="/box">
               <Route

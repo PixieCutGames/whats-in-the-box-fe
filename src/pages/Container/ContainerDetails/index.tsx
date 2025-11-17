@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import useContainerDetails from "./useContainerDetails";
 import DaysAgo from "../../../shared/components/ui/DaysAgo";
 import { useState } from "react";
-import ContainerImage from "./ContainerImage";
+import ContainerImage from "../../../shared/components/ContainerImage";
 import ContainerHeader from "./ContainerHeader";
 import EmptyState from "./EmptyState";
 import GridView from "./GridView";

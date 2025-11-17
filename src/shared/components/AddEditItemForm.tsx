@@ -86,7 +86,11 @@ function AddEditItemForm({
         {({ isSubmitting, errors, touched, isValid }) => (
           <Form className="space-y-6">
             {/* Photo upload */}
-            <ImageUpload id="imageId" name="imageId" />
+            <ImageUpload
+              id="imageId"
+              name="imageId"
+              imageUrl={details?.imageUrl}
+            />
             {/* Name */}
             <div className="space-y-2">
               <label

@@ -34,6 +34,7 @@ export type ContainerFormValues = {
   description?: string;
   location?: string;
   imageId?: Yup.Maybe<string>;
+  imageUrl?: Yup.Maybe<string>;
   id: string;
 };
 
@@ -70,6 +71,7 @@ export type ItemFormValues = {
   name: string;
   description?: string;
   imageId?: Yup.Maybe<string>;
+  imageUrl?: Yup.Maybe<string>;
   quantity: number;
   containerId: string;
 };
