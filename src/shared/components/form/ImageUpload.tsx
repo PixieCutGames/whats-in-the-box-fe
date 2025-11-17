@@ -4,14 +4,15 @@ import useMedia from "../../hooks/useMedia";
 import { FieldHookConfig, useField } from "formik";
 import { Maybe } from "yup";
 
-function ImageUpload(
-  props: InputHTMLAttributes<HTMLInputElement> &
-    ClassAttributes<HTMLInputElement> &
-    FieldHookConfig<string> & { imageUrl?: Maybe<string> }
-) {
+function ImageUpload({
+  imageUrl,
+  ...props
+}: InputHTMLAttributes<HTMLInputElement> &
+  ClassAttributes<HTMLInputElement> &
+  FieldHookConfig<string> & { imageUrl?: Maybe<string> }) {
   //   const [photo, setPhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(
-    props.imageUrl ? props.imageUrl : null
+    imageUrl ? imageUrl : null
   );
   const [isDragging, setIsDragging] = useState<boolean>();
   const fileInputRef = useRef<HTMLInputElement>(null);
