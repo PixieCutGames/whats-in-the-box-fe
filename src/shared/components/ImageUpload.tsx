@@ -64,7 +64,7 @@ function ImageUpload(
   };
 
   const handleRemovePhoto = () => {
-    // setPhoto(null);
+    setValue(null);
     setPhotoPreview(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -76,13 +76,13 @@ function ImageUpload(
         htmlFor={field.name}
         className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
       >
-        Box Photo
+        Photo
       </label>
       {photoPreview ? (
         <div className="relative">
           <img
             src={photoPreview}
-            alt="Box preview"
+            alt="preview"
             className="w-full h-48 object-cover rounded-lg border border-border"
           />
           <button

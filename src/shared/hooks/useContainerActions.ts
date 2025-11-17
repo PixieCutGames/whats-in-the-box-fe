@@ -29,7 +29,7 @@ function useContainerActions() {
     error: deleteContainerError,
   } = useMutation({
     mutationFn: async (id: string) => {
-      return apiClient<{ container: Container }>(`/container/${id}`, {
+      return apiClient<{ message: string }>(`/container/${id}`, {
         method: "DELETE",
       });
     },

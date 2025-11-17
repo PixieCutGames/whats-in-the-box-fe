@@ -8,18 +8,25 @@ import {
 import { XIcon } from "lucide-react";
 import { Fragment } from "react/jsx-runtime";
 import AddEditContainerForm from "./AddEditContainerForm";
-import { ContainerFormValues } from "../../types";
+import { ContainerFormValues, ItemFormValues } from "../../types";
+import AddEditItemForm from "./AddEditItemForm";
 
-type AddEditContainerDialogProps = {
+type AddEditDialogProps = {
   isOpen: boolean;
   onClose: (refetch?: boolean) => void;
   details?: ContainerFormValues;
+  itemDetails?: ItemFormValues;
+  type: "container" | "item";
+  containerId?: string;
 };
-function AddEditContainerDialog({
+function AddEditDialog({
   details,
+  type,
+  containerId,
+  itemDetails,
   isOpen,
   onClose,
-}: AddEditContainerDialogProps) {
+}: AddEditDialogProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -50,7 +57,7 @@ function AddEditContainerDialog({
               <div className="flex justify-between gap-2">
                 {/* TITLE */}
                 <DialogTitle className="text-lg leading-none font-semibold text-text-primary">
-                  Create New Box
+                  Create New {type === "container" ? "Box" : "Item"}
                 </DialogTitle>
                 <button
                   onClick={() => {
@@ -62,7 +69,16 @@ function AddEditContainerDialog({
                   <span className="sr-only">Close</span>
                 </button>
               </div>
-              <AddEditContainerForm onClose={onClose} details={details} />
+              {type === "container" && (
+                <AddEditContainerForm onClose={onClose} details={details} />
+              )}
+              {type === "item" && (
+                <AddEditItemForm
+                  onClose={onClose}
+                  details={itemDetails}
+                  containerId={containerId}
+                />
+              )}
             </DialogPanel>
           </TransitionChild>
         </div>
@@ -71,4 +87,4 @@ function AddEditContainerDialog({
   );
 }
 
-export default AddEditContainerDialog;
+export default AddEditDialog;
