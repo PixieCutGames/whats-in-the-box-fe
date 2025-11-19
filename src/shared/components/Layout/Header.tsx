@@ -21,6 +21,7 @@ const NESTED_ROUTES = [
   { path: "/item/new", title: "Create New Item" },
   { path: "/item/edit", title: "Edit Item" },
   { path: "/quick", title: "Search" },
+  { path: "/profile", title: "Profile" },
 ];
 
 type HeaderProps = {

@@ -25,6 +25,7 @@ const ItemDetailsPage = lazy(() => import("./pages/Item/ItemDetails"));
 const EditItemPage = lazy(() => import("./pages/Item/EditItem"));
 
 const AdvancedSearch = lazy(() => import("./pages/Search/Advanced"));
+const ProfilePage = lazy(() => import("./pages/Profile"));
 
 function App() {
   const queryClient = new QueryClient({
@@ -178,6 +179,14 @@ function App() {
               element={
                 <Suspense>
                   <AdvancedSearch />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <Suspense>
+                  <ProfilePage />
                 </Suspense>
               }
             />
