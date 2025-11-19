@@ -173,7 +173,14 @@ function App() {
               {/* TODO: add wildcard to reroute to boxex */}
             </Route>
             <Route path="/quick" element={<QuickSearchPage />} />
-            <Route path="/search" element={<AdvancedSearch />} />
+            <Route
+              path="/search"
+              element={
+                <Suspense>
+                  <AdvancedSearch />
+                </Suspense>
+              }
+            />
             <Route path="/logout" element={<Logout />} />
           </Route>
           <Route

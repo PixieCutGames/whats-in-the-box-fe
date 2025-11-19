@@ -26,6 +26,7 @@ export type Container = {
   imageUrl: Yup.Maybe<string>;
   updatedAt: Date;
   createdAt: Date;
+  itemsCount: number;
   items: ContainerItem[];
 };
 

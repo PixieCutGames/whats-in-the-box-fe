@@ -42,7 +42,7 @@ function ListView({ containers }: ListViewProps) {
           {/* Items Count */}
           <div>
             <p className="text-text-secondary whitespace-nowrap">
-              Items: {container.items.length}
+              Items: {container.itemsCount}
             </p>
           </div>
 

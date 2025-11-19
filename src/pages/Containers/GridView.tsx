@@ -33,9 +33,7 @@ function GridView({ containers }: GridViewProps) {
             <h3 className="text-text-primary text-lg font-medium">
               {container.name}
             </h3>
-            <p className="text-text-secondary">
-              Items: {container.items.length}
-            </p>
+            <p className="text-text-secondary">Items: {container.itemsCount}</p>
             <p className="text-text-secondary">
               Updated: <DaysAgo date={container.updatedAt} />
             </p>
