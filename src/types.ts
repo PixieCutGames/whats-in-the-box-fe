@@ -77,6 +77,25 @@ export type ItemFormValues = {
   containerId: string;
 };
 
+export type Activity = {
+  id: string;
+  userId: string;
+  type: ActivityType;
+  message: string;
+  metadata?: Record<string, any>;
+  createdAt: Date;
+};
+
 export enum ContainerType {
   BOX,
+}
+
+export enum ActivityType {
+  ITEM_CREATED = "item_created",
+  ITEM_UPDATED = "item_updated",
+  ITEM_DELETED = "item_deleted",
+  CONTAINER_CREATED = "container_created",
+  CONTAINER_UPDATED = "container_updated",
+  CONTAINER_DELETED = "container_deleted",
+  ITEM_MOVED = "item_moved",
 }

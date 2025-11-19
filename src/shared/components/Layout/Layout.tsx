@@ -7,7 +7,7 @@ function Layout({ children }: PropsWithChildren) {
   const { pathname } = location;
 
   const navigationItems = [
-    { label: "Dashboard", href: "/" },
+    { label: "Home", href: "/" },
     { label: "Boxes", href: "/boxes" },
     { label: "Items", href: "/items" },
   ];

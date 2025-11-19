@@ -1,26 +1,131 @@
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import useUser from "../../shared/hooks/useUser";
+import { ChevronRight, Package, Plus } from "lucide-react";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { useState } from "react";
+import AddEditDialog from "../../shared/components/AddEditDialog";
+import useDashboard from "./useDashboard";
+import useContainers from "../../shared/hooks/useContainers";
+import RecentActivities from "./RecentActivities";
+import GridView from "../Containers/GridView";
 
 function Dashboard() {
-  const { userDetails, logout } = useUser();
+  const { userDetails } = useUser();
+  const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
+  const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  return (
-    <div>
-      <h1 className="text-text-primary text-2xl font-medium">Dashboard</h1>
-      {userDetails?.user.name}
-      <div className="mt-4">
-        <button
-          onClick={() => {
-            logout();
-            console.log("logout");
+  const { logs, logsIsloding, stats } = useDashboard();
+  const { containersDetails } = useContainers(4);
 
-            navigate("/login");
-          }}
-        >
-          Logout
-        </button>
+  const createNewContainer = () => {
+    if (notDesktop) {
+      navigate("/box/new");
+      return;
+    }
+    setOpenCreateDialog(true);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-text-primary text-2xl font-medium">
+          Welcome {userDetails?.user.name ?? userDetails?.user.email}
+        </h1>
+        {/* Add Button */}
+        {!!stats?.containers && (
+          <button
+            className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors"
+            onClick={createNewContainer}
+          >
+            <Plus className="h-4 w-4" />
+            <span className="hidden sm:inline">Add Box</span>
+          </button>
+        )}
       </div>
+      {/* Empty State Content */}
+      {stats?.containers === 0 && (
+        <div className="flex flex-col items-center justify-center py-16 px-4">
+          <div className="h-32 w-32 rounded-full bg-primary-surface/20 flex items-center justify-center mb-6">
+            <Package className="h-16 w-16 text-primary" />
+          </div>
+          <h2 className="text-text-primary mb-2 text-center">
+            Welcome to What's in the Box!
+          </h2>
+          <p className="text-text-secondary text-center mb-2 max-w-md">
+            You have no boxes yet.
+          </p>
+          <p className="text-text-secondary text-center mb-8 max-w-md">
+            Start by creating your first box to add and track items.
+          </p>
+          <button
+            onClick={createNewContainer}
+            className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors"
+          >
+            <Plus className="h-5 w-5" />
+            Create Your First Box
+          </button>
+        </div>
+      )}
+      {!!stats?.containers && (
+        <>
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {/* Total Boxes */}
+            <div className="bg-background-surface border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <p className="text-text-secondary mb-2">Total Boxes</p>
+              <p className="text-text-primary text-2xl font-meduim">
+                {stats.containers}
+              </p>
+            </div>
+
+            {/* Total Items */}
+            <div className="bg-background-surface border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <p className="text-text-secondary mb-2">Total Items</p>
+              <p className="text-text-primary text-2xl font-meduim">
+                {stats.items}
+              </p>
+            </div>
+
+            {/* Recently Updated Box */}
+            <div className="bg-background-surface border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <p className="text-text-secondary mb-2">Recently Updated Box</p>
+              <p className="text-text-primary text-xl font-meduim truncate">
+                {stats.lastUpdatedContainer?.name ?? "-"}
+              </p>
+            </div>
+
+            {/* Recently Updated Item */}
+            <div className="bg-background-surface border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+              <p className="text-text-secondary mb-2">Recently Updated Item</p>
+              <p className="text-text-primary text-xl font-meduim truncate">
+                {stats.lastUpdatedItem?.name ?? "-"}
+              </p>
+            </div>
+          </div>
+          <RecentActivities logs={logs} logsIsloding={logsIsloding} />
+          <div className="bg-background-surface border border-border rounded-lg p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-text-primary text-xl font-medium">
+                Your Boxes (Recently Updated)
+              </h2>
+              <Link
+                to="/boxes"
+                className="text-primary-default hover:text-primary-hover transition-colors flex items-center gap-1"
+              >
+                <span>View All</span>
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <GridView containers={containersDetails?.containers ?? []} />
+          </div>
+        </>
+      )}
+      <AddEditDialog
+        type="container"
+        isOpen={openCreateDialog}
+        onClose={() => setOpenCreateDialog(false)}
+      />
     </div>
   );
 }
