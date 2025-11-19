@@ -70,9 +70,9 @@ function Dashboard() {
       {!!stats?.containers && (
         <>
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {/* Total Boxes */}
-            <div className="bg-background-surface border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+            <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
               <p className="text-text-secondary mb-2">Total Boxes</p>
               <p className="text-text-primary text-2xl font-meduim">
                 {stats.containers}
@@ -80,7 +80,7 @@ function Dashboard() {
             </div>
 
             {/* Total Items */}
-            <div className="bg-background-surface border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+            <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
               <p className="text-text-secondary mb-2">Total Items</p>
               <p className="text-text-primary text-2xl font-meduim">
                 {stats.items}
@@ -88,26 +88,41 @@ function Dashboard() {
             </div>
 
             {/* Recently Updated Box */}
-            <div className="bg-background-surface border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+            <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
               <p className="text-text-secondary mb-2">Recently Updated Box</p>
-              <p className="text-text-primary text-xl font-meduim truncate">
-                {stats.lastUpdatedContainer?.name ?? "-"}
-              </p>
+              {stats.lastUpdatedContainer ? (
+                <Link
+                  to={`/box/${stats.lastUpdatedContainer.id}`}
+                  className="text-text-primary text-lg font-meduim truncate"
+                >
+                  {stats.lastUpdatedContainer.name ?? "-"}{" "}
+                </Link>
+              ) : (
+                <p className="text-text-primary text-xl font-meduim">-</p>
+              )}
             </div>
 
             {/* Recently Updated Item */}
-            <div className="bg-background-surface border border-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+            <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
               <p className="text-text-secondary mb-2">Recently Updated Item</p>
-              <p className="text-text-primary text-xl font-meduim truncate">
-                {stats.lastUpdatedItem?.name ?? "-"}
-              </p>
+              {stats.lastUpdatedItem ? (
+                <Link
+                  to={`/item/${stats.lastUpdatedItem.id}`}
+                  className="text-text-primary text-lg font-meduim truncate"
+                >
+                  {stats.lastUpdatedItem.name ?? "-"}
+                </Link>
+              ) : (
+                <p className="text-text-primary text-xl font-meduim">-</p>
+              )}
             </div>
           </div>
           <RecentActivities logs={logs} logsIsloding={logsIsloding} />
           <div className="bg-background-surface border border-border rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-text-primary text-xl font-medium">
-                Your Boxes (Recently Updated)
+                Your Boxes{" "}
+                <span className="max-md:hidden">(Recently Updated)</span>
               </h2>
               <Link
                 to="/boxes"
