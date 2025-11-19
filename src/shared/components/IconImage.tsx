@@ -1,11 +1,12 @@
-import { Package } from "lucide-react";
+import { Blocks, Package } from "lucide-react";
 import { Maybe } from "yup";
 
-type ContainerImageProps = {
+type IconImageProps = {
   imageUrl: Maybe<string>;
   name: string;
+  type: "container" | "item";
 };
-function ContainerImage({ imageUrl, name }: ContainerImageProps) {
+function IconImage({ imageUrl, name, type }: IconImageProps) {
   if (imageUrl)
     return (
       <div className="w-full aspect-square rounded-lg overflow-hidden border border-border">
@@ -14,9 +15,13 @@ function ContainerImage({ imageUrl, name }: ContainerImageProps) {
     );
   return (
     <div className="w-full aspect-square rounded-lg bg-background-accent border border-border flex items-center justify-center">
-      <Package className="h-16 w-16 text-text-secondary" />
+      {type === "container" ? (
+        <Package className="h-16 w-16 text-text-secondary" />
+      ) : (
+        <Blocks className="h-16 w-16 text-text-secondary" />
+      )}
     </div>
   );
 }
 
-export default ContainerImage;
+export default IconImage;

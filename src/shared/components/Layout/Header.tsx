@@ -13,6 +13,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 
 import Logo from "/assets/Logo.png";
 import SearchButton from "./SearchButton";
+import useUser from "../../hooks/useUser";
 
 const NESTED_ROUTES = [
   { path: "/box/new", title: "Create New Box" },
@@ -30,7 +31,7 @@ type HeaderProps = {
   pathname: string;
 };
 function Header({ navigationItems, pathname }: HeaderProps) {
-  // const [searchOpen, setSearchOpen] = useState<boolean>();
+  const { userDetails } = useUser();
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
@@ -101,17 +102,6 @@ function Header({ navigationItems, pathname }: HeaderProps) {
           </div>
           {/* Right Section: Search + Profile */}
           <div className="flex items-center gap-3">
-            {/* Search - Desktop */}
-            {/* <div className="hidden md:block">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="pl-10 pr-4 py-2 w-64 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-text-primary placeholder:text-text-secondary"
-                />
-              </div>
-            </div> */}
             {/* Search  */}
             <SearchButton />
             {/* Profile Dropdown */}
@@ -119,7 +109,11 @@ function Header({ navigationItems, pathname }: HeaderProps) {
               <Menu>
                 <MenuButton className="flex items-center gap-2 p-2 rounded-lg hover:bg-background-accent transition-colors">
                   <div className="h-8 w-8 rounded-full bg-primary-surface flex items-center justify-center">
-                    <span className="text-primary">U</span>
+                    <span className="text-primary uppercase">
+                      {(
+                        userDetails?.user.name ?? userDetails?.user.email
+                      )?.charAt(0)}
+                    </span>
                   </div>
                   <ChevronDown className="h-4 w-4 text-text-secondary hidden sm:block" />
                 </MenuButton>
@@ -149,20 +143,6 @@ function Header({ navigationItems, pathname }: HeaderProps) {
             </div>
           </div>
         </div>
-        {/* Mobile Search Bar */}
-        {/* {searchOpen && (
-          <div className="md:hidden pb-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="pl-10 pr-4 py-2 w-full bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-text-primary placeholder:text-text-secondary"
-                autoFocus
-              />
-            </div>
-          </div>
-        )} */}
       </div>
     </nav>
   );

@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import useItemDetails from "./useItemDetails";
 import ItemHeader from "./ItemHeader";
 import DaysAgo from "../../../shared/components/ui/DaysAgo";
-import ContainerImage from "../../../shared/components/ContainerImage";
+import IconImage from "../../../shared/components/IconImage";
 
 function ItemDetails() {
   const { id } = useParams();
@@ -17,12 +17,20 @@ function ItemDetails() {
       {/* Item details */}
       <div className="lg:hidden">
         {/* Item Photo */}
-        <ContainerImage imageUrl={item?.imageUrl} name={item?.name ?? ""} />
+        <IconImage
+          imageUrl={item?.imageUrl}
+          name={item?.name ?? ""}
+          type="item"
+        />
       </div>
       <div className="bg-background-surface border border-border rounded-lg p-6 lg:flex block gap-6">
         <div className="hidden lg:block w-sm">
           {/* Item Photo */}
-          <ContainerImage imageUrl={item?.imageUrl} name={item?.name ?? ""} />
+          <IconImage
+            imageUrl={item?.imageUrl}
+            name={item?.name ?? ""}
+            type="item"
+          />
         </div>
         <div className="space-y-4">
           <div>

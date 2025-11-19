@@ -1,4 +1,4 @@
-import { Package, Plus } from "lucide-react";
+import { Blocks, Plus } from "lucide-react";
 
 type EmptyStateProps = {
   createNewContainer: () => void;
@@ -13,7 +13,7 @@ function EmptyState({
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4">
       <div className="h-24 w-24 rounded-full bg-background-accent flex items-center justify-center mb-6">
-        <Package className="h-12 w-12 text-text-secondary" />
+        <Blocks className="h-12 w-12 text-text-secondary" />
       </div>
       <h2 className="text-text-primary mb-2">
         No items {!hasContainers && "or boxes"} yet
