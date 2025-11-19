@@ -1,6 +1,6 @@
 import { useDebounce } from "@uidotdev/usehooks";
 import { Field, Form, Formik } from "formik";
-import { Package, Search } from "lucide-react";
+import { Blocks, Package, Search } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useQuickSearch from "../../hooks/useQuickSearch";
@@ -101,7 +101,7 @@ function QuickSearch({ onClose }: QuickSearchProps) {
                             onClick={closeDialog}
                             className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent text-text-primary no-underline`}
                           >
-                            <Package className="h-5 w-5 shrink-0" />
+                            <Blocks className="h-5 w-5 shrink-0" />
                             <div className="flex-1 min-w-0">
                               <div>{result.name}</div>
                               {result.container.name && (

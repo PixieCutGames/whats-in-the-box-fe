@@ -1,4 +1,4 @@
-import { Package } from "lucide-react";
+import { Blocks } from "lucide-react";
 import { Item } from "../../types";
 import DaysAgo from "../../shared/components/ui/DaysAgo";
 import { Link } from "react-router-dom";
@@ -24,7 +24,7 @@ function GridView({ items }: GridViewProps) {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <Package className="h-16 w-16 text-text-secondary group-hover:text-primary transition-colors" />
+              <Blocks className="h-16 w-16 text-text-secondary group-hover:text-primary transition-colors" />
             )}
           </div>
 

@@ -1,4 +1,4 @@
-import { ChevronRight, Package } from "lucide-react";
+import { Blocks, ChevronRight } from "lucide-react";
 import { Item } from "../../types";
 import DaysAgo from "../../shared/components/ui/DaysAgo";
 import { Link } from "react-router-dom";
@@ -26,7 +26,7 @@ function ListView({ items }: ListViewProps) {
                 className="w-full h-full object-cover rounded-lg"
               />
             ) : (
-              <Package className="h-6 w-6 text-text-secondary" />
+              <Blocks className="h-6 w-6 text-text-secondary" />
             )}
           </div>
 

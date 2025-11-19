@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import useContainerDetails from "./useContainerDetails";
 import DaysAgo from "../../../shared/components/ui/DaysAgo";
 import { useState } from "react";
-import ContainerImage from "../../../shared/components/ContainerImage";
+import ContainerImage from "../../../shared/components/IconImage";
 import ContainerHeader from "./ContainerHeader";
 import EmptyState from "./EmptyState";
 import GridView from "./GridView";
@@ -26,6 +26,7 @@ function ContainerDetails() {
         <ContainerImage
           imageUrl={container?.imageUrl}
           name={container?.name ?? ""}
+          type="container"
         />
       </div>
       <div className="bg-background-surface border border-border rounded-lg p-6 lg:flex block gap-6">
@@ -34,6 +35,7 @@ function ContainerDetails() {
           <ContainerImage
             imageUrl={container?.imageUrl}
             name={container?.name ?? ""}
+            type="container"
           />
         </div>
         <div className="space-y-4">
