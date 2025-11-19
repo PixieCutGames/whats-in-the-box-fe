@@ -92,7 +92,7 @@ function Items() {
             {/* Add Button */}
             <button
               className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors"
-              onClick={createNewContainer}
+              onClick={createNewItem}
             >
               <Plus className="h-4 w-4" />
               <span className="hidden sm:inline">Add Item</span>

@@ -5,19 +5,21 @@ import {
   MenuItems,
   MenuSeparator,
 } from "@headlessui/react";
-import { ArrowLeft, ChevronDown, Menu as MenuIcon, Search } from "lucide-react";
+import { ArrowLeft, ChevronDown, Menu as MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import MobileSidebar from "./MobileSideBar";
 import { useMediaQuery } from "@uidotdev/usehooks";
 
 import Logo from "/assets/Logo.png";
+import SearchButton from "./SearchButton";
 
 const NESTED_ROUTES = [
   { path: "/box/new", title: "Create New Box" },
   { path: "/box/edit", title: "Edit Box" },
   { path: "/item/new", title: "Create New Item" },
   { path: "/item/edit", title: "Edit Item" },
+  { path: "/quick", title: "Search" },
 ];
 
 type HeaderProps = {
@@ -28,7 +30,7 @@ type HeaderProps = {
   pathname: string;
 };
 function Header({ navigationItems, pathname }: HeaderProps) {
-  const [searchOpen, setSearchOpen] = useState<boolean>();
+  // const [searchOpen, setSearchOpen] = useState<boolean>();
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
@@ -100,7 +102,7 @@ function Header({ navigationItems, pathname }: HeaderProps) {
           {/* Right Section: Search + Profile */}
           <div className="flex items-center gap-3">
             {/* Search - Desktop */}
-            <div className="hidden md:block">
+            {/* <div className="hidden md:block">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
                 <input
@@ -109,15 +111,9 @@ function Header({ navigationItems, pathname }: HeaderProps) {
                   className="pl-10 pr-4 py-2 w-64 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-text-primary placeholder:text-text-secondary"
                 />
               </div>
-            </div>
-            {/* Search - Mobile Icon */}
-            <button
-              onClick={() => setSearchOpen(!searchOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-background-accent transition-colors"
-              aria-label="Search"
-            >
-              <Search className="h-5 w-5 text-text-primary" />
-            </button>
+            </div> */}
+            {/* Search  */}
+            <SearchButton />
             {/* Profile Dropdown */}
             <div className="relative">
               <Menu>
@@ -154,7 +150,7 @@ function Header({ navigationItems, pathname }: HeaderProps) {
           </div>
         </div>
         {/* Mobile Search Bar */}
-        {searchOpen && (
+        {/* {searchOpen && (
           <div className="md:hidden pb-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
@@ -166,7 +162,7 @@ function Header({ navigationItems, pathname }: HeaderProps) {
               />
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </nav>
   );

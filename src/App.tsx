@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import { ProtectedRoute } from "./shared/components/ProtectedRoute";
 import { AuthRedirect } from "./shared/components/AuthRedirect";
 import Logout from "./shared/components/Logout";
+import QuickSearchPage from "./pages/Search/Quick";
 
 const AuthorizationPage = lazy(() => import("./pages/Authorization"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -19,9 +20,11 @@ const ContainerDetails = lazy(
 const EditContainer = lazy(() => import("./pages/Container/EditContainer"));
 
 const ItemsPage = lazy(() => import("./pages/Items"));
-const NewItem = lazy(() => import("./pages/Item/NewItem"));
-const ItemDetails = lazy(() => import("./pages/Item/ItemDetails"));
-const EditItem = lazy(() => import("./pages/Item/EditItem"));
+const NewItemPage = lazy(() => import("./pages/Item/NewItem"));
+const ItemDetailsPage = lazy(() => import("./pages/Item/ItemDetails"));
+const EditItemPage = lazy(() => import("./pages/Item/EditItem"));
+
+const AdvancedSearch = lazy(() => import("./pages/Search/Advanced"));
 
 function App() {
   const queryClient = new QueryClient({
@@ -120,7 +123,7 @@ function App() {
                 path="new"
                 element={
                   <Suspense>
-                    <NewItem />
+                    <NewItemPage />
                   </Suspense>
                 }
               />
@@ -128,7 +131,7 @@ function App() {
                 path="edit"
                 element={
                   <Suspense>
-                    <EditItem />
+                    <EditItemPage />
                   </Suspense>
                 }
               />
@@ -136,7 +139,7 @@ function App() {
                 path=":id"
                 element={
                   <Suspense>
-                    <ItemDetails />
+                    <ItemDetailsPage />
                   </Suspense>
                 }
               />
@@ -169,6 +172,15 @@ function App() {
               />
               {/* TODO: add wildcard to reroute to boxex */}
             </Route>
+            <Route path="/quick" element={<QuickSearchPage />} />
+            <Route
+              path="/search"
+              element={
+                <Suspense>
+                  <AdvancedSearch />
+                </Suspense>
+              }
+            />
             <Route path="/logout" element={<Logout />} />
           </Route>
           <Route
