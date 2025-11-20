@@ -25,12 +25,17 @@ const ItemDetailsPage = lazy(() => import("./pages/Item/ItemDetails"));
 const EditItemPage = lazy(() => import("./pages/Item/EditItem"));
 
 const AdvancedSearch = lazy(() => import("./pages/Search/Advanced"));
+const ProfilePage = lazy(() => import("./pages/Profile"));
+const ChangePasswordPage = lazy(() => import("./pages/ChangePassword"));
 
 function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        retry: 2,
+        retry: (failureCount, error) => {
+          console.log(error);
+          return failureCount < 2 ? true : false;
+        },
         staleTime: 1000 * 60 * 5,
         refetchOnWindowFocus: false,
       },
@@ -178,6 +183,22 @@ function App() {
               element={
                 <Suspense>
                   <AdvancedSearch />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <Suspense>
+                  <ProfilePage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/change-password"
+              element={
+                <Suspense>
+                  <ChangePasswordPage />
                 </Suspense>
               }
             />

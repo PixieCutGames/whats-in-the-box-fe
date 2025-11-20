@@ -14,7 +14,6 @@ function useContainers(limit?: number) {
         `/containers/${limit ?? ""}`
       );
     },
-    retry: true,
   });
   return {
     containersDetails,

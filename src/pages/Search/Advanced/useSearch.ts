@@ -10,7 +10,6 @@ function useSearch(query?: string) {
         `/search?${query}`
       );
     },
-    retry: true,
     staleTime: 0,
     enabled: !!query,
   });

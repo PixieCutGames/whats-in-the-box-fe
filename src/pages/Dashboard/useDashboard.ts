@@ -17,7 +17,6 @@ function useDashboard() {
         lastUpdatedItem?: Item;
       }>(`/dashboard/stats`);
     },
-    retry: true,
     staleTime: 0,
   });
 
@@ -32,7 +31,6 @@ function useDashboard() {
         logs: Activity[];
       }>(`/dashboard/activities`);
     },
-    retry: true,
     staleTime: 0,
   });
   return {

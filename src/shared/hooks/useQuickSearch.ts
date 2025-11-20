@@ -10,7 +10,6 @@ function useQuickSearch(query?: string) {
         `/quick/${query}`
       );
     },
-    retry: true,
     staleTime: 0,
     enabled: !!query,
   });
