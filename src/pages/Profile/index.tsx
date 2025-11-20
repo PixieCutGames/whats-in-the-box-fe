@@ -3,11 +3,15 @@ import { Button } from "../../shared/components/ui/Button";
 import useUser from "../../shared/hooks/useUser";
 import ChangeNameDialog from "./ChangeNameDialog";
 import { useState } from "react";
+import ChangePasswordDialog from "./ChangePasswordDialog";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 function ProfilePage() {
+  const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
   const { userDetails } = useUser();
   const navigate = useNavigate();
   const [isChangeNameOpened, setisChangeNameOpened] = useState(false);
+  const [isChangePasswordOpened, setIsChangePasswordOpened] = useState(false);
 
   const handleLogout = () => {
     navigate("/logout");
@@ -74,7 +78,10 @@ function ProfilePage() {
               Password
             </label>
             <Button
-              //   onClick={() => setChangePasswordOpen(true)}
+              onClick={() => {
+                if (notDesktop) navigate("/change-password");
+                else setIsChangePasswordOpened(true);
+              }}
               variant="outline"
               className="w-full sm:w-auto"
             >
@@ -96,6 +103,10 @@ function ProfilePage() {
       <ChangeNameDialog
         isOpen={isChangeNameOpened}
         onClose={() => setisChangeNameOpened(false)}
+      />
+      <ChangePasswordDialog
+        isOpen={isChangePasswordOpened}
+        onClose={() => setIsChangePasswordOpened(false)}
       />
     </div>
   );
