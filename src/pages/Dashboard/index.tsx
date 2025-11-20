@@ -17,6 +17,7 @@ function Dashboard() {
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
   const navigate = useNavigate();
 
+  // TODO: handle errors
   const { logs, logsIsloding, stats, statsIsLoading } = useDashboard();
   const { containersDetails, containersIsLoading } = useContainers(4);
 
