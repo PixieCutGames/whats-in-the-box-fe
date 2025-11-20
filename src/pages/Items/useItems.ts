@@ -12,7 +12,6 @@ function useItems() {
     queryFn: async () => {
       return apiClient<{ items: Item[] }>("/items/");
     },
-    retry: true,
   });
   return {
     itemsDetails,

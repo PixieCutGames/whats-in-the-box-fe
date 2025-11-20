@@ -20,7 +20,6 @@ function useMedia() {
         true
       );
     },
-    retry: true,
   });
 
   const uploadMedia = (

@@ -32,7 +32,10 @@ function App() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        retry: 2,
+        retry: (failureCount, error) => {
+          console.log(error);
+          return failureCount < 2 ? true : false;
+        },
         staleTime: 1000 * 60 * 5,
         refetchOnWindowFocus: false,
       },

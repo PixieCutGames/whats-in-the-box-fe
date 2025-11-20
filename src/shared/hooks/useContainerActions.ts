@@ -19,7 +19,6 @@ function useContainerActions() {
         body: JSON.stringify(data),
       });
     },
-    retry: true,
   });
 
   const {
@@ -33,7 +32,6 @@ function useContainerActions() {
         method: "DELETE",
       });
     },
-    retry: true,
   });
 
   const {
@@ -48,7 +46,6 @@ function useContainerActions() {
         body: JSON.stringify(data),
       });
     },
-    retry: true,
   });
 
   const createNewContainer = (

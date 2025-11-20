@@ -8,7 +8,6 @@ function useItemDetails(id?: string) {
     queryFn: async () => {
       return apiClient<{ item: Item }>(`/item/${id}`);
     },
-    retry: true,
     enabled: !!id,
     staleTime: 0,
   });

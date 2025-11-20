@@ -35,7 +35,6 @@ function useUser() {
         body: JSON.stringify(data),
       });
     },
-    retry: true,
   });
 
   const {
@@ -53,7 +52,6 @@ function useUser() {
         body: JSON.stringify(data),
       });
     },
-    retry: true,
   });
 
   const changeName = (
@@ -83,7 +81,10 @@ function useUser() {
         console.log(newData);
         onSuccess();
       },
-      onError,
+      onError: (err) => {
+        onError();
+        console.log(err);
+      },
     });
   };
 

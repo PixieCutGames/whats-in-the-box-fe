@@ -20,6 +20,8 @@ type ChangePasswordFormProps = {
 };
 function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
   const { changePassword, changePasswordError, refetchUser } = useUser();
+  console.log({ changePasswordError });
+
   const navigate = useNavigate();
   return (
     <>
@@ -112,7 +114,7 @@ function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
                 !isValid && "opacity-50"
               }`}
             >
-              {isSubmitting ? "Changing pPassword..." : "Change Password"}
+              {isSubmitting ? "Changing Password..." : "Change Password"}
             </button>
             <div className="lg:flex flex-row justify-end gap-2 hidden">
               <button
@@ -131,7 +133,7 @@ function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
                   !isValid && "opacity-50"
                 }`}
               >
-                {isSubmitting ? "Changing pPassword..." : "Change Password"}
+                {isSubmitting ? "Changing Password..." : "Change Password"}
               </button>
             </div>
           </Form>

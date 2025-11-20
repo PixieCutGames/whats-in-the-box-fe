@@ -8,7 +8,6 @@ function useContainerDetails(id?: string) {
     queryFn: async () => {
       return apiClient<{ container: Container }>(`/container/${id}`);
     },
-    retry: true,
     enabled: !!id,
     staleTime: 0,
   });
