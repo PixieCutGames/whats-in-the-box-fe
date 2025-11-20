@@ -46,6 +46,8 @@ function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
       >
         {({ isSubmitting, isValid }) => (
           <Form className="space-y-4">
+            {/* TODO: add submmitting guard */}
+            {/* <FormSubmittingGuard isSubmitting={isSubmitting} /> */}
             {/* Current Password */}
             <div className="space-y-2">
               <label

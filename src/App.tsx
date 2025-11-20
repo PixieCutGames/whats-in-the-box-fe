@@ -5,6 +5,7 @@ import { ProtectedRoute } from "./shared/components/ProtectedRoute";
 import { AuthRedirect } from "./shared/components/AuthRedirect";
 import Logout from "./shared/components/Logout";
 import QuickSearchPage from "./pages/Search/Quick";
+import ProtectedSkeleton from "./shared/components/skeleton/ProtectedSkeleton";
 
 const AuthorizationPage = lazy(() => import("./pages/Authorization"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -102,7 +103,7 @@ function App() {
             <Route
               path="/"
               element={
-                <Suspense>
+                <Suspense fallback={<ProtectedSkeleton />}>
                   <Dashboard />
                 </Suspense>
               }
@@ -110,7 +111,7 @@ function App() {
             <Route
               path="/boxes"
               element={
-                <Suspense>
+                <Suspense fallback={<ProtectedSkeleton />}>
                   <ContainersPage />
                 </Suspense>
               }
@@ -118,7 +119,7 @@ function App() {
             <Route
               path="/items"
               element={
-                <Suspense>
+                <Suspense fallback={<ProtectedSkeleton />}>
                   <ItemsPage />
                 </Suspense>
               }
@@ -127,7 +128,7 @@ function App() {
               <Route
                 path="new"
                 element={
-                  <Suspense>
+                  <Suspense fallback={<ProtectedSkeleton />}>
                     <NewItemPage />
                   </Suspense>
                 }
@@ -135,7 +136,7 @@ function App() {
               <Route
                 path="edit"
                 element={
-                  <Suspense>
+                  <Suspense fallback={<ProtectedSkeleton />}>
                     <EditItemPage />
                   </Suspense>
                 }
@@ -143,7 +144,7 @@ function App() {
               <Route
                 path=":id"
                 element={
-                  <Suspense>
+                  <Suspense fallback={<ProtectedSkeleton />}>
                     <ItemDetailsPage />
                   </Suspense>
                 }
@@ -154,7 +155,7 @@ function App() {
               <Route
                 path="new"
                 element={
-                  <Suspense>
+                  <Suspense fallback={<ProtectedSkeleton />}>
                     <NewContainer />
                   </Suspense>
                 }
@@ -162,7 +163,7 @@ function App() {
               <Route
                 path="edit"
                 element={
-                  <Suspense>
+                  <Suspense fallback={<ProtectedSkeleton />}>
                     <EditContainer />
                   </Suspense>
                 }
@@ -170,7 +171,7 @@ function App() {
               <Route
                 path=":id"
                 element={
-                  <Suspense>
+                  <Suspense fallback={<ProtectedSkeleton />}>
                     <ContainerDetails />
                   </Suspense>
                 }
@@ -181,7 +182,7 @@ function App() {
             <Route
               path="/search"
               element={
-                <Suspense>
+                <Suspense fallback={<ProtectedSkeleton />}>
                   <AdvancedSearch />
                 </Suspense>
               }
@@ -189,7 +190,7 @@ function App() {
             <Route
               path="/profile"
               element={
-                <Suspense>
+                <Suspense fallback={<ProtectedSkeleton />}>
                   <ProfilePage />
                 </Suspense>
               }
@@ -197,7 +198,7 @@ function App() {
             <Route
               path="/change-password"
               element={
-                <Suspense>
+                <Suspense fallback={<ProtectedSkeleton />}>
                   <ChangePasswordPage />
                 </Suspense>
               }
