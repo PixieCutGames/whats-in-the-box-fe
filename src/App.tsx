@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { ProtectedRoute } from "./shared/components/ProtectedRoute";
 import { AuthRedirect } from "./shared/components/AuthRedirect";
 import Logout from "./shared/components/Logout";
@@ -149,7 +149,7 @@ function App() {
                   </Suspense>
                 }
               />
-              {/* TODO: add wildcard to reroute to items */}
+              <Route index element={<Navigate to="new" replace />} />
             </Route>
             <Route path="/box">
               <Route
@@ -176,7 +176,7 @@ function App() {
                   </Suspense>
                 }
               />
-              {/* TODO: add wildcard to reroute to boxex */}
+              <Route index element={<Navigate to="new" replace />} />
             </Route>
             <Route path="/quick" element={<QuickSearchPage />} />
             <Route
@@ -205,14 +205,8 @@ function App() {
             />
             <Route path="/logout" element={<Logout />} />
           </Route>
-          <Route
-            path="/*"
-            element={
-              <Suspense>
-                <AuthorizationPage />
-              </Suspense>
-            }
-          />
+          {/* TODO: add 404 page */}
+          <Route path="/*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
