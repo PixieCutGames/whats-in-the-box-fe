@@ -158,7 +158,6 @@ function AdvancedSearch() {
           </div>
         </div>
       </div>
-      {/* TODO: handle loading */}
       {/* TODO: handle errors */}
       <div className="space-y-4">
         {!!isLoading && (
