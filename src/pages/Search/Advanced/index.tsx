@@ -8,6 +8,10 @@ import ContainerListView from "../../Containers/ListView";
 import ContainerGridView from "../../Containers/GridView";
 import ItemsListView from "../../Items/ListView";
 import ItemsGridView from "../../Items/GridView";
+import ContainerListViewSkeleton from "../../../shared/components/skeleton/ContainerListViewSkeleton";
+import ContainerGridViewSkeleton from "../../../shared/components/skeleton/ContainerGridViewSkeleton";
+import ItemsListViewSkeleton from "../../../shared/components/skeleton/ItemsListViewSkeleton";
+import ItemGridViewSkeleton from "../../../shared/components/skeleton/ItemGridViewSkeleton";
 
 function AdvancedSearch() {
   const navigate = useNavigate();
@@ -154,20 +158,42 @@ function AdvancedSearch() {
           </div>
         </div>
       </div>
-      {/* TODO: handle loading */}
       {/* TODO: handle errors */}
       <div className="space-y-4">
+        {!!isLoading && (
+          <>
+            <div>
+              {type !== "container" && (
+                <h3 className="text-text-secondary mb-3">Boxes</h3>
+              )}
+              <div className="space-y-1">
+                {viewMode === "list" && <ContainerListViewSkeleton />}
+                {viewMode === "grid" && <ContainerGridViewSkeleton />}
+              </div>
+            </div>
+            <div>
+              {type !== "item" && (
+                <h3 className="text-text-secondary mb-3">Items</h3>
+              )}
+              <div className="space-y-1">
+                {viewMode === "list" && <ItemsListViewSkeleton />}
+                {viewMode === "grid" && <ItemGridViewSkeleton />}
+              </div>
+            </div>
+          </>
+        )}
         {!isLoading && data && (
           <>
             {!data.containers.length && !data.items.length ? (
               <div className="text-center py-8">
+                {/* TODO: add empty state */}
                 <p className="text-text-secondary">No results found</p>
               </div>
             ) : (
               <>
                 {/* Boxes */}
                 {data.containers.length > 0 && (
-                  <>
+                  <div>
                     {type !== "container" && (
                       <h3 className="text-text-secondary mb-3">Boxes</h3>
                     )}
@@ -179,7 +205,7 @@ function AdvancedSearch() {
                         <ContainerGridView containers={data.containers} />
                       )}
                     </div>
-                  </>
+                  </div>
                 )}
                 {/* Items */}
                 {data.items.length > 0 && (

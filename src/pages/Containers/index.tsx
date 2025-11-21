@@ -7,6 +7,8 @@ import AddEditContainerDialog from "../../shared/components/AddEditDialog";
 import EmptyState from "./EmptyState";
 import GridView from "./GridView";
 import ListView from "./ListView";
+import ContainerGridViewSkeleton from "../../shared/components/skeleton/ContainerGridViewSkeleton";
+import ContainerListViewSkeleton from "../../shared/components/skeleton/ContainerListViewSkeleton";
 
 function ContainersPage() {
   const navigate = useNavigate();
@@ -25,7 +27,10 @@ function ContainersPage() {
   };
 
   const getView = () => {
-    if (containersIsLoading) return <div>Loading</div>;
+    if (containersIsLoading) {
+      if (viewMode === "grid") return <ContainerGridViewSkeleton />;
+      else return <ContainerListViewSkeleton />;
+    }
     if (containersDetails?.containers.length === 0)
       return <EmptyState createNewContainer={createNewContainer} />;
     if (containersDetails?.containers.length && viewMode === "grid")
@@ -35,9 +40,9 @@ function ContainersPage() {
     return null;
   };
   return (
-    <div className="space-6">
+    <div className="space-y-6">
       {/* Header with View Controls */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between">
         <h1 className="text-text-primary text-2xl font-medium">Boxes</h1>
         {!!containersDetails?.containers.length && (
           <div className="flex items-center gap-2">

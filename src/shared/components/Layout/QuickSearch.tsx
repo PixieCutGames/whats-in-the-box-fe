@@ -4,6 +4,7 @@ import { Blocks, Package, Search } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useQuickSearch from "../../hooks/useQuickSearch";
+import QuickSearchResultsSkeleton from "../skeleton/QuickSearchResultsSkeleton";
 
 type QuickSearchProps = {
   onClose?: () => void;
@@ -26,6 +27,7 @@ function QuickSearch({ onClose }: QuickSearchProps) {
           console.log(query);
           navigate(`/search?query=${query}`);
           setSubmitting(false);
+          closeDialog();
         }}
       >
         {() => (
@@ -48,79 +50,82 @@ function QuickSearch({ onClose }: QuickSearchProps) {
           </Form>
         )}
       </Formik>
-      {/* TODO: handle loading */}
       {/* TODO: handle errors */}
-      <div className="space-y-4">
-        {!isLoading && data && (
-          <>
-            {!data.containers.length && !data.items.length ? (
-              <div className="text-center py-8">
-                <p className="text-text-secondary">No results found</p>
-              </div>
-            ) : (
-              <>
-                {/* Boxes */}
-                {data.containers.length > 0 && (
-                  <>
-                    <h3 className="text-text-secondary mb-3">Boxes</h3>
-                    <div className="space-y-1">
-                      {data.containers.map((result) => {
-                        return (
-                          <Link
-                            key={result.id}
-                            to={`/box/${result.id}`}
-                            onClick={closeDialog}
-                            className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent text-text-primary no-underline`}
-                          >
-                            <Package className="h-5 w-5 shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <div>{result.name}</div>
-                              {result.location && (
-                                <div className="text-text-secondary">
-                                  (in {result.location})
-                                </div>
-                              )}
-                            </div>
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  </>
-                )}
+      {isLoading ? (
+        <QuickSearchResultsSkeleton />
+      ) : (
+        <div className="space-y-4">
+          {data && (
+            <>
+              {!data.containers.length && !data.items.length ? (
+                <div className="text-center py-8">
+                  <p className="text-text-secondary">No results found</p>
+                </div>
+              ) : (
+                <>
+                  {/* Boxes */}
+                  {data.containers.length > 0 && (
+                    <>
+                      <h3 className="text-text-secondary mb-3">Boxes</h3>
+                      <div className="space-y-1">
+                        {data.containers.map((result) => {
+                          return (
+                            <Link
+                              key={result.id}
+                              to={`/box/${result.id}`}
+                              onClick={closeDialog}
+                              className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent text-text-primary no-underline`}
+                            >
+                              <Package className="h-5 w-5 shrink-0" />
+                              <div className="flex-1 min-w-0">
+                                <div>{result.name}</div>
+                                {result.location && (
+                                  <div className="text-text-secondary">
+                                    (in {result.location})
+                                  </div>
+                                )}
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    </>
+                  )}
 
-                {/* Items */}
-                {data.items.length > 0 && (
-                  <div>
-                    <h3 className="text-text-secondary mb-3">Items</h3>
-                    <div className="space-y-1">
-                      {data.items.map((result) => {
-                        return (
-                          <Link
-                            key={result.id}
-                            to={`/item/${result.id}`}
-                            onClick={closeDialog}
-                            className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent text-text-primary no-underline`}
-                          >
-                            <Blocks className="h-5 w-5 shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <div>{result.name}</div>
-                              {result.container.name && (
-                                <div className="text-text-secondary">
-                                  (in {result.container.name})
-                                </div>
-                              )}
-                            </div>
-                          </Link>
-                        );
-                      })}
+                  {/* Items */}
+                  {data.items.length > 0 && (
+                    <div>
+                      <h3 className="text-text-secondary mb-3">Items</h3>
+                      <div className="space-y-1">
+                        {data.items.map((result) => {
+                          return (
+                            <Link
+                              key={result.id}
+                              to={`/item/${result.id}`}
+                              onClick={closeDialog}
+                              className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent text-text-primary no-underline`}
+                            >
+                              <Blocks className="h-5 w-5 shrink-0" />
+                              <div className="flex-1 min-w-0">
+                                <div>{result.name}</div>
+                                {result.container.name && (
+                                  <div className="text-text-secondary">
+                                    (in {result.container.name})
+                                  </div>
+                                )}
+                              </div>
+                            </Link>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </>
-            )}
-          </>
-        )}
-      </div>
+                  )}
+                </>
+              )}
+            </>
+          )}
+        </div>
+      )}
     </>
   );
 }

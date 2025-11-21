@@ -8,10 +8,13 @@ import EmptyState from "./EmptyState";
 import useContainers from "../../shared/hooks/useContainers";
 import GridView from "./GridView";
 import ListView from "./ListView";
+import ItemGridViewSkeleton from "../../shared/components/skeleton/ItemGridViewSkeleton";
+import ItemsListViewSkeleton from "../../shared/components/skeleton/ItemsListViewSkeleton";
 
 function Items() {
   const navigate = useNavigate();
   const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
+  // TODO: handle errors
   const { itemsDetails, itemsIsLoading } = useItems();
   const { containersDetails, containersIsLoading } = useContainers();
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -37,7 +40,10 @@ function Items() {
   };
 
   const getView = () => {
-    if (itemsIsLoading || containersIsLoading) return <div>Loading</div>;
+    if (itemsIsLoading || containersIsLoading) {
+      if (viewMode === "grid") return <ItemGridViewSkeleton />;
+      else return <ItemsListViewSkeleton />;
+    }
     if (
       itemsDetails?.items.length === 0 ||
       containersDetails?.containers.length === 0
@@ -57,9 +63,9 @@ function Items() {
   };
 
   return (
-    <div className="space-6">
+    <div className="space-y-6">
       {/* Header with View Controls */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between">
         <h1 className="text-text-primary text-2xl font-medium">Items</h1>
         {!!itemsDetails?.items.length && (
           <div className="flex items-center gap-2">

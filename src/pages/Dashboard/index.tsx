@@ -8,6 +8,9 @@ import useDashboard from "./useDashboard";
 import useContainers from "../../shared/hooks/useContainers";
 import RecentActivities from "./RecentActivities";
 import GridView from "../Containers/GridView";
+import StatsCard from "./StatsCard";
+import ContainerGridViewSkeleton from "../../shared/components/skeleton/ContainerGridViewSkeleton";
+import DashboardSkeleton from "../../shared/components/skeleton/Dashboard";
 
 function Dashboard() {
   const { userDetails } = useUser();
@@ -15,8 +18,9 @@ function Dashboard() {
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const { logs, logsIsloding, stats } = useDashboard();
-  const { containersDetails } = useContainers(4);
+  // TODO: handle errors
+  const { logs, logsIsloding, stats, statsIsLoading } = useDashboard();
+  const { containersDetails, containersIsLoading } = useContainers(4);
 
   const createNewContainer = () => {
     if (notDesktop) {
@@ -25,6 +29,8 @@ function Dashboard() {
     }
     setOpenCreateDialog(true);
   };
+
+  if (statsIsLoading) return <DashboardSkeleton />;
 
   return (
     <div className="space-y-6">
@@ -70,54 +76,10 @@ function Dashboard() {
       {!!stats?.containers && (
         <>
           {/* Stats Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Total Boxes */}
-            <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
-              <p className="text-text-secondary mb-2">Total Boxes</p>
-              <p className="text-text-primary text-2xl font-meduim">
-                {stats.containers}
-              </p>
-            </div>
-
-            {/* Total Items */}
-            <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
-              <p className="text-text-secondary mb-2">Total Items</p>
-              <p className="text-text-primary text-2xl font-meduim">
-                {stats.items}
-              </p>
-            </div>
-
-            {/* Recently Updated Box */}
-            <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
-              <p className="text-text-secondary mb-2">Recently Updated Box</p>
-              {stats.lastUpdatedContainer ? (
-                <Link
-                  to={`/box/${stats.lastUpdatedContainer.id}`}
-                  className="text-text-primary text-lg font-meduim truncate"
-                >
-                  {stats.lastUpdatedContainer.name ?? "-"}{" "}
-                </Link>
-              ) : (
-                <p className="text-text-primary text-xl font-meduim">-</p>
-              )}
-            </div>
-
-            {/* Recently Updated Item */}
-            <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
-              <p className="text-text-secondary mb-2">Recently Updated Item</p>
-              {stats.lastUpdatedItem ? (
-                <Link
-                  to={`/item/${stats.lastUpdatedItem.id}`}
-                  className="text-text-primary text-lg font-meduim truncate"
-                >
-                  {stats.lastUpdatedItem.name ?? "-"}
-                </Link>
-              ) : (
-                <p className="text-text-primary text-xl font-meduim">-</p>
-              )}
-            </div>
-          </div>
+          <StatsCard stats={stats} isLoding={statsIsLoading} />
+          {/* Recent Activity */}
           <RecentActivities logs={logs} logsIsloding={logsIsloding} />
+          {/* Your boxes */}
           <div className="bg-background-surface border border-border rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-text-primary text-xl font-medium">
@@ -132,7 +94,11 @@ function Dashboard() {
                 <ChevronRight className="h-4 w-4" />
               </Link>
             </div>
-            <GridView containers={containersDetails?.containers ?? []} />
+            {containersIsLoading ? (
+              <ContainerGridViewSkeleton />
+            ) : (
+              <GridView containers={containersDetails?.containers ?? []} />
+            )}
           </div>
         </>
       )}

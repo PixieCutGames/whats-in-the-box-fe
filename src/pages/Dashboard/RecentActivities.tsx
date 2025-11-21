@@ -1,3 +1,4 @@
+import RecentActivitySkeleton from "../../shared/components/skeleton/Dashboard/RecentActivitySkeleton";
 import DaysAgo from "../../shared/components/ui/DaysAgo";
 import { Activity, ActivityType } from "../../types";
 
@@ -7,7 +8,7 @@ type RecentActivitiesProps = {
 };
 function RecentActivities({ logs, logsIsloding }: RecentActivitiesProps) {
   // TODO: handle erros
-  if (logsIsloding) return <div>Loading...</div>;
+  if (logsIsloding) return <RecentActivitySkeleton />;
   return (
     <div className="bg-background-surface border border-border rounded-lg p-6">
       <h2 className="text-text-primary mb-4">Recent Activity</h2>

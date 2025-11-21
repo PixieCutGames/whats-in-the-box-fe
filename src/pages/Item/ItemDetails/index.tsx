@@ -3,13 +3,14 @@ import useItemDetails from "./useItemDetails";
 import ItemHeader from "./ItemHeader";
 import DaysAgo from "../../../shared/components/ui/DaysAgo";
 import IconImage from "../../../shared/components/IconImage";
+import ItemDetailsSkeleton from "../../../shared/components/skeleton/ItemDetailsSkeleton";
 
 function ItemDetails() {
   const { id } = useParams();
   // TODO: handle containersError
   const { item, isLoading, refetch } = useItemDetails(id);
 
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading) return <ItemDetailsSkeleton />;
   return (
     <div className="space-y-6">
       {/* HEADER */}

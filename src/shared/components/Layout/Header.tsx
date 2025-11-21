@@ -15,7 +15,7 @@ import Logo from "/assets/Logo.png";
 import SearchButton from "./SearchButton";
 import useUser from "../../hooks/useUser";
 
-const NESTED_ROUTES = [
+export const NESTED_ROUTES = [
   { path: "/box/new", title: "Create New Box" },
   { path: "/box/edit", title: "Edit Box" },
   { path: "/item/new", title: "Create New Item" },
