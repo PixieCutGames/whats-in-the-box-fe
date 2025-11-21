@@ -50,7 +50,6 @@ function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
           { name, description, location, imageId },
           { setSubmitting }
         ) => {
-          console.log(name, description, location);
           setSubmitting(true);
           if (details) {
             editContainer(

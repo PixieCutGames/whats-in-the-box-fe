@@ -28,7 +28,6 @@ function useAuth() {
       { email, password },
       {
         onSuccess: (data) => {
-          console.log(data);
           tokenManager.setTokens(
             {
               accessToken: data.accessToken,
@@ -53,10 +52,7 @@ function useAuth() {
     registerMutate(
       { name, email, password },
       {
-        onSuccess: (data) => {
-          console.log(data);
-          onSuccess();
-        },
+        onSuccess,
         onError,
       }
     );

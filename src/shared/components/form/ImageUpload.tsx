@@ -25,7 +25,6 @@ function ImageUpload({
 
   const [field, _, { setValue }] = useField(props.name);
 
-  //   TODO: add loading image
   // TODO: add error handling
   const { uploadMedia, loadingUploadMedia } = useMedia();
 
@@ -38,7 +37,6 @@ function ImageUpload({
       uploadMedia(
         file,
         (publicId) => {
-          console.log(publicId);
           setValue(publicId);
           setImageisLoading?.(false);
         },

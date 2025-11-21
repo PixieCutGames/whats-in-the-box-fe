@@ -20,7 +20,6 @@ type ChangePasswordFormProps = {
 };
 function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
   const { changePassword, changePasswordError, refetchUser } = useUser();
-  console.log({ changePasswordError });
 
   const navigate = useNavigate();
   return (

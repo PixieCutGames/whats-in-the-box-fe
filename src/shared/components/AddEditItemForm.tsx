@@ -57,7 +57,6 @@ function AddEditItemForm({
           { name, description, quantity, imageId, containerId },
           { setSubmitting }
         ) => {
-          console.log(name, description, location);
           setSubmitting(true);
           if (details) {
             editItem(

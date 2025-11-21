@@ -105,7 +105,6 @@ function ForgotPasswordForm() {
                 }}
                 validationSchema={EmailSchema}
                 onSubmit={({ email }, { setSubmitting }) => {
-                  console.log(email, setSubmitting);
                   generateResetPasswordLink(
                     email,
                     () => {

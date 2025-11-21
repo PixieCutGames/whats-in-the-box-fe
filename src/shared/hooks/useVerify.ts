@@ -15,10 +15,7 @@ function useVerify(token?: string) {
     onError: () => void
   ) => {
     resendVerificationMutate(data, {
-      onSuccess: (data) => {
-        console.log(data);
-        onSuccess();
-      },
+      onSuccess,
       onError,
     });
   };

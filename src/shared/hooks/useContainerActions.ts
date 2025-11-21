@@ -54,10 +54,7 @@ function useContainerActions() {
     onError: () => void
   ) => {
     createContainerMutate(data, {
-      onSuccess: (newData) => {
-        console.log(newData);
-        onSuccess(newData);
-      },
+      onSuccess,
       onError,
     });
   };
@@ -79,10 +76,7 @@ function useContainerActions() {
     onError: () => void
   ) => {
     editContainerMutate(data, {
-      onSuccess: (newData) => {
-        console.log(newData);
-        onSuccess(newData);
-      },
+      onSuccess,
       onError,
     });
   };

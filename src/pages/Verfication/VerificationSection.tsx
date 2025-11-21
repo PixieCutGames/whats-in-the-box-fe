@@ -17,7 +17,6 @@ function VerificationSection() {
     useVerify();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state);
 
   const verificationEmail = location.state.email;
   const prevPath = location.state.prevPath;
