@@ -26,6 +26,7 @@ function QuickSearch({ onClose }: QuickSearchProps) {
           console.log(query);
           navigate(`/search?query=${query}`);
           setSubmitting(false);
+          closeDialog();
         }}
       >
         {() => (

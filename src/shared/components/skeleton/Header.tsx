@@ -1,4 +1,29 @@
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { ArrowLeft } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { NESTED_ROUTES } from "../Layout/Header";
+
 export default function HeaderSkeleton() {
+  const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const nestedRoute = NESTED_ROUTES.find((r) => r.path === location.pathname);
+
+  if (notDesktop && nestedRoute) {
+    return (
+      <div className="bg-background-surface border-b border-border px-4 py-4">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="p-2 -ml-2 hover:bg-background-accent rounded-lg transition-colors"
+          >
+            <ArrowLeft className="h-5 w-5 text-text-primary" />
+          </button>
+          <h1 className="text-text-primary">{nestedRoute.title}</h1>
+        </div>
+      </div>
+    );
+  }
   return (
     <nav className="bg-background-surface border-b border-border sticky top-0 z-50 animate-pulse">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
