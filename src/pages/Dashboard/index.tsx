@@ -10,6 +10,7 @@ import RecentActivities from "./RecentActivities";
 import GridView from "../Containers/GridView";
 import StatsCard from "./StatsCard";
 import ContainerGridViewSkeleton from "../../shared/components/skeleton/ContainerGridViewSkeleton";
+import DashboardSkeleton from "../../shared/components/skeleton/Dashboard";
 
 function Dashboard() {
   const { userDetails } = useUser();
@@ -28,6 +29,8 @@ function Dashboard() {
     }
     setOpenCreateDialog(true);
   };
+
+  if (statsIsLoading) return <DashboardSkeleton />;
 
   return (
     <div className="space-y-6">
@@ -70,33 +73,35 @@ function Dashboard() {
           </button>
         </div>
       )}
-      {/* Stats Cards */}
-      <StatsCard stats={stats} isLoding={statsIsLoading} />
-      {/* Recent Activity */}
-      <RecentActivities logs={logs} logsIsloding={logsIsloding} />
-      <>
-        {/* Your boxes */}
-        <div className="bg-background-surface border border-border rounded-lg p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-text-primary text-xl font-medium">
-              Your Boxes{" "}
-              <span className="max-md:hidden">(Recently Updated)</span>
-            </h2>
-            <Link
-              to="/boxes"
-              className="text-primary-default hover:text-primary-hover transition-colors flex items-center gap-1"
-            >
-              <span>View All</span>
-              <ChevronRight className="h-4 w-4" />
-            </Link>
+      {!!stats?.containers && (
+        <>
+          {/* Stats Cards */}
+          <StatsCard stats={stats} isLoding={statsIsLoading} />
+          {/* Recent Activity */}
+          <RecentActivities logs={logs} logsIsloding={logsIsloding} />
+          {/* Your boxes */}
+          <div className="bg-background-surface border border-border rounded-lg p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-text-primary text-xl font-medium">
+                Your Boxes{" "}
+                <span className="max-md:hidden">(Recently Updated)</span>
+              </h2>
+              <Link
+                to="/boxes"
+                className="text-primary-default hover:text-primary-hover transition-colors flex items-center gap-1"
+              >
+                <span>View All</span>
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
+            {containersIsLoading ? (
+              <ContainerGridViewSkeleton />
+            ) : (
+              <GridView containers={containersDetails?.containers ?? []} />
+            )}
           </div>
-          {containersIsLoading ? (
-            <ContainerGridViewSkeleton />
-          ) : (
-            <GridView containers={containersDetails?.containers ?? []} />
-          )}
-        </div>
-      </>
+        </>
+      )}
       <AddEditDialog
         type="container"
         isOpen={openCreateDialog}

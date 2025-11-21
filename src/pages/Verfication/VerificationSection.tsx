@@ -69,8 +69,10 @@ function VerificationSection() {
               {!!prevPath ? (
                 <>
                   We've sent a verification link to
-                  <span className="text-foreground">{verificationEmail}</span>.
-                  Please check your inbox and click the link to activate your
+                  <span className="text-foreground pl-1">
+                    {verificationEmail}
+                  </span>
+                  . Please check your inbox and click the link to activate your
                   account.
                 </>
               ) : (
@@ -114,6 +116,7 @@ function VerificationSection() {
               {getHandleResendVerificationText()}
             </Button>
             <Button
+              disabled={loadingResend}
               onClick={() => {
                 navigate("/register");
               }}
@@ -123,6 +126,7 @@ function VerificationSection() {
               Change email
             </Button>
             <Button
+              disabled={loadingResend}
               onClick={() => {
                 navigate("/login");
               }}
