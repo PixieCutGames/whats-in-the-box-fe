@@ -29,8 +29,6 @@ function useMedia() {
   ) => {
     uploadMediaMutate(file, {
       onSuccess: (data) => {
-        console.log(data);
-
         onSuccess(data.publicId);
       },
       onError,

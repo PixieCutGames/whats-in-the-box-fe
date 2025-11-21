@@ -68,7 +68,6 @@ export async function apiClient<T>(
     ...options,
     headers,
   });
-  console.log({ res });
 
   // Handle token expiry (401) -
   if (res.status === 401) {
@@ -98,15 +97,11 @@ export async function apiClient<T>(
   } catch {
     data = {};
   }
-  console.log({ data });
 
   if (!res.ok) {
-    console.log("API error", res.status, data);
-
     const message = data?.message || data?.error || `API Error (${res.status})`;
     throw new Error(message);
   }
-  console.log("API success", data);
 
   return data as T;
 }

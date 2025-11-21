@@ -24,7 +24,6 @@ function QuickSearch({ onClose }: QuickSearchProps) {
           query: "",
         }}
         onSubmit={({ query }, { setSubmitting }) => {
-          console.log(query);
           navigate(`/search?query=${query}`);
           setSubmitting(false);
           closeDialog();

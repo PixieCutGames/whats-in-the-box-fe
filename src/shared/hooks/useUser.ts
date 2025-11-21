@@ -62,10 +62,7 @@ function useUser() {
     updateProfileMutate(
       { name },
       {
-        onSuccess: (newData) => {
-          console.log(newData);
-          onSuccess();
-        },
+        onSuccess,
         onError,
       }
     );
@@ -77,10 +74,7 @@ function useUser() {
     onError: () => void
   ) => {
     changePasswordMutate(data, {
-      onSuccess: (newData) => {
-        console.log(newData);
-        onSuccess();
-      },
+      onSuccess,
       onError: (err) => {
         onError();
         console.log(err);

@@ -24,10 +24,7 @@ function useResetPassword() {
     forgotPasswordMutate(
       { email },
       {
-        onSuccess: (data) => {
-          console.log(data);
-          onSuccess();
-        },
+        onSuccess,
         onError,
       }
     );
@@ -42,10 +39,7 @@ function useResetPassword() {
     resetPasswordMutate(
       { token, newPassword },
       {
-        onSuccess: (data) => {
-          console.log(data);
-          onSuccess();
-        },
+        onSuccess,
         onError,
       }
     );

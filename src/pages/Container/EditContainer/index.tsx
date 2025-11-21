@@ -4,7 +4,7 @@ import AddEditContainerForm from "../../../shared/components/AddEditContainerFor
 function EditContainer() {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state);
+
   if (!location.state.name || !location.state.id) navigate("/boxes");
 
   return <AddEditContainerForm details={location.state} />;

@@ -50,10 +50,7 @@ function useItemActions() {
     onError: () => void
   ) => {
     createItemMutate(data, {
-      onSuccess: (newData) => {
-        console.log(newData);
-        onSuccess(newData);
-      },
+      onSuccess,
       onError,
     });
   };
@@ -75,10 +72,7 @@ function useItemActions() {
     onError: () => void
   ) => {
     editItemMutate(data, {
-      onSuccess: (newData) => {
-        console.log(newData);
-        onSuccess(newData);
-      },
+      onSuccess,
       onError,
     });
   };

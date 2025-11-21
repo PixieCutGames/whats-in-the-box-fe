@@ -1,18 +1,18 @@
 import { Suspense, lazy } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { ProtectedRoute } from "./shared/components/ProtectedRoute";
 import { AuthRedirect } from "./shared/components/AuthRedirect";
 import Logout from "./shared/components/Logout";
 import QuickSearchPage from "./pages/Search/Quick";
 import ProtectedSkeleton from "./shared/components/skeleton/ProtectedSkeleton";
+import AuthorizationPage from "./pages/Authorization";
+import ForgotPasswordPage from "./pages/ForgotPassword";
+import VerifyEmailPage from "./pages/VerifyEmail";
+import VerficationPage from "./pages/Verfication";
+import ResetPasswordPage from "./pages/ResetPassword";
 
-const AuthorizationPage = lazy(() => import("./pages/Authorization"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
-const VerficationPage = lazy(() => import("./pages/Verfication"));
-const VerifyEmailPage = lazy(() => import("./pages/VerifyEmail"));
-const ForgotPasswordPage = lazy(() => import("./pages/ForgotPassword"));
-const ResetPasswordPage = lazy(() => import("./pages/ResetPassword"));
 const ContainersPage = lazy(() => import("./pages/Containers"));
 const NewContainer = lazy(() => import("./pages/Container/NewContainer"));
 const ContainerDetails = lazy(
@@ -49,55 +49,13 @@ function App() {
         <Routes>
           {/* Routes for unauthenticated users */}
           <Route element={<AuthRedirect />}>
-            <Route
-              path="/login"
-              element={
-                <Suspense>
-                  <AuthorizationPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/register"
-              element={
-                <Suspense>
-                  <AuthorizationPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/forgot-password"
-              element={
-                <Suspense>
-                  <ForgotPasswordPage />
-                </Suspense>
-              }
-            />
-            <Route
-              path="/reset-password"
-              element={
-                <Suspense>
-                  <ResetPasswordPage />
-                </Suspense>
-              }
-            />
+            <Route path="/login" element={<AuthorizationPage />} />
+            <Route path="/register" element={<AuthorizationPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
           </Route>
-          <Route
-            path="/verification"
-            element={
-              <Suspense>
-                <VerficationPage />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/verify-email"
-            element={
-              <Suspense>
-                <VerifyEmailPage />
-              </Suspense>
-            }
-          />
+          <Route path="/verification" element={<VerficationPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
           {/* Routes for authenticated users */}
           <Route element={<ProtectedRoute />}>
             <Route
@@ -149,7 +107,7 @@ function App() {
                   </Suspense>
                 }
               />
-              {/* TODO: add wildcard to reroute to items */}
+              <Route index element={<Navigate to="new" replace />} />
             </Route>
             <Route path="/box">
               <Route
@@ -176,7 +134,7 @@ function App() {
                   </Suspense>
                 }
               />
-              {/* TODO: add wildcard to reroute to boxex */}
+              <Route index element={<Navigate to="new" replace />} />
             </Route>
             <Route path="/quick" element={<QuickSearchPage />} />
             <Route
@@ -205,14 +163,8 @@ function App() {
             />
             <Route path="/logout" element={<Logout />} />
           </Route>
-          <Route
-            path="/*"
-            element={
-              <Suspense>
-                <AuthorizationPage />
-              </Suspense>
-            }
-          />
+          {/* TODO: add 404 page */}
+          <Route path="/*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

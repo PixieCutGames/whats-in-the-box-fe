@@ -8,9 +8,6 @@ function AuthForms() {
   const navigate = useNavigate();
 
   const toggleForms = (index: number) => {
-    console.log(location.pathname);
-    console.log(index);
-
     navigate(index === 0 ? "/login" : "/register");
   };
 

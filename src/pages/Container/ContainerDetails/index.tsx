@@ -8,6 +8,7 @@ import ContainerHeader from "./ContainerHeader";
 import EmptyState from "./EmptyState";
 import GridView from "./GridView";
 import ListView from "./ListView";
+import ContainerDetailsSkeleton from "../../../shared/components/skeleton/ContainerDetails";
 
 function ContainerDetails() {
   const { id } = useParams();
@@ -15,7 +16,7 @@ function ContainerDetails() {
   const { container, isLoading, refetch } = useContainerDetails(id);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading) return <ContainerDetailsSkeleton />;
   return (
     <div className="space-y-6">
       {/* Header */}
