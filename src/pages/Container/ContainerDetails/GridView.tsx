@@ -13,7 +13,6 @@ function GridView({ items }: GridViewProps) {
         <Link
           to={`/item/${item.id}`}
           key={item.id}
-          // onClick={() => onBoxClick?.(item.id)}
           className="bg-background-surface border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all cursor-pointer group"
         >
           {/* Image/Icon */}
