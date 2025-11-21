@@ -9,6 +9,7 @@ import ItemDetailsSkeleton from "./ItemDetailsSkeleton";
 import ItemFormSkeleton from "./ItemForm";
 import ContainerFormSkeleton from "./ContainerForm";
 import ContainerDetailsSkeleton from "./ContainerDetails";
+import GlobalLoading from "./GlobalLoading";
 
 function ProtectedSkeleton() {
   const { pathname, ...location } = useLocation();
@@ -27,7 +28,7 @@ function ProtectedSkeleton() {
   if (pathname === "/item/edit" || pathname === "/item/new")
     return <ItemFormSkeleton />;
   if (pathname.includes("/item/")) return <ItemDetailsSkeleton />;
-  return <div>Loading...</div>;
+  return <GlobalLoading />;
 }
 
 export default ProtectedSkeleton;
