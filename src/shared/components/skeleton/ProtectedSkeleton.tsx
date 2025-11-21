@@ -12,9 +12,7 @@ import ContainerDetailsSkeleton from "./ContainerDetails";
 import GlobalLoading from "./GlobalLoading";
 
 function ProtectedSkeleton() {
-  const { pathname, ...location } = useLocation();
-  console.log(location);
-  console.log(pathname);
+  const { pathname } = useLocation();
 
   if (pathname === "/") return <Dashboard />;
   if (pathname === "/boxes") return <Containers />;

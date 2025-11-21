@@ -36,6 +36,7 @@ function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
       imageId: null,
     }
   );
+  const [imageUploading, setImageUploading] = useState<boolean>(false);
   const [submitValues] = useState({
     loading: details ? "Saving Changes..." : "Creating Box...",
     normal: details ? "Save Changes" : "Create Box",
@@ -76,6 +77,7 @@ function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
               id="imageId"
               name="imageId"
               imageUrl={details?.imageUrl}
+              setImageisLoading={setImageUploading}
             />
             {/* Name */}
             <div className="space-y-2">
@@ -159,9 +161,9 @@ function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
             {/* Submit */}
             <button
               type="submit"
-              disabled={isSubmitting || !isValid}
+              disabled={isSubmitting || !isValid || imageUploading}
               className={`lg:hidden w-full px-6 py-3 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors disabled:pointer-events-none ${
-                !isValid && "opacity-50"
+                (!isValid || imageUploading) && "opacity-50"
               }`}
             >
               {isSubmitting ? submitValues.loading : submitValues.normal}
@@ -178,9 +180,9 @@ function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
               </button>
               <button
                 type="submit"
-                disabled={isSubmitting || !isValid}
+                disabled={isSubmitting || !isValid || imageUploading}
                 className={`px-6 py-2 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors disabled:pointer-events-none ${
-                  !isValid && "opacity-50"
+                  (!isValid || imageUploading) && "opacity-50"
                 }`}
               >
                 {isSubmitting ? submitValues.loading : submitValues.normal}

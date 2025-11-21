@@ -4,12 +4,18 @@ import useMedia from "../../hooks/useMedia";
 import { FieldHookConfig, useField } from "formik";
 import { Maybe } from "yup";
 
+type ImageUploadProps = {
+  imageUrl?: Maybe<string>;
+  setImageisLoading?: (isLoading: boolean) => void;
+};
 function ImageUpload({
   imageUrl,
+  setImageisLoading,
   ...props
 }: InputHTMLAttributes<HTMLInputElement> &
   ClassAttributes<HTMLInputElement> &
-  FieldHookConfig<string> & { imageUrl?: Maybe<string> }) {
+  FieldHookConfig<string> &
+  ImageUploadProps) {
   //   const [photo, setPhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(
     imageUrl ? imageUrl : null
@@ -21,21 +27,24 @@ function ImageUpload({
 
   //   TODO: add loading image
   // TODO: add error handling
-  const { uploadMedia } = useMedia();
+  const { uploadMedia, loadingUploadMedia } = useMedia();
 
   const handleFileChange = (file: File | null) => {
     if (file && file.size <= 2 * 1024 * 1024) {
       // 2MB limit
       //   setPhoto(file);
 
+      setImageisLoading?.(true);
       uploadMedia(
         file,
         (publicId) => {
           console.log(publicId);
           setValue(publicId);
+          setImageisLoading?.(false);
         },
         () => {
           console.log("Error");
+          setImageisLoading?.(false);
         }
       );
       const reader = new FileReader();
@@ -89,13 +98,20 @@ function ImageUpload({
             alt="preview"
             className="w-full h-48 object-cover rounded-lg border border-border"
           />
-          <button
-            type="button"
-            onClick={handleRemovePhoto}
-            className="absolute top-2 right-2 p-1 bg-background-surface rounded-full border border-border hover:bg-background-accent transition-colors"
-          >
-            <X className="h-4 w-4 text-text-primary" />
-          </button>
+          {loadingUploadMedia ? (
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center rounded-lg">
+              <div className="h-8 w-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+              <p className="text-white text-sm mt-2">Uploading...</p>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={handleRemovePhoto}
+              className="absolute top-2 right-2 p-1 bg-background-surface rounded-full border border-border hover:bg-background-accent transition-colors"
+            >
+              <X className="h-4 w-4 text-text-primary" />
+            </button>
+          )}
         </div>
       ) : (
         <div
