@@ -3,8 +3,9 @@ import { Field, Form, Formik } from "formik";
 import { Blocks, Package, Search } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useQuickSearch from "../../hooks/useQuickSearch";
-import QuickSearchResultsSkeleton from "../skeleton/QuickSearchResultsSkeleton";
+import useQuickSearch from "../../../hooks/useQuickSearch";
+import QuickSearchResultsSkeleton from "../../skeleton/QuickSearchResultsSkeleton";
+import EmptyState from "./EmptyState";
 
 type QuickSearchProps = {
   onClose?: () => void;
@@ -13,10 +14,11 @@ function QuickSearch({ onClose }: QuickSearchProps) {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState<string>();
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
-  const { data, isLoading } = useQuickSearch(debouncedSearchTerm);
+  const { data, isLoading, refetch } = useQuickSearch(debouncedSearchTerm);
   const closeDialog = () => {
     if (onClose) onClose();
   };
+  // TODO: add recent searches
   return (
     <>
       <Formik
@@ -57,9 +59,7 @@ function QuickSearch({ onClose }: QuickSearchProps) {
           {data && (
             <>
               {!data.containers.length && !data.items.length ? (
-                <div className="text-center py-8">
-                  <p className="text-text-secondary">No results found</p>
-                </div>
+                <EmptyState quickSearch />
               ) : (
                 <>
                   {/* Boxes */}

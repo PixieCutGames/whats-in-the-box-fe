@@ -12,6 +12,7 @@ import ContainerGridViewSkeleton from "../../../shared/components/skeleton/Conta
 import ItemsListViewSkeleton from "../../../shared/components/skeleton/ItemsListViewSkeleton";
 import ItemGridViewSkeleton from "../../../shared/components/skeleton/ItemGridViewSkeleton";
 import usePreference from "../../../shared/hooks/usePreference";
+import EmptyState from "../../../shared/components/Layout/Search/EmptyState";
 
 function AdvancedSearch() {
   const navigate = useNavigate();
@@ -189,10 +190,7 @@ function AdvancedSearch() {
         {!isLoading && data && (
           <>
             {!data.containers.length && !data.items.length ? (
-              <div className="text-center py-8">
-                {/* TODO: add empty state */}
-                <p className="text-text-secondary">No results found</p>
-              </div>
+              <EmptyState />
             ) : (
               <>
                 {/* Boxes */}
