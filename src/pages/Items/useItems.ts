@@ -6,7 +6,9 @@ function useItems() {
   const {
     data: itemsDetails,
     error: itemsError,
-    isLoading: itemsIsLoading,
+    isLoading,
+    isRefetching,
+    refetch,
   } = useQuery({
     queryKey: ["getItems"],
     queryFn: async () => {
@@ -16,7 +18,8 @@ function useItems() {
   return {
     itemsDetails,
     itemsError,
-    itemsIsLoading,
+    itemsIsLoading: isLoading || isRefetching,
+    refetchItems: refetch,
   };
 }
 

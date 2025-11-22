@@ -7,6 +7,7 @@ import useItemActions from "../../../shared/hooks/useItemActions";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import ConfirmationDialog from "../../../shared/components/ui/ConfirmationDialog";
 import AddEditDialog from "../../../shared/components/AddEditDialog";
+import toast from "react-hot-toast";
 
 type ItemHeaderProps = {
   item?: Item;
@@ -19,18 +20,19 @@ function ItemHeader({ item, onUpdate }: ItemHeaderProps) {
     useState<boolean>(false);
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
 
-  const { deleteItem } = useItemActions();
+  const { deleteItem, loadingDeleteItem } = useItemActions();
 
   const onDelete = () => {
     if (!item) return;
     deleteItem(
       item.id,
       () => {
+        toast.success("Item deleted successfully.");
         setOpenDeleteConfirmation(false);
         navigate(`/box/${item.containerId}`);
       },
       () => {
-        // TODO: add error handling
+        toast.error("Failed to delete item.");
       }
     );
   };
@@ -93,6 +95,8 @@ function ItemHeader({ item, onUpdate }: ItemHeaderProps) {
         confirmText="Delete Item"
         isDanger
         isOpen={openDeleteConfirmation}
+        loading={loadingDeleteItem}
+        loadingText="Deleting..."
         onCancel={() => setOpenDeleteConfirmation(false)}
         onConfirm={onDelete}
       >

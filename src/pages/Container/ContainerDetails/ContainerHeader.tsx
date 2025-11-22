@@ -8,6 +8,7 @@ import { useState } from "react";
 import useContainerActions from "../../../shared/hooks/useContainerActions";
 import AddEditDialog from "../../../shared/components/AddEditDialog";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import toast from "react-hot-toast";
 
 type ContainerHeaderProps = {
   container: Maybe<Container>;
@@ -21,18 +22,19 @@ function ContainerHeader({ container, onUpdate }: ContainerHeaderProps) {
   const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
   const [openAddItemDialog, setOpenAddItemDialog] = useState<boolean>(false);
 
-  const { deleteContainer } = useContainerActions();
+  const { deleteContainer, deleteContainerLoading } = useContainerActions();
 
   const onDelete = () => {
     if (!container) return;
     deleteContainer(
       container.id,
       () => {
+        toast.success("Box deleted successfully.");
         setOpenDeleteConfirmation(false);
         navigate("/boxes", { replace: true });
       },
       () => {
-        // TODO: add error handling
+        toast.error("Failed to delete box.");
       }
     );
   };
@@ -148,6 +150,8 @@ function ContainerHeader({ container, onUpdate }: ContainerHeaderProps) {
         title="Delete Box?"
         confirmText="Delete Box"
         isDanger
+        loading={deleteContainerLoading}
+        loadingText="Deleting..."
         isOpen={openDeleteConfirmation}
         onCancel={() => setOpenDeleteConfirmation(false)}
         onConfirm={onDelete}

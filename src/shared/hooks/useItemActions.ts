@@ -15,6 +15,7 @@ function useItemActions() {
         body: JSON.stringify(data),
       });
     },
+    retry: false,
   });
 
   const {
@@ -28,6 +29,7 @@ function useItemActions() {
         method: "DELETE",
       });
     },
+    retry: false,
   });
 
   const {
@@ -42,6 +44,7 @@ function useItemActions() {
         body: JSON.stringify(data),
       });
     },
+    retry: false,
   });
 
   const createNewItem = (

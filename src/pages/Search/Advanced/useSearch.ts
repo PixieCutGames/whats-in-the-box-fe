@@ -3,7 +3,7 @@ import { Container, Item } from "../../../types";
 import { apiClient } from "../../../lib/apiClient";
 
 function useSearch(query?: string) {
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ["quickSearch", query],
     queryFn: async () => {
       return apiClient<{ items: Item[]; containers: Container[] }>(
@@ -13,7 +13,7 @@ function useSearch(query?: string) {
     staleTime: 0,
     enabled: !!query,
   });
-  return { data, isLoading, error };
+  return { data, isLoading: isLoading || isRefetching, error, refetch };
 }
 
 export default useSearch;

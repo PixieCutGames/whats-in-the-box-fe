@@ -11,6 +11,7 @@ import ForgotPasswordPage from "./pages/ForgotPassword";
 import VerifyEmailPage from "./pages/VerifyEmail";
 import VerficationPage from "./pages/Verfication";
 import ResetPasswordPage from "./pages/ResetPassword";
+import Toaster from "./shared/components/Toaster";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const ContainersPage = lazy(() => import("./pages/Containers"));
@@ -167,6 +168,7 @@ function App() {
           <Route path="/*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
+      <Toaster />
     </QueryClientProvider>
   );
 }

@@ -2,7 +2,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { Search } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import QuickSearchDialog from "./QuickSearchDialog";
+import QuickSearchDialog from "./Search/QuickSearchDialog";
 
 function SearchButton() {
   const navigate = useNavigate();

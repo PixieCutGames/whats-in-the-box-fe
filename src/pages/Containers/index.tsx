@@ -10,12 +10,18 @@ import ListView from "./ListView";
 import ContainerGridViewSkeleton from "../../shared/components/skeleton/ContainerGridViewSkeleton";
 import ContainerListViewSkeleton from "../../shared/components/skeleton/ContainerListViewSkeleton";
 import usePreference from "../../shared/hooks/usePreference";
+import ErrorState from "./ErrorState";
 
 function ContainersPage() {
   const navigate = useNavigate();
   const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
-  // TODO: handle containersError
-  const { containersDetails, containersIsLoading } = useContainers();
+
+  const {
+    containersDetails,
+    containersIsLoading,
+    containersError,
+    refetchContainers,
+  } = useContainers();
   const [viewMode, setViewMode] = usePreference<"grid" | "list">(
     "ContainersPage",
     "view",
@@ -36,6 +42,7 @@ function ContainersPage() {
       if (viewMode === "grid") return <ContainerGridViewSkeleton />;
       else return <ContainerListViewSkeleton />;
     }
+    if (containersError) return <ErrorState refetch={refetchContainers} />;
     if (containersDetails?.containers.length === 0)
       return <EmptyState createNewContainer={createNewContainer} />;
     if (containersDetails?.containers.length && viewMode === "grid")

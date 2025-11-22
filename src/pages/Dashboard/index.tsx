@@ -1,6 +1,6 @@
 import { useNavigate, Link } from "react-router";
 import useUser from "../../shared/hooks/useUser";
-import { ChevronRight, Package, Plus } from "lucide-react";
+import { ChevronRight, Plus } from "lucide-react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useState } from "react";
 import AddEditDialog from "../../shared/components/AddEditDialog";
@@ -11,6 +11,8 @@ import GridView from "../Containers/GridView";
 import StatsCard from "./StatsCard";
 import ContainerGridViewSkeleton from "../../shared/components/skeleton/ContainerGridViewSkeleton";
 import DashboardSkeleton from "../../shared/components/skeleton/Dashboard";
+import EmptyState from "./EmptyState";
+import ErrorState from "./ErrorState";
 
 function Dashboard() {
   const { userDetails } = useUser();
@@ -18,9 +20,22 @@ function Dashboard() {
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // TODO: handle errors
-  const { logs, logsIsloding, stats, statsIsLoading } = useDashboard();
-  const { containersDetails, containersIsLoading } = useContainers(4);
+  const {
+    stats,
+    statsIsLoading,
+    refetchStats,
+    statsError,
+    logs,
+    logsIsloading,
+    logsError,
+    refetchLogs,
+  } = useDashboard("all");
+  const {
+    containersDetails,
+    containersIsLoading,
+    containersError,
+    refetchContainers,
+  } = useContainers(4);
 
   const createNewContainer = () => {
     if (notDesktop) {
@@ -51,55 +66,49 @@ function Dashboard() {
       </div>
       {/* Empty State Content */}
       {stats?.containers === 0 && (
-        <div className="flex flex-col items-center justify-center py-16 px-4">
-          <div className="h-32 w-32 rounded-full bg-primary-surface/20 flex items-center justify-center mb-6">
-            <Package className="h-16 w-16 text-primary" />
-          </div>
-          <h2 className="text-text-primary mb-2 text-center">
-            Welcome to What's in the Box!
-          </h2>
-          <p className="text-text-secondary text-center mb-2 max-w-md">
-            You have no boxes yet.
-          </p>
-          <p className="text-text-secondary text-center mb-8 max-w-md">
-            Start by creating your first box to add and track items.
-          </p>
-          <button
-            onClick={createNewContainer}
-            className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors"
-          >
-            <Plus className="h-5 w-5" />
-            Create Your First Box
-          </button>
-        </div>
+        <EmptyState createNewContainer={createNewContainer} />
       )}
       {!!stats?.containers && (
         <>
           {/* Stats Cards */}
-          <StatsCard stats={stats} isLoding={statsIsLoading} />
+          <StatsCard
+            stats={stats}
+            isLoading={statsIsLoading}
+            isError={!!statsError}
+            refetch={refetchStats}
+          />
           {/* Recent Activity */}
-          <RecentActivities logs={logs} logsIsloding={logsIsloding} />
+          <RecentActivities
+            logs={logs}
+            logsIsloading={logsIsloading}
+            logsError={!!logsError}
+            refetchLogs={refetchLogs}
+          />
           {/* Your boxes */}
-          <div className="bg-background-surface border border-border rounded-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-text-primary text-xl font-medium">
-                Your Boxes{" "}
-                <span className="max-md:hidden">(Recently Updated)</span>
-              </h2>
-              <Link
-                to="/boxes"
-                className="text-primary-default hover:text-primary-hover transition-colors flex items-center gap-1"
-              >
-                <span>View All</span>
-                <ChevronRight className="h-4 w-4" />
-              </Link>
+          {containersError ? (
+            <ErrorState refetch={refetchContainers} />
+          ) : (
+            <div className="bg-background-surface border border-border rounded-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-text-primary text-xl font-medium">
+                  Your Boxes
+                  <span className="max-md:hidden ml-1">(Recently Updated)</span>
+                </h2>
+                <Link
+                  to="/boxes"
+                  className="text-primary-default hover:text-primary-hover transition-colors flex items-center gap-1"
+                >
+                  <span>View All</span>
+                  <ChevronRight className="h-4 w-4" />
+                </Link>
+              </div>
+              {containersIsLoading ? (
+                <ContainerGridViewSkeleton />
+              ) : (
+                <GridView containers={containersDetails?.containers ?? []} />
+              )}
             </div>
-            {containersIsLoading ? (
-              <ContainerGridViewSkeleton />
-            ) : (
-              <GridView containers={containersDetails?.containers ?? []} />
-            )}
-          </div>
+          )}
         </>
       )}
       <AddEditDialog

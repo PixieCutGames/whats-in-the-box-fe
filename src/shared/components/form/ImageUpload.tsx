@@ -23,9 +23,8 @@ function ImageUpload({
   const [isDragging, setIsDragging] = useState<boolean>();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [field, _, { setValue }] = useField(props.name);
+  const [field, _, { setValue, setError }] = useField(props.name);
 
-  // TODO: add error handling
   const { uploadMedia, loadingUploadMedia } = useMedia();
 
   const handleFileChange = (file: File | null) => {
@@ -41,8 +40,9 @@ function ImageUpload({
           setImageisLoading?.(false);
         },
         () => {
-          console.log("Error");
           setImageisLoading?.(false);
+          setPhotoPreview(null);
+          setError("Failed to upload image, please try again.");
         }
       );
       const reader = new FileReader();
