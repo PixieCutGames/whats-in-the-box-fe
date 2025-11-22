@@ -3,7 +3,7 @@ import { apiClient } from "../../../lib/apiClient";
 import { Item } from "../../../types";
 
 function useItemDetails(id?: string) {
-  const { data, error, isLoading, refetch } = useQuery({
+  const { data, error, isLoading, isRefetching, refetch } = useQuery({
     queryKey: ["getItem", id],
     queryFn: async () => {
       return apiClient<{ item: Item }>(`/item/${id}`);
@@ -14,7 +14,7 @@ function useItemDetails(id?: string) {
   return {
     item: data?.item,
     error,
-    isLoading,
+    isLoading: isLoading || isRefetching,
     refetch,
   };
 }
