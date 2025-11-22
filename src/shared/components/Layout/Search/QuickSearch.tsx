@@ -6,6 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 import useQuickSearch from "../../../hooks/useQuickSearch";
 import QuickSearchResultsSkeleton from "../../skeleton/QuickSearchResultsSkeleton";
 import EmptyState from "./EmptyState";
+import ErrorState from "./ErrorState";
+import { Container, Item } from "../../../../types";
+import UIState from "../UIState";
 
 type QuickSearchProps = {
   onClose?: () => void;
@@ -14,10 +17,72 @@ function QuickSearch({ onClose }: QuickSearchProps) {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState<string>();
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
-  const { data, isLoading, refetch } = useQuickSearch(debouncedSearchTerm);
+  const { data, isLoading, refetch, error } =
+    useQuickSearch(debouncedSearchTerm);
   const closeDialog = () => {
     if (onClose) onClose();
   };
+
+  const getContainersList = (containers: Container[]) => {
+    return containers.length > 0 ? (
+      <>
+        <h3 className="text-text-secondary mb-3">Boxes</h3>
+        <div className="space-y-1">
+          {containers.map((result) => {
+            return (
+              <Link
+                key={result.id}
+                to={`/box/${result.id}`}
+                onClick={closeDialog}
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent text-text-primary no-underline`}
+              >
+                <Package className="h-5 w-5 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <div>{result.name}</div>
+                  {result.location && (
+                    <div className="text-text-secondary">
+                      (in {result.location})
+                    </div>
+                  )}
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </>
+    ) : null;
+  };
+
+  const getItemsList = (items: Item[]) => {
+    return items.length > 0 ? (
+      <div>
+        <h3 className="text-text-secondary mb-3">Items</h3>
+        <div className="space-y-1">
+          {items.map((result) => {
+            return (
+              <Link
+                key={result.id}
+                to={`/item/${result.id}`}
+                onClick={closeDialog}
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent text-text-primary no-underline`}
+              >
+                <Blocks className="h-5 w-5 shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <div>{result.name}</div>
+                  {result.container.name && (
+                    <div className="text-text-secondary">
+                      (in {result.container.name})
+                    </div>
+                  )}
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    ) : null;
+  };
+
   // TODO: add recent searches
   return (
     <>
@@ -51,80 +116,32 @@ function QuickSearch({ onClose }: QuickSearchProps) {
           </Form>
         )}
       </Formik>
-      {/* TODO: handle errors */}
-      {isLoading ? (
-        <QuickSearchResultsSkeleton />
-      ) : (
-        <div className="space-y-4">
-          {data && (
+      <UIState
+        loading={isLoading}
+        error={!!error}
+        empty={data && !data.containers.length && !data.items.length}
+      >
+        <div data-loading>
+          <QuickSearchResultsSkeleton />
+        </div>
+        <div data-error>
+          <ErrorState refetch={refetch} />
+        </div>
+        <div data-empty className="space-y-4">
+          <EmptyState />
+        </div>
+        <div data-data className="space-y-4">
+          {!!data && (
             <>
-              {!data.containers.length && !data.items.length ? (
-                <EmptyState quickSearch />
-              ) : (
-                <>
-                  {/* Boxes */}
-                  {data.containers.length > 0 && (
-                    <>
-                      <h3 className="text-text-secondary mb-3">Boxes</h3>
-                      <div className="space-y-1">
-                        {data.containers.map((result) => {
-                          return (
-                            <Link
-                              key={result.id}
-                              to={`/box/${result.id}`}
-                              onClick={closeDialog}
-                              className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent text-text-primary no-underline`}
-                            >
-                              <Package className="h-5 w-5 shrink-0" />
-                              <div className="flex-1 min-w-0">
-                                <div>{result.name}</div>
-                                {result.location && (
-                                  <div className="text-text-secondary">
-                                    (in {result.location})
-                                  </div>
-                                )}
-                              </div>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </>
-                  )}
+              {/* Boxes */}
+              {getContainersList(data.containers)}
 
-                  {/* Items */}
-                  {data.items.length > 0 && (
-                    <div>
-                      <h3 className="text-text-secondary mb-3">Items</h3>
-                      <div className="space-y-1">
-                        {data.items.map((result) => {
-                          return (
-                            <Link
-                              key={result.id}
-                              to={`/item/${result.id}`}
-                              onClick={closeDialog}
-                              className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent text-text-primary no-underline`}
-                            >
-                              <Blocks className="h-5 w-5 shrink-0" />
-                              <div className="flex-1 min-w-0">
-                                <div>{result.name}</div>
-                                {result.container.name && (
-                                  <div className="text-text-secondary">
-                                    (in {result.container.name})
-                                  </div>
-                                )}
-                              </div>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </>
-              )}
+              {/* Items */}
+              {getItemsList(data.items)}
             </>
           )}
         </div>
-      )}
+      </UIState>
     </>
   );
 }

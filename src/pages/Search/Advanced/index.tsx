@@ -7,12 +7,11 @@ import ContainerListView from "../../Containers/ListView";
 import ContainerGridView from "../../Containers/GridView";
 import ItemsListView from "../../Items/ListView";
 import ItemsGridView from "../../Items/GridView";
-import ContainerListViewSkeleton from "../../../shared/components/skeleton/ContainerListViewSkeleton";
-import ContainerGridViewSkeleton from "../../../shared/components/skeleton/ContainerGridViewSkeleton";
-import ItemsListViewSkeleton from "../../../shared/components/skeleton/ItemsListViewSkeleton";
-import ItemGridViewSkeleton from "../../../shared/components/skeleton/ItemGridViewSkeleton";
 import usePreference from "../../../shared/hooks/usePreference";
 import EmptyState from "../../../shared/components/Layout/Search/EmptyState";
+import SearchSkeleton from "./SearchSkeleton";
+import ErrorState from "../../../shared/components/Layout/Search/ErrorState";
+import UIState from "../../../shared/components/Layout/UIState";
 
 function AdvancedSearch() {
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ function AdvancedSearch() {
   const query = searchParams.get("query");
   const sort = searchParams.get("sort_by");
   const type = searchParams.get("type");
-  const { data, isLoading } = useSearch(
+  const { data, isLoading, error, refetch } = useSearch(
     `query=${query}&sortBy=updatedAt&sortDir=${sort ?? "desc"}&type=${
       type ?? "all"
     }`
@@ -57,6 +56,8 @@ function AdvancedSearch() {
     if (type === "item") return "Items";
     return "Type";
   };
+
+  // TODO: add recent searches
   return (
     <div>
       <SearchForm query={query ?? ""} onSubmit={handleSearchSubmit} />
@@ -163,35 +164,23 @@ function AdvancedSearch() {
           </div>
         </div>
       </div>
-      {/* TODO: handle errors */}
       <div className="space-y-4">
-        {!!isLoading && (
-          <>
-            <div>
-              {type !== "container" && (
-                <h3 className="text-text-secondary mb-3">Boxes</h3>
-              )}
-              <div className="space-y-1">
-                {viewMode === "list" && <ContainerListViewSkeleton />}
-                {viewMode === "grid" && <ContainerGridViewSkeleton />}
-              </div>
-            </div>
-            <div>
-              {type !== "item" && (
-                <h3 className="text-text-secondary mb-3">Items</h3>
-              )}
-              <div className="space-y-1">
-                {viewMode === "list" && <ItemsListViewSkeleton />}
-                {viewMode === "grid" && <ItemGridViewSkeleton />}
-              </div>
-            </div>
-          </>
-        )}
-        {!isLoading && data && (
-          <>
-            {!data.containers.length && !data.items.length ? (
-              <EmptyState />
-            ) : (
+        <UIState
+          loading={isLoading}
+          error={!!error}
+          empty={data && !data.containers.length && !data.items.length}
+        >
+          <div data-loading>
+            <SearchSkeleton type={type} viewMode={viewMode} />
+          </div>
+          <div data-error>
+            <ErrorState refetch={refetch} />
+          </div>
+          <div data-empty>
+            <EmptyState />
+          </div>
+          <div data-data>
+            {!!data && (
               <>
                 {/* Boxes */}
                 {data.containers.length > 0 && (
@@ -227,8 +216,8 @@ function AdvancedSearch() {
                 )}
               </>
             )}
-          </>
-        )}
+          </div>
+        </UIState>
       </div>
     </div>
   );
