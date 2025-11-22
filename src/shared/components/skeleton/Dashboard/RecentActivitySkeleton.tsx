@@ -1,6 +1,9 @@
 export default function RecentActivitySkeleton() {
   return (
-    <div className="bg-background-surface border border-border rounded-lg p-6 animate-pulse">
+    <div
+      data-loading
+      className="bg-background-surface border border-border rounded-lg p-6 animate-pulse"
+    >
       {/* Title */}
       <div className="h-5 w-32 bg-background-accent rounded mb-4" />
 

@@ -1,6 +1,9 @@
 export default function DashboardStatsSkeleton() {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-pulse">
+    <div
+      data-loading
+      className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-pulse"
+    >
       {/* Repeat for 4 cards */}
       {[1, 2, 3, 4].map((i) => (
         <div

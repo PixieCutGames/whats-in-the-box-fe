@@ -7,6 +7,8 @@ function useContainers(limit?: number) {
     data: containersDetails,
     error: containersError,
     isLoading: containersIsLoading,
+    refetch,
+    isRefetching,
   } = useQuery({
     queryKey: ["getContainers"],
     queryFn: async () => {
@@ -18,7 +20,8 @@ function useContainers(limit?: number) {
   return {
     containersDetails,
     containersError,
-    containersIsLoading,
+    containersIsLoading: containersIsLoading || isRefetching,
+    refetchContainers: refetch,
   };
 }
 

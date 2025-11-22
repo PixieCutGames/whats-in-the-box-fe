@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Container, Item } from "../../types";
 import DashboardStatsSkeleton from "../../shared/components/skeleton/Dashboard/DashboardStatsSkeleton";
+import UIState from "../../shared/components/Layout/UIState";
+import ErrorState from "./ErrorState";
 
 type StatsCardProps = {
   stats?: {
@@ -9,18 +11,21 @@ type StatsCardProps = {
     lastUpdatedContainer?: Container;
     lastUpdatedItem?: Item;
   };
-  isLoding?: boolean;
+  isLoading?: boolean;
+  isError?: boolean;
+  refetch: () => void;
 };
-function StatsCard({ stats, isLoding }: StatsCardProps) {
-  if (isLoding) return <DashboardStatsSkeleton />;
-  if (stats)
-    return (
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+function StatsCard({ stats, isLoading, refetch, isError }: StatsCardProps) {
+  return (
+    <UIState loading={isLoading} error={isError}>
+      <ErrorState refetch={refetch} />;
+      <DashboardStatsSkeleton />
+      <div data-data className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Boxes */}
         <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
           <p className="text-text-secondary mb-2">Total Boxes</p>
           <p className="text-text-primary text-2xl font-meduim">
-            {stats.containers}
+            {stats?.containers}
           </p>
         </div>
 
@@ -28,14 +33,14 @@ function StatsCard({ stats, isLoding }: StatsCardProps) {
         <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
           <p className="text-text-secondary mb-2">Total Items</p>
           <p className="text-text-primary text-2xl font-meduim">
-            {stats.items}
+            {stats?.items}
           </p>
         </div>
 
         {/* Recently Updated Box */}
         <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
           <p className="text-text-secondary mb-2">Recently Updated Box</p>
-          {stats.lastUpdatedContainer ? (
+          {stats?.lastUpdatedContainer ? (
             <Link
               to={`/box/${stats.lastUpdatedContainer.id}`}
               className="text-text-primary text-lg font-meduim truncate"
@@ -50,7 +55,7 @@ function StatsCard({ stats, isLoding }: StatsCardProps) {
         {/* Recently Updated Item */}
         <div className="bg-background-surface border border-border rounded-lg p-6 transition-shadow">
           <p className="text-text-secondary mb-2">Recently Updated Item</p>
-          {stats.lastUpdatedItem ? (
+          {stats?.lastUpdatedItem ? (
             <Link
               to={`/item/${stats.lastUpdatedItem.id}`}
               className="text-text-primary text-lg font-meduim truncate"
@@ -62,8 +67,8 @@ function StatsCard({ stats, isLoding }: StatsCardProps) {
           )}
         </div>
       </div>
-    );
-  return null;
+    </UIState>
+  );
 }
 
 export default StatsCard;
