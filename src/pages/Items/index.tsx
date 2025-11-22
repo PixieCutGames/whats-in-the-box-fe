@@ -11,12 +11,13 @@ import ListView from "./ListView";
 import ItemGridViewSkeleton from "../../shared/components/skeleton/ItemGridViewSkeleton";
 import ItemsListViewSkeleton from "../../shared/components/skeleton/ItemsListViewSkeleton";
 import usePreference from "../../shared/hooks/usePreference";
+import ErrorState from "./ErrorState";
 
 function Items() {
   const navigate = useNavigate();
   const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
   // TODO: handle errors
-  const { itemsDetails, itemsIsLoading } = useItems();
+  const { itemsDetails, itemsIsLoading, itemsError, refetchItems } = useItems();
   const { containersDetails, containersIsLoading } = useContainers();
   const [viewMode, setViewMode] = usePreference<"grid" | "list">(
     "Items",
@@ -60,6 +61,7 @@ function Items() {
           hasContainers={!!containersDetails?.containers.length}
         />
       );
+    if (itemsError) return <ErrorState refetch={refetchItems} />;
     if (itemsDetails?.items.length && viewMode === "grid")
       return <GridView items={itemsDetails.items} />;
     if (itemsDetails?.items.length && viewMode === "list")
