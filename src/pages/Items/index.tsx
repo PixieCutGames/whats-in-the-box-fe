@@ -10,6 +10,7 @@ import GridView from "./GridView";
 import ListView from "./ListView";
 import ItemGridViewSkeleton from "../../shared/components/skeleton/ItemGridViewSkeleton";
 import ItemsListViewSkeleton from "../../shared/components/skeleton/ItemsListViewSkeleton";
+import usePreference from "../../shared/hooks/usePreference";
 
 function Items() {
   const navigate = useNavigate();
@@ -17,7 +18,11 @@ function Items() {
   // TODO: handle errors
   const { itemsDetails, itemsIsLoading } = useItems();
   const { containersDetails, containersIsLoading } = useContainers();
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode, setViewMode] = usePreference<"grid" | "list">(
+    "Items",
+    "view",
+    "grid"
+  );
   const [openCreateItemDialog, setOpenCreateItemDialog] =
     useState<boolean>(false);
   const [openCreateBoxDialog, setOpenCreateBoxDialog] =

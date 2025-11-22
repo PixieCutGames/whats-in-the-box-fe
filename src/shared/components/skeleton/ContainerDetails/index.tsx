@@ -1,4 +1,11 @@
+import usePreference from "../../../hooks/usePreference";
+
 export default function ContainerDetailsSkeleton() {
+  const [viewMode] = usePreference<"grid" | "list">(
+    "ContainerDetails",
+    "view",
+    "grid"
+  );
   return (
     <div className="space-y-6 animate-pulse">
       {/* HEADER */}
@@ -55,25 +62,64 @@ export default function ContainerDetailsSkeleton() {
           <div className="h-6 w-20 bg-background-accent rounded" />
         </div>
 
-        {/* Items Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {[...Array(5)].map((_, i) => (
-            <div
-              key={i}
-              className="bg-background-surface border border-border rounded-lg overflow-hidden"
-            >
-              {/* Image */}
-              <div className="aspect-square bg-background-accent" />
+        {viewMode === "grid" ? (
+          <>
+            {/* Items Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              {[...Array(4)].map((_, i) => (
+                <div
+                  key={i}
+                  className="bg-background-surface border border-border rounded-lg overflow-hidden"
+                >
+                  {/* Image */}
+                  <div className="aspect-square bg-background-accent" />
 
-              {/* Content */}
-              <div className="p-4 space-y-2">
-                <div className="h-5 w-3/4 bg-background-accent rounded" />
-                <div className="h-4 w-1/2 bg-background-accent rounded" />
-                <div className="h-4 w-2/3 bg-background-accent rounded" />
-              </div>
+                  {/* Content */}
+                  <div className="p-4 space-y-2">
+                    <div className="h-5 w-3/4 bg-background-accent rounded" />
+                    <div className="h-4 w-1/2 bg-background-accent rounded" />
+                    <div className="h-4 w-2/3 bg-background-accent rounded" />
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        ) : (
+          <>
+            {/* Items List */}
+            <div className="bg-background-surface border border-border rounded-lg overflow-hidden animate-pulse">
+              {[...Array(3)].map((_, i) => (
+                <div
+                  key={i}
+                  className={`flex items-center gap-4 p-4 ${
+                    i !== 5 ? "border-b border-border-light" : ""
+                  }`}
+                >
+                  {/* Image/Icon */}
+                  <div className="h-12 w-12 rounded-lg bg-background-accent shrink-0" />
+
+                  {/* Name */}
+                  <div className="flex-1 min-w-0">
+                    <div className="h-5 w-40 bg-background-accent rounded" />
+                  </div>
+
+                  {/* Qty */}
+                  <div className="hidden sm:block">
+                    <div className="h-4 w-14 bg-background-accent rounded" />
+                  </div>
+
+                  {/* Updated Date */}
+                  <div className="hidden md:block">
+                    <div className="h-4 w-24 bg-background-accent rounded" />
+                  </div>
+
+                  {/* Chevron */}
+                  <div className="h-5 w-5 bg-background-accent rounded shrink-0" />
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
