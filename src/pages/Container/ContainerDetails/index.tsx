@@ -9,11 +9,12 @@ import GridView from "./GridView";
 import ListView from "./ListView";
 import ContainerDetailsSkeleton from "../../../shared/components/skeleton/ContainerDetails";
 import usePreference from "../../../shared/hooks/usePreference";
+import ErrorState from "./ErrorState";
 
 function ContainerDetails() {
   const { id } = useParams();
-  // TODO: handle containersError
-  const { container, isLoading, refetch } = useContainerDetails(id);
+
+  const { container, isLoading, refetch, error } = useContainerDetails(id);
   const [viewMode, setViewMode] = usePreference<"grid" | "list">(
     "ContainerDetails",
     "view",
@@ -21,6 +22,7 @@ function ContainerDetails() {
   );
 
   if (isLoading) return <ContainerDetailsSkeleton />;
+  if (error) return <ErrorState refetch={refetch} />;
   return (
     <div className="space-y-6">
       {/* Header */}

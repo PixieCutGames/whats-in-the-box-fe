@@ -16,7 +16,7 @@ import ErrorState from "./ErrorState";
 function Items() {
   const navigate = useNavigate();
   const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
-  // TODO: handle errors
+
   const { itemsDetails, itemsIsLoading, itemsError, refetchItems } = useItems();
   const { containersDetails, containersIsLoading } = useContainers();
   const [viewMode, setViewMode] = usePreference<"grid" | "list">(
