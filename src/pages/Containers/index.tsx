@@ -9,13 +9,18 @@ import GridView from "./GridView";
 import ListView from "./ListView";
 import ContainerGridViewSkeleton from "../../shared/components/skeleton/ContainerGridViewSkeleton";
 import ContainerListViewSkeleton from "../../shared/components/skeleton/ContainerListViewSkeleton";
+import usePreference from "../../shared/hooks/usePreference";
 
 function ContainersPage() {
   const navigate = useNavigate();
   const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
   // TODO: handle containersError
   const { containersDetails, containersIsLoading } = useContainers();
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode, setViewMode] = usePreference<"grid" | "list">(
+    "ContainersPage",
+    "view",
+    "grid"
+  );
   const [openCreateDialog, setOpenCreateDialog] = useState<boolean>(false);
 
   const createNewContainer = () => {

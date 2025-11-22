@@ -1,6 +1,13 @@
+import usePreference from "../../../hooks/usePreference";
 import ContainerGridViewSkeleton from "../ContainerGridViewSkeleton";
+import ContainerListViewSkeleton from "../ContainerListViewSkeleton";
 
 function Containers() {
+  const [viewMode] = usePreference<"grid" | "list">(
+    "ContainerDetails",
+    "view",
+    "grid"
+  );
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -8,8 +15,11 @@ function Containers() {
         {/* Title */}
         <div className="h-8 w-28 bg-background-accent rounded" />
       </div>
-      {/* TODO: get saved pref and display the correct view  */}
-      <ContainerGridViewSkeleton />
+      {viewMode === "grid" ? (
+        <ContainerGridViewSkeleton />
+      ) : (
+        <ContainerListViewSkeleton />
+      )}
     </div>
   );
 }

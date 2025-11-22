@@ -2,7 +2,6 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import useSearch from "./useSearch";
 import SearchForm from "./SearchForm";
 import { CheckIcon, ChevronDownIcon, Grid3x3, List } from "lucide-react";
-import { useState } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import ContainerListView from "../../Containers/ListView";
 import ContainerGridView from "../../Containers/GridView";
@@ -12,6 +11,7 @@ import ContainerListViewSkeleton from "../../../shared/components/skeleton/Conta
 import ContainerGridViewSkeleton from "../../../shared/components/skeleton/ContainerGridViewSkeleton";
 import ItemsListViewSkeleton from "../../../shared/components/skeleton/ItemsListViewSkeleton";
 import ItemGridViewSkeleton from "../../../shared/components/skeleton/ItemGridViewSkeleton";
+import usePreference from "../../../shared/hooks/usePreference";
 
 function AdvancedSearch() {
   const navigate = useNavigate();
@@ -25,7 +25,11 @@ function AdvancedSearch() {
     }`
   );
 
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode, setViewMode] = usePreference<"grid" | "list">(
+    "AdvancedSearch",
+    "view",
+    "grid"
+  );
 
   const handleSearchSubmit = (newQuery: string) => {
     navigate(`/search?query=${encodeURIComponent(newQuery)}`);
