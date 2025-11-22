@@ -64,4 +64,10 @@
 
   --color-error: #ef4444;
   --color-error-hover: #dc2626;
+
+  --color-toaster-border-success: #c1f9b9;
+  --color-toaster-background-success: #ecf8ef;
+
+  --color-toaster-border-error: #fdcccc;
+  --color-toaster-background-error: #feeced;
 }
