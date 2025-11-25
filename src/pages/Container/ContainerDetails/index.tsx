@@ -29,7 +29,9 @@ function ContainerDetails() {
 
   const createNewItem = () => {
     if (notDesktop) {
-      navigate("/item/new");
+      navigate("/item/new", {
+        state: { containerId: container?.id },
+      });
       return;
     }
     setOpenAddItemDialog(true);
