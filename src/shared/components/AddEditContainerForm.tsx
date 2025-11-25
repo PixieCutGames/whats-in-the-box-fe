@@ -63,7 +63,8 @@ function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
           } else {
             createNewContainer(
               { name, description, location, imageId },
-              (data) => navigate(`/box/${data.container.id}`),
+              (data) =>
+                navigate(`/box/${data.container.id}`, { replace: true }),
               () => setSubmitting(false)
             );
           }

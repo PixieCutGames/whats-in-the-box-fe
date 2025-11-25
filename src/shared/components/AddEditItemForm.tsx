@@ -77,7 +77,7 @@ function AddEditItemForm({
           } else {
             createNewItem(
               { name, description, quantity, imageId, containerId },
-              (data) => navigate(`/item/${data.item.id}`),
+              (data) => navigate(`/item/${data.item.id}`, { replace: true }),
               () => setSubmitting(false)
             );
           }
