@@ -43,7 +43,7 @@ function StatsCard({ stats, isLoading, refetch, isError }: StatsCardProps) {
           {stats?.lastUpdatedContainer ? (
             <Link
               to={`/box/${stats.lastUpdatedContainer.id}`}
-              className="text-text-primary text-lg font-meduim truncate"
+              className="text-text-primary text-lg font-meduim truncate block"
             >
               {stats.lastUpdatedContainer.name ?? "-"}{" "}
             </Link>
@@ -58,7 +58,7 @@ function StatsCard({ stats, isLoading, refetch, isError }: StatsCardProps) {
           {stats?.lastUpdatedItem ? (
             <Link
               to={`/item/${stats.lastUpdatedItem.id}`}
-              className="text-text-primary text-lg font-meduim truncate"
+              className="text-text-primary text-lg font-meduim truncate block"
             >
               {stats.lastUpdatedItem.name ?? "-"}
             </Link>
