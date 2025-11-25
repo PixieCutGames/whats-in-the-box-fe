@@ -77,7 +77,7 @@ function AddEditItemForm({
           } else {
             createNewItem(
               { name, description, quantity, imageId, containerId },
-              (data) => navigate(`/item/${data.item.id}`),
+              (data) => navigate(`/item/${data.item.id}`, { replace: true }),
               () => setSubmitting(false)
             );
           }
@@ -136,6 +136,7 @@ function AddEditItemForm({
               <AutoComplete
                 name="containerId"
                 id="containerId"
+                disabled={!!containerId}
                 options={
                   containersDetails?.containers.map((c) => ({
                     value: c.id,

@@ -3,6 +3,7 @@ import { ClassAttributes, InputHTMLAttributes, useRef, useState } from "react";
 import useMedia from "../../hooks/useMedia";
 import { FieldHookConfig, useField } from "formik";
 import { Maybe } from "yup";
+import imageCompression from "browser-image-compression";
 
 type ImageUploadProps = {
   imageUrl?: Maybe<string>;
@@ -27,31 +28,48 @@ function ImageUpload({
 
   const { uploadMedia, loadingUploadMedia } = useMedia();
 
-  const handleFileChange = (file: File | null) => {
-    if (file && file.size <= 2 * 1024 * 1024) {
+  const handleFileChange = async (file: File | null) => {
+    if (file && file.size <= 20 * 1024 * 1024) {
       // 2MB limit
-      //   setPhoto(file);
-
       setImageisLoading?.(true);
-      uploadMedia(
-        file,
-        (publicId) => {
-          setValue(publicId);
-          setImageisLoading?.(false);
-        },
-        () => {
-          setImageisLoading?.(false);
-          setPhotoPreview(null);
-          setError("Failed to upload image, please try again.");
-        }
-      );
+
+      const options = {
+        maxSizeMB: 1, // compress to ~1 MB
+        maxWidthOrHeight: 1500, // resize large photos
+        useWebWorker: true,
+      };
+
+      try {
+        const compressedFile = await imageCompression(file, options);
+
+        // Use this for uploading
+        uploadMedia(
+          compressedFile,
+          (publicId) => {
+            setValue(publicId);
+            setImageisLoading?.(false);
+          },
+          () => {
+            setImageisLoading?.(false);
+            setPhotoPreview(null);
+            setError("Failed to upload image, please try again.");
+          }
+        );
+
+        // Use this for showing a preview
+        // const preview = URL.createObjectURL(compressedFile);
+        // setPhotoPreview(preview);
+      } catch (error) {
+        console.error("Compression error:", error);
+      }
+
       const reader = new FileReader();
       reader.onloadend = () => {
         setPhotoPreview(reader.result as string);
       };
       reader.readAsDataURL(file);
     } else if (file) {
-      alert("File size must be less than 2MB");
+      alert("File size must be less than 20MB");
     }
   };
 
@@ -132,7 +150,7 @@ function ImageUpload({
               Upload Photo
             </button>
             <p className="text-text-secondary">or drag & drop</p>
-            <p className="text-text-secondary">Max size 2MB</p>
+            <p className="text-text-secondary">Max size 20MB</p>
           </div>
           <input
             ref={fileInputRef}

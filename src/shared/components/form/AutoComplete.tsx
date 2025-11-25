@@ -20,6 +20,7 @@ type AutoCompleteProps<T> = {
 };
 function AutoComplete<T>({
   options,
+  disabled,
   ...props
 }: InputHTMLAttributes<HTMLInputElement> &
   ClassAttributes<HTMLInputElement> &
@@ -66,6 +67,7 @@ function AutoComplete<T>({
     >
       <div className="relative">
         <ComboboxInput
+          disabled={disabled}
           displayValue={(option: Option<T>) => (option ? option.label : "")}
           onChange={(event) => {
             setQuery(event.target.value);
@@ -77,9 +79,11 @@ function AutoComplete<T>({
                : "border-input"
            } `}
         />
-        <ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
-          <ChevronDownIcon className="size-4 fill-white/60 group-data-hover:fill-white" />
-        </ComboboxButton>
+        {!disabled && (
+          <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2">
+            <ChevronDownIcon className="size-4 text-text-secondary" />
+          </ComboboxButton>
+        )}
       </div>
       <ComboboxOptions
         anchor="bottom"
