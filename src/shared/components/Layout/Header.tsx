@@ -80,9 +80,12 @@ function Header({ navigationItems, pathname }: HeaderProps) {
 
             {/* Logo */}
             <div className="flex items-center">
-              <div className="rounded-lg bg-primary flex items-center justify-center">
+              <Link
+                to="/"
+                className="rounded-lg bg-primary flex items-center justify-center"
+              >
                 <img src={Logo} alt="Logo" className="h-8" />
-              </div>
+              </Link>
             </div>
 
             {/* Desktop Navigation Links */}

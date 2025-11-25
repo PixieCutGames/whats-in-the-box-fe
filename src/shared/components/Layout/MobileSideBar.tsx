@@ -57,7 +57,9 @@ export default function MobileSidebar({
               {/* HEADER */}
               <div className="flex justify-between gap-1.5 p-4">
                 <div className="rounded-lg bg-primary flex items-center justify-center">
-                  <img src={Logo} alt="Logo" className="h-8" />
+                  <Link to="/" onClick={onClose}>
+                    <img src={Logo} alt="Logo" className="h-8" />
+                  </Link>
                 </div>
                 <button
                   onClick={onClose}
@@ -73,6 +75,7 @@ export default function MobileSidebar({
                 {navigationItems.map((item) => (
                   <Link
                     to={item.href}
+                    onClick={onClose}
                     className={`px-4 py-3 rounded-lg transition-colors no-underline ${
                       pathname === item.href
                         ? "bg-primary-surface text-primary"
