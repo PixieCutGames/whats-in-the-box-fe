@@ -147,7 +147,7 @@ function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
         >
           <AlertCircle className="size-4" />
           <div className="text-destructive/90 text-sm leading-relaxed ml-5">
-            Error: {changePasswordError.message}
+            {changePasswordError.message}
           </div>
         </div>
       )}
