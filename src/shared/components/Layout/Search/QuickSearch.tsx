@@ -9,6 +9,7 @@ import EmptyState from "./EmptyState";
 import ErrorState from "./ErrorState";
 import { Container, Item } from "../../../../types";
 import UIState from "../UIState";
+import useRecentSearches from "../../../hooks/useRecentSearches";
 
 type QuickSearchProps = {
   onClose?: () => void;
@@ -16,7 +17,9 @@ type QuickSearchProps = {
 function QuickSearch({ onClose }: QuickSearchProps) {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState<string>();
+  const [searchFieldEmpty, setSearchFieldEmpty] = useState<boolean>(true);
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  const { recentSearches } = useRecentSearches();
   const { data, isLoading, refetch, error } =
     useQuickSearch(debouncedSearchTerm);
   const closeDialog = () => {
@@ -83,7 +86,6 @@ function QuickSearch({ onClose }: QuickSearchProps) {
     ) : null;
   };
 
-  // TODO: add recent searches
   return (
     <>
       <Formik
@@ -100,8 +102,11 @@ function QuickSearch({ onClose }: QuickSearchProps) {
           <Form
             onChange={(e) => {
               const value = (e.target as any).value;
-              if (typeof value === "string" && value.length >= 3)
+              if (value === "") setSearchFieldEmpty(true);
+              if (typeof value === "string" && value.length >= 3) {
                 setSearchTerm(value);
+                setSearchFieldEmpty(false);
+              }
             }}
           >
             <div className="my-4 relative">
@@ -116,32 +121,52 @@ function QuickSearch({ onClose }: QuickSearchProps) {
           </Form>
         )}
       </Formik>
-      <UIState
-        loading={isLoading}
-        error={!!error}
-        empty={data && !data.containers.length && !data.items.length}
-      >
-        <div data-loading>
-          <QuickSearchResultsSkeleton />
+      {searchFieldEmpty && recentSearches.length ? (
+        <div>
+          <h3 className="text-text-secondary mb-3">Recent searches:</h3>
+          <div className="space-y-2">
+            {recentSearches.map((search) => (
+              <button
+                key={search}
+                onClick={() => {
+                  setSearchTerm(search);
+                  setSearchFieldEmpty(false);
+                }}
+                className="block w-full text-left px-3 py-2 text-text-primary hover:bg-background-accent rounded-lg transition-colors"
+              >
+                {search}
+              </button>
+            ))}
+          </div>
         </div>
-        <div data-error>
-          <ErrorState refetch={refetch} />
-        </div>
-        <div data-empty className="space-y-4">
-          <EmptyState />
-        </div>
-        <div data-data className="space-y-4">
-          {!!data && (
-            <>
-              {/* Boxes */}
-              {getContainersList(data.containers)}
+      ) : (
+        <UIState
+          loading={isLoading}
+          error={!!error}
+          empty={data && !data.containers.length && !data.items.length}
+        >
+          <div data-loading>
+            <QuickSearchResultsSkeleton />
+          </div>
+          <div data-error>
+            <ErrorState refetch={refetch} />
+          </div>
+          <div data-empty className="space-y-4">
+            <EmptyState />
+          </div>
+          <div data-data className="space-y-4">
+            {!!data && (
+              <>
+                {/* Boxes */}
+                {getContainersList(data.containers)}
 
-              {/* Items */}
-              {getItemsList(data.items)}
-            </>
-          )}
-        </div>
-      </UIState>
+                {/* Items */}
+                {getItemsList(data.items)}
+              </>
+            )}
+          </div>
+        </UIState>
+      )}
     </>
   );
 }

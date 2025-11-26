@@ -11,6 +11,7 @@ function SearchForm({ query, onSubmit }: SearchFormProps) {
       initialValues={{
         query,
       }}
+      enableReinitialize
       onSubmit={({ query }, { setSubmitting }) => {
         setSubmitting(false);
         onSubmit(query);

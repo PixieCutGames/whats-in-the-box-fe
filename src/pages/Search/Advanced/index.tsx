@@ -12,10 +12,13 @@ import EmptyState from "../../../shared/components/Layout/Search/EmptyState";
 import SearchSkeleton from "./SearchSkeleton";
 import ErrorState from "../../../shared/components/Layout/Search/ErrorState";
 import UIState from "../../../shared/components/Layout/UIState";
+import { useEffect } from "react";
+import useRecentSearches from "../../../shared/hooks/useRecentSearches";
 
 function AdvancedSearch() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { addRecentSearch } = useRecentSearches();
   const query = searchParams.get("query");
   const sort = searchParams.get("sort_by");
   const type = searchParams.get("type");
@@ -30,6 +33,10 @@ function AdvancedSearch() {
     "view",
     "grid"
   );
+
+  useEffect(() => {
+    if (query) addRecentSearch(query);
+  }, [query]);
 
   const handleSearchSubmit = (newQuery: string) => {
     navigate(`/search?query=${encodeURIComponent(newQuery)}`);
@@ -57,7 +64,6 @@ function AdvancedSearch() {
     return "Type";
   };
 
-  // TODO: add recent searches
   return (
     <div>
       <SearchForm query={query ?? ""} onSubmit={handleSearchSubmit} />
@@ -179,7 +185,7 @@ function AdvancedSearch() {
           <div data-empty>
             <EmptyState />
           </div>
-          <div data-data>
+          <div data-data className="space-y-4">
             {!!data && (
               <>
                 {/* Boxes */}
