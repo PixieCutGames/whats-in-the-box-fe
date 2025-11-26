@@ -15,7 +15,7 @@ const schema = Yup.object().shape({
   description: Yup.string(),
   quantity: Yup.number().min(1).required(),
   imageId: Yup.string().nullable(),
-  containerId: Yup.string().min(3).required("Location is required!"),
+  containerId: Yup.string().min(3).required("Box is required!"),
 });
 
 type AddEditItemFormProps = {
@@ -131,7 +131,7 @@ function AddEditItemForm({
                 htmlFor="containerId"
                 className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
               >
-                Location
+                Box
               </label>
               <AutoComplete
                 name="containerId"
