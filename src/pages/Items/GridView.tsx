@@ -33,9 +33,7 @@ function GridView({ items }: GridViewProps) {
             <h3 className="text-text-primary text-lg font-medium">
               {items.name}
             </h3>
-            <p className="text-text-secondary">
-              Location: {items.container.name}
-            </p>
+            <p className="text-text-secondary">Box: {items.container.name}</p>
             <p className="text-text-secondary">Qty: {items.quantity}</p>
             <p className="text-text-secondary">
               Updated: <DaysAgo date={items.updatedAt} />

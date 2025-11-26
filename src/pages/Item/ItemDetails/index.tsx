@@ -38,7 +38,7 @@ function ItemDetails() {
         <div className="space-y-4">
           <div>
             <h3 className="text-text-secondary text-lg font-medium mb-1">
-              Location:
+              Box:
             </h3>
             <Link
               to={`/box/${item?.container.id}`}

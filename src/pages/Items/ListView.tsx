@@ -37,7 +37,7 @@ function ListView({ items }: ListViewProps) {
             </h3>
             {/* Location */}
             <p className="text-text-secondary whitespace-nowrap mt-2 truncate">
-              Location: {item.container.name}
+              Box: {item.container.name}
             </p>
           </div>
 
