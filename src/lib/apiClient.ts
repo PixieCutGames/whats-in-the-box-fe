@@ -99,6 +99,15 @@ export async function apiClient<T>(
   }
 
   if (!res.ok) {
+    // ------------------------------
+    // 1. FORM VALIDATION ERRORS
+    // ------------------------------
+    if (data.error === "ValidationError" && Array.isArray(data.details)) {
+      const messages = data.details
+        .map((detail: any) => detail.message)
+        .join(", ");
+      throw new Error(messages);
+    }
     const message = data?.message || data?.error || `API Error (${res.status})`;
     throw new Error(message);
   }
