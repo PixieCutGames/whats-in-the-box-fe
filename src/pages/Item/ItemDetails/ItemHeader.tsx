@@ -26,6 +26,7 @@ function ItemHeader({ item, onUpdate }: ItemHeaderProps) {
     if (!item) return;
     deleteItem(
       item.id,
+      item.containerId,
       () => {
         toast.success("Item deleted successfully.");
         setOpenDeleteConfirmation(false);

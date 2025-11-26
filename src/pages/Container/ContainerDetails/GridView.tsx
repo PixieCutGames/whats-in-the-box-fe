@@ -13,7 +13,7 @@ function GridView({ items }: GridViewProps) {
         <Link
           to={`/item/${item.id}`}
           key={item.id}
-          className="bg-background-surface border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all cursor-pointer group"
+          className="bg-background-surface border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all cursor-pointer group no-underline"
         >
           {/* Image/Icon */}
           <div className="aspect-square bg-background-accent flex items-center justify-center group-hover:bg-primary-surface/20 transition-colors">

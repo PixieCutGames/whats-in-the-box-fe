@@ -9,7 +9,6 @@ function useContainerDetails(id?: string) {
       return apiClient<{ container: Container }>(`/container/${id}`);
     },
     enabled: !!id,
-    staleTime: 0,
   });
   return {
     container: data?.container,

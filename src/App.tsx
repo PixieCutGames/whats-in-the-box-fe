@@ -38,7 +38,7 @@ function App() {
           console.log(error);
           return failureCount < 2 ? true : false;
         },
-        staleTime: 1000 * 60 * 5,
+        staleTime: 1000 * 60 * 30,
         refetchOnWindowFocus: false,
       },
     },

@@ -28,6 +28,7 @@ function ContainerHeader({ container, onUpdate }: ContainerHeaderProps) {
     if (!container) return;
     deleteContainer(
       container.id,
+      container.items.map((item) => item.id),
       () => {
         toast.success("Box deleted successfully.");
         setOpenDeleteConfirmation(false);
