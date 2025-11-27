@@ -11,9 +11,8 @@ import toast from "react-hot-toast";
 
 type ItemHeaderProps = {
   item?: Item;
-  onUpdate: () => void;
 };
-function ItemHeader({ item, onUpdate }: ItemHeaderProps) {
+function ItemHeader({ item }: ItemHeaderProps) {
   const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
   const navigate = useNavigate();
   const [openDeleteConfirmation, setOpenDeleteConfirmation] =
@@ -113,10 +112,7 @@ function ItemHeader({ item, onUpdate }: ItemHeaderProps) {
       </ConfirmationDialog>
       <AddEditDialog
         isOpen={openEditDialog}
-        onClose={(refetch) => {
-          setOpenEditDialog(false);
-          if (refetch) onUpdate();
-        }}
+        onClose={() => setOpenEditDialog(false)}
         itemDetails={item}
         type="item"
       />

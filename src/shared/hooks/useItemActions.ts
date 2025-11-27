@@ -152,7 +152,39 @@ function useItemActions() {
     onError: () => void
   ) => {
     editItemMutate(data, {
-      onSuccess,
+      onSuccess: (data) => {
+        onSuccess(data);
+        const { item } = data;
+        qc.setQueryData<{ items: Item[] }>(["getItems"], (old) =>
+          old
+            ? {
+                items: old.items.map((i) => (i.id === item.id ? item : i)),
+              }
+            : old
+        );
+        qc.setQueryData<{ container: Container }>(
+          ["getContainer", item.containerId],
+          (old) =>
+            old
+              ? {
+                  ...old,
+                  container: {
+                    ...old.container,
+                    items: old.container.items.map((i) =>
+                      i.id === item.id ? item : i
+                    ),
+                  },
+                }
+              : old
+        );
+        qc.setQueryData<{ item: Item }>(["getItem", item.id], (old) =>
+          old
+            ? {
+                item,
+              }
+            : old
+        );
+      },
       onError,
     });
   };

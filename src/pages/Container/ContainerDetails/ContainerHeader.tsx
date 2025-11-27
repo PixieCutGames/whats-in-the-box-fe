@@ -12,9 +12,8 @@ import toast from "react-hot-toast";
 
 type ContainerHeaderProps = {
   container: Maybe<Container>;
-  onUpdate: () => void;
 };
-function ContainerHeader({ container, onUpdate }: ContainerHeaderProps) {
+function ContainerHeader({ container }: ContainerHeaderProps) {
   const notDesktop = useMediaQuery("only screen and (max-width : 1024px)");
   const navigate = useNavigate();
   const [openDeleteConfirmation, setOpenDeleteConfirmation] =
@@ -170,19 +169,13 @@ function ContainerHeader({ container, onUpdate }: ContainerHeaderProps) {
       </ConfirmationDialog>
       <AddEditDialog
         isOpen={openEditDialog}
-        onClose={(refetch) => {
-          setOpenEditDialog(false);
-          if (refetch) onUpdate();
-        }}
+        onClose={() => setOpenEditDialog(false)}
         details={container ?? undefined}
         type="container"
       />
       <AddEditDialog
         isOpen={openAddItemDialog}
-        onClose={(refetch) => {
-          setOpenAddItemDialog(false);
-          if (refetch) onUpdate();
-        }}
+        onClose={() => setOpenAddItemDialog(false)}
         containerId={container?.id}
         type="item"
       />

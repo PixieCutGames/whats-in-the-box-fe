@@ -115,7 +115,28 @@ function useContainerActions() {
     onError: () => void
   ) => {
     editContainerMutate(data, {
-      onSuccess,
+      onSuccess: (data) => {
+        onSuccess(data);
+        const { container } = data;
+        qc.setQueryData<{ containers: Container[] }>(["getContainers"], (old) =>
+          old
+            ? {
+                containers: old.containers.map(
+                  (c): Container => (c.id === container.id ? container : c)
+                ),
+              }
+            : old
+        );
+        qc.setQueryData<{ container: Container }>(
+          ["getContainer", container.id],
+          (old) =>
+            old
+              ? {
+                  container,
+                }
+              : old
+        );
+      },
       onError,
     });
   };
