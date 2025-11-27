@@ -1,8 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "../../lib/apiClient";
-import { CreateItemProps, Item, ItemFormValues } from "../../types";
+import { Container, CreateItemProps, Item, ItemFormValues } from "../../types";
 
 function useItemActions() {
+  const qc = useQueryClient();
+
   const {
     mutate: createItemMutate,
     data: newItemData,
@@ -53,18 +55,93 @@ function useItemActions() {
     onError: () => void
   ) => {
     createItemMutate(data, {
-      onSuccess,
+      onSuccess: (data) => {
+        onSuccess(data);
+        const { item } = data;
+        qc.setQueryData<{ items: Item[] }>(["getItems"], (old) =>
+          old ? { items: [item, ...old.items] } : old
+        );
+        qc.setQueryData<{ container: Container }>(
+          ["getContainer", item.containerId],
+          (old) =>
+            old
+              ? {
+                  ...old,
+                  container: {
+                    ...old.container,
+                    itemsCount: old.container.itemsCount + 1,
+                    items: [item, ...old.container.items],
+                  },
+                }
+              : old
+        );
+        qc.setQueryData<{ containers: Container[] }>(
+          ["getContainers"],
+          (old) => {
+            const containers = old?.containers ?? [];
+            return {
+              containers: containers.map(
+                (container: Container): Container =>
+                  container.id === item.containerId
+                    ? {
+                        ...container,
+                        itemsCount: container.itemsCount + 1,
+                      }
+                    : container
+              ),
+            };
+          }
+        );
+      },
       onError,
     });
   };
 
   const deleteItem = (
     id: string,
+    containerId: string,
     onSuccess: () => void,
     onError: () => void
   ) => {
     deleteItemMutate(id, {
-      onSuccess,
+      onSuccess: () => {
+        onSuccess();
+
+        qc.setQueryData<{ items: Item[] }>(["getItems"], (old) =>
+          old ? { items: old.items.filter((i) => i.id !== id) } : old
+        );
+        qc.setQueryData<{ container: Container }>(
+          ["getContainer", containerId],
+          (old) =>
+            old
+              ? {
+                  ...old,
+                  container: {
+                    ...old.container,
+                    itemsCount: old.container.itemsCount - 1,
+                    items: old.container.items.filter((i) => i.id !== id),
+                  },
+                }
+              : old
+        );
+        qc.setQueryData<{ containers: Container[] }>(
+          ["getContainers"],
+          (old) => {
+            const containers = old?.containers ?? [];
+            return {
+              containers: containers.map(
+                (container: Container): Container =>
+                  container.id === containerId
+                    ? {
+                        ...container,
+                        itemsCount: container.itemsCount - 1,
+                      }
+                    : container
+              ),
+            };
+          }
+        );
+      },
       onError,
     });
   };
@@ -75,7 +152,39 @@ function useItemActions() {
     onError: () => void
   ) => {
     editItemMutate(data, {
-      onSuccess,
+      onSuccess: (data) => {
+        onSuccess(data);
+        const { item } = data;
+        qc.setQueryData<{ items: Item[] }>(["getItems"], (old) =>
+          old
+            ? {
+                items: old.items.map((i) => (i.id === item.id ? item : i)),
+              }
+            : old
+        );
+        qc.setQueryData<{ container: Container }>(
+          ["getContainer", item.containerId],
+          (old) =>
+            old
+              ? {
+                  ...old,
+                  container: {
+                    ...old.container,
+                    items: old.container.items.map((i) =>
+                      i.id === item.id ? item : i
+                    ),
+                  },
+                }
+              : old
+        );
+        qc.setQueryData<{ item: Item }>(["getItem", item.id], (old) =>
+          old
+            ? {
+                item,
+              }
+            : old
+        );
+      },
       onError,
     });
   };

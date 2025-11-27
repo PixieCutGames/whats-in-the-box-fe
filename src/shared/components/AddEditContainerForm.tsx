@@ -64,7 +64,7 @@ function AddEditContainerForm({ details, onClose }: AddEditContainerFormProps) {
             createNewContainer(
               { name, description, location, imageId },
               (data) =>
-                navigate(`/box/${data.container.id}`, { replace: true }),
+                navigate(`/box/${data.container.id}`, { replace: !onClose }),
               () => setSubmitting(false)
             );
           }

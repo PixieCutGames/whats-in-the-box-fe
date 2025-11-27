@@ -16,7 +16,7 @@ function ItemDetails() {
   return (
     <div className="space-y-6">
       {/* HEADER */}
-      <ItemHeader item={item} onUpdate={() => refetch()} />
+      <ItemHeader item={item} />
       {/* Item details */}
       <div className="lg:hidden">
         {/* Item Photo */}

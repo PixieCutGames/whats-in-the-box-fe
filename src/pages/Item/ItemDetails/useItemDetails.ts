@@ -9,7 +9,6 @@ function useItemDetails(id?: string) {
       return apiClient<{ item: Item }>(`/item/${id}`);
     },
     enabled: !!id,
-    staleTime: 0,
   });
   return {
     item: data?.item,

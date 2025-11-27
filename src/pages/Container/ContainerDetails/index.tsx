@@ -42,7 +42,7 @@ function ContainerDetails() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <ContainerHeader container={container} onUpdate={() => refetch()} />
+      <ContainerHeader container={container} />
       {/* Container details */}
       <div className="lg:hidden">
         {/* Box Photo */}
