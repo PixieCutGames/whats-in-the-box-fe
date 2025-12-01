@@ -198,14 +198,6 @@ function LoginForm() {
           Apple
         </Button>
       </div>
-      {/* <button
-        onClick={() =>
-          (window.location.href = `${VITE_BASE_URL}/auth/google`)
-        }
-        className="btn-social"
-      >
-        Continue with Google
-      </button> */}
       {!!loginError && (
         <div
           role="alert"
