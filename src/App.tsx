@@ -12,6 +12,7 @@ import VerifyEmailPage from "./pages/VerifyEmail";
 import VerficationPage from "./pages/Verfication";
 import ResetPasswordPage from "./pages/ResetPassword";
 import Toaster from "./shared/components/Toaster";
+import SocialSuccess from "./shared/components/SocialSuccess";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const ContainersPage = lazy(() => import("./pages/Containers"));
@@ -164,6 +165,7 @@ function App() {
             />
             <Route path="/logout" element={<Logout />} />
           </Route>
+          <Route path="/social-success" element={<SocialSuccess />} />
           {/* TODO: add 404 page */}
           <Route path="/*" element={<Navigate to="/" replace />} />
         </Routes>
