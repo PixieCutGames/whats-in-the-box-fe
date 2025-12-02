@@ -20,6 +20,7 @@
   --color-background-dark: #0f172a;
   --color-background-dark-surface: #1e293b;
   --color-background-dark-surface-hover: #334155;
+  --color-background-dark-accent: #1e3a8a;
 
   --color-foreground: #0f172a;
   --color-foreground-dark: #f8fafc;
@@ -40,6 +41,7 @@
 
   --color-primary-dark: #3b82f6;
   --color-primary-dark-foreground: #f8fafc;
+  --color-primary-dark-surface: #1e3a8a;
 
   --color-secondary: #f1f5f9;
   --color-secondary-foreground: #0f172a;
