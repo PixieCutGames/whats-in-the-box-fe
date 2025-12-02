@@ -37,52 +37,56 @@ function VerifyEmailSection() {
   // TODO: Handle invalid token or verification error
   if (!token || !!verifyError) return <Navigate to="/login" replace />;
 
+  const getView = () => {
+    if (loadingVerify)
+      return (
+        <>
+          <CardHeader className="text-center">
+            {/* Spinner Container */}
+            <div className="mx-auto mb-4 w-20 h-20 bg-primary/10 dark:bg-primary-dark/10 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 border-4 border-primary dark:border-primary-dark border-t-transparent rounded-full animate-spin" />
+            </div>
+
+            <CardTitle>Verifying your email…</CardTitle>
+            <CardDescription>
+              Please wait while we confirm your identity.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-center text-sm text-muted-foreground dark:text-muted-dark-foreground">
+              This may take a few seconds.
+            </p>
+          </CardContent>
+        </>
+      );
+    return (
+      <>
+        <CardHeader className="text-center">
+          <div className="mx-auto mb-4 w-20 h-20 bg-success/10 dark:bg-success-dark/10 rounded-full flex items-center justify-center">
+            <CheckCircle className="w-12 h-12 text-success dark:text-success-dark" />
+          </div>
+          <CardTitle>Your email has been verified</CardTitle>
+          <CardDescription>
+            You can now log in and start organizing your boxes.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Button onClick={handleContinueToLogin} className="w-full">
+            Continue to login
+          </Button>
+          <p className="text-center text-sm text-muted-foreground dark:text-muted-dark-foreground">
+            Auto-redirecting in {redirectCountdown} seconds...
+          </p>
+        </CardContent>
+      </>
+    );
+  };
+
   const handleContinueToLogin = () => navigate("/login");
   return (
     <div className="lg:w-1/2 flex items-center justify-center p-8 lg:p-12">
       <div className="w-full max-w-md">
-        <Card>
-          {loadingVerify ? (
-            <>
-              <CardHeader className="text-center">
-                {/* Spinner Container */}
-                <div className="mx-auto mb-4 w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
-                  <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-                </div>
-
-                <CardTitle>Verifying your email…</CardTitle>
-                <CardDescription>
-                  Please wait while we confirm your identity.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <p className="text-center text-sm text-muted-foreground">
-                  This may take a few seconds.
-                </p>
-              </CardContent>
-            </>
-          ) : (
-            <>
-              <CardHeader className="text-center">
-                <div className="mx-auto mb-4 w-20 h-20 bg-success/10 rounded-full flex items-center justify-center">
-                  <CheckCircle className="w-12 h-12 text-success" />
-                </div>
-                <CardTitle>Your email has been verified</CardTitle>
-                <CardDescription>
-                  You can now log in and start organizing your boxes.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <Button onClick={handleContinueToLogin} className="w-full">
-                  Continue to login
-                </Button>
-                <p className="text-center text-sm text-muted-foreground">
-                  Auto-redirecting in {redirectCountdown} seconds...
-                </p>
-              </CardContent>
-            </>
-          )}
-        </Card>
+        <Card>{getView()}</Card>
       </div>
     </div>
   );

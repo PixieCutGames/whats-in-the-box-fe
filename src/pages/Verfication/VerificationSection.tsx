@@ -56,8 +56,8 @@ function VerificationSection() {
       <div className="w-full max-w-md">
         <Card>
           <CardHeader className="text-center">
-            <div className="mx-auto mb-4 w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-              <Mail className="w-8 h-8 text-primary" />
+            <div className="mx-auto mb-4 w-16 h-16 bg-primary/10 dark:bg-primary-dark/10 rounded-full flex items-center justify-center">
+              <Mail className="w-8 h-8 text-primary dark:text-primary-dark" />
             </div>
             <CardTitle>
               {prevPath
@@ -68,7 +68,7 @@ function VerificationSection() {
               {!!prevPath ? (
                 <>
                   We've sent a verification link to
-                  <span className="text-foreground pl-1">
+                  <span className="text-foreground dark:text-foreground-dark pl-1">
                     {verificationEmail}
                   </span>
                   . Please check your inbox and click the link to activate your
@@ -83,25 +83,25 @@ function VerificationSection() {
           </CardHeader>
           <CardContent className="space-y-3">
             {resendCooldown > 0 && !!resendData && (
-              <div className="bg-success/10 border border-success/20 rounded-lg p-4 mb-3">
-                <div className="flex items-center gap-2 text-success mb-1">
+              <div className="bg-success/10 dark:bg-success-dark/10 border border-success/20 dark:border-success-dark/20 rounded-lg p-4 mb-3">
+                <div className="flex items-center gap-2 text-success dark:text-success-dark mb-1">
                   <CheckCircle className="h-4 w-4" />
                   <span className="font-medium">
                     Verification email sent again!
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground ml-6">
+                <p className="text-sm text-muted-foreground dark:text-muted-dark-foreground ml-6">
                   Check your inbox. The link is on its way.
                 </p>
               </div>
             )}
             {resendCooldown > 0 && !!resendError && (
-              <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+              <div className="bg-destructive/10 dark:bg-destructive-dark/10 border border-destructive/20 dark:border-destructive-dark/20 rounded-lg p-4">
                 <div className="flex items-center gap-2 text-destructive">
                   <AlertCircle className="h-4 w-4" />
                   <span className="font-medium">{resendError.message}</span>
                 </div>
-                <p className="text-sm text-muted-foreground ml-6">
+                <p className="text-sm text-muted-foreground dark:text-muted-dark-foreground ml-6">
                   Please wait 30 seconds before requesting another email.
                 </p>
               </div>
