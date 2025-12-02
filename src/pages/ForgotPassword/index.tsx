@@ -3,7 +3,7 @@ import ForgotPasswordForm from "./ForgotPasswordForm";
 
 function ForgotPasswordPage() {
   return (
-    <div className="min-h-screen lg:flex lg:flex-row bg-background">
+    <div className="min-h-screen lg:flex lg:flex-row bg-background dark:bg-background-dark">
       <Branding />
       <ForgotPasswordForm />
     </div>

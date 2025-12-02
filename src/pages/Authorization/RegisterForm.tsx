@@ -9,7 +9,6 @@ import * as Yup from "yup";
 import PasswordInput from "../../shared/components/form/PasswordInput";
 import useAuth from "./useAuth";
 import { useNavigate, useLocation } from "react-router";
-import { AlertCircle } from "lucide-react";
 import { Button } from "../../shared/components/ui/Button";
 import Label from "../../shared/components/form/Label";
 import TextField from "../../shared/components/form/TextField";
