@@ -12,12 +12,24 @@
 
 @theme {
   --font-size: 16px;
+
   --color-background: #f8fafc;
   --color-background-surface: #ffffff;
   --color-background-accent: #eff6ff;
+
+  --color-background-dark: #0f172a;
+  --color-background-dark-surface: #1e293b;
+  --color-background-dark-surface-hover: #334155;
+
   --color-foreground: #0f172a;
+  --color-foreground-dark: #f8fafc;
+
   --color-card: #ffffff;
   --color-card-foreground: #0f172a;
+
+  --color-card-dark: #1e293b;
+  --color-card-dark-foreground: #f8fafc;
+
   --color-popover: #ffffff;
   --color-popover-foreground: #0f172a;
   --color-primary: #3b82f6;
@@ -25,24 +37,55 @@
   --color-primary-hover: #2563eb;
   --color-primary-active: #1d4ed8;
   --color-primary-surface: #eff6ff;
+
+  --color-primary-dark: #3b82f6;
+  --color-primary-dark-foreground: #f8fafc;
+
   --color-secondary: #f1f5f9;
   --color-secondary-foreground: #0f172a;
+
+  --color-secondary-dark: #334155;
+  --color-secondary-dark-foreground: #f8fafc;
+
   --color-muted: #f1f5f9;
   --color-muted-foreground: #64748b;
+
+  --color-muted-dark: #334155;
+  --color-muted-dark-foreground: #94a3b8;
+
   --color-accent: #eff6ff;
   --color-accent-foreground: #0f172a;
+
+  --color-accent-dark: #1e3a8a;
+  --color-accent-dark-foreground: #f8fafc;
+
   --color-destructive: #ef4444;
   --color-destructive-foreground: #ffffff;
+
+  --color-destructive-dark: #f87171;
+  --color-destructive-dark-foreground: #0f172a;
+
   --color-success: #22c55e;
   --color-success-foreground: #ffffff;
+
   --color-border: #e2e8f0;
   --color-border-light: #f1f5f9;
+
+  --color-border-dark: #334155;
+  --color-border-dark-light: #475569;
+
   --color-input: #e2e8f0;
   --color-input-background: #ffffff;
+  --color-input-dark: #334155;
+  --color-input-dark-background: #1e293b;
+
   --color-switch-background: #cbd5e1;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
+
   --color-ring: #3b82f6;
+  --color-ring-dark: #60a5fa;
+
   --color-chart-1: #3b82f6;
   --color-chart-2: #22c55e;
   --color-chart-3: #f59e0b;
@@ -62,6 +105,10 @@
   --color-text-secondary: #475569;
   --color-text-inverse: #ffffff;
 
+  --color-text-dark-primary: #f8fafc;
+  --color-text-dark-secondary: #cbd5e1;
+  --color-text-dark-inverse: #0f172a;
+
   --color-error: #ef4444;
   --color-error-hover: #dc2626;
 
@@ -71,3 +118,74 @@
   --color-toaster-border-error: #fdcccc;
   --color-toaster-background-error: #feeced;
 }
+
+/* .dark {
+  --background-base: #0F172A;
+  --background-surface: #1E293B;
+  --background-surface-hover: #334155;
+  
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-inverse: #0F172A;
+  
+  --border-default: #334155;
+  --border-light: #475569;
+  
+  --primary-default: #3B82F6;
+  --primary-hover: #60A5FA;
+  --primary-active: #2563EB;
+  --primary-surface: #1E3A8A;
+  
+  --success-default: #22C55E;
+  --success-hover: #16A34A;
+  
+  --warning-default: #EAB308;
+  --warning-hover: #CA8A04;
+  
+  --error-default: #F87171;
+  --error-hover: #EF4444;
+  
+  --neutral-50: #0F172A;
+  --neutral-100: #1E293B;
+  --neutral-200: #334155;
+  --neutral-300: #475569;
+  --neutral-400: #64748B;
+  --neutral-500: #94A3B8;
+  --neutral-600: #CBD5E1;
+  --neutral-700: #E2E8F0;
+  --neutral-800: #F1F5F9;
+  --neutral-900: #F8FAFC;
+  
+  --background: #0F172A;
+  --foreground: #F8FAFC;
+  --card: #1E293B;
+  --card-foreground: #F8FAFC;
+  --popover: #1E293B;
+  --popover-foreground: #F8FAFC;
+  --primary: #3B82F6;
+  --primary-foreground: #F8FAFC;
+  --secondary: #334155;
+  --secondary-foreground: #F8FAFC;
+  --muted: #334155;
+  --muted-foreground: #94A3B8;
+  --accent: #1E3A8A;
+  --accent-foreground: #F8FAFC;
+  --destructive: #F87171;
+  --destructive-foreground: #0F172A;
+  --border: #334155;
+  --input: #334155;
+  --ring: #60A5FA;
+  --chart-1: #3B82F6;
+  --chart-2: #22C55E;
+  --chart-3: #EAB308;
+  --chart-4: #F87171;
+  --chart-5: #A78BFA;
+  --sidebar: #1E293B;
+  --sidebar-foreground: #F8FAFC;
+  --sidebar-primary: #3B82F6;
+  --sidebar-primary-foreground: #F8FAFC;
+  --sidebar-accent: #334155;
+  --sidebar-accent-foreground: #F8FAFC;
+  --sidebar-border: #334155;
+  --sidebar-ring: #60A5FA;
+} */

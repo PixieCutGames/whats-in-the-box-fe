@@ -21,7 +21,7 @@ const Branding = () => {
   ];
   return (
     <>
-      <div className="lg:w-1/2 bg-primary p-8 lg:p-12 hidden lg:flex flex-col justify-between text-white">
+      <div className="lg:w-1/2 bg-primary dark:bg-background-dark-surface p-8 lg:p-12 hidden lg:flex flex-col justify-between text-primary-foreground dark:text-text-dark-primary">
         <div>
           <div className="flex items-center gap-3 mb-8">
             <img src={Logo} alt="Logo" className="h-10" />
@@ -31,23 +31,25 @@ const Branding = () => {
           <div className="space-y-8 mt-16 hidden lg:block">
             {items.map((item) => (
               <div className="flex items-start gap-4" key={item.title}>
-                <div className="bg-white/10 p-3 rounded-lg backdrop-blur-sm border border-white/20">
+                <div className="bg-primary-foreground/10 dark:bg-primary-dark-foreground/10 p-3 rounded-lg backdrop-blur-sm border border-primary-foreground/20 dark:border-primary-dark-foreground/20">
                   {item.icon}
                 </div>
                 <div>
                   <h3 className="mb-1">{item.title}</h3>
-                  <p className="text-white/80">{item.subTitle}</p>
+                  <p className="text-primary-foreground/80 dark:text-primary-dark-foreground/80">
+                    {item.subTitle}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="text-sm text-white/70 hidden lg:block">
+        <div className="text-sm text-primary-foreground/70 dark:text-text-dark-primary/70 hidden lg:block">
           © 2025 whats in the box. All rights reserved.
         </div>
       </div>
-      <div className="lg:hidden p-8 bg-primary text-white flex justify-center">
+      <div className="lg:hidden p-8 bg-primary dark:bg-background-dark-surface text-primary-foreground dark:text-text-dark-primary flex justify-center">
         <div className="flex items-center gap-3">
           <img src="/assets/Logo.png" alt="Logo" className="h-10" />
           <h1 className="text-3xl">Whats in the box</h1>

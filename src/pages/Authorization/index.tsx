@@ -3,7 +3,7 @@ import AuthForms from "./AuthForms";
 
 function AuthorizationPage() {
   return (
-    <div className="min-h-screen lg:flex lg:flex-row bg-background">
+    <div className="min-h-screen lg:flex lg:flex-row bg-background dark:bg-background-dark">
       <Branding />
       <AuthForms />
     </div>
