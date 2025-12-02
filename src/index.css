@@ -68,6 +68,9 @@
   --color-success: #22c55e;
   --color-success-foreground: #ffffff;
 
+  --color-success-dark: #22c55e;
+  --color-success-dark-hover: #16a34a;
+
   --color-border: #e2e8f0;
   --color-border-light: #f1f5f9;
 
