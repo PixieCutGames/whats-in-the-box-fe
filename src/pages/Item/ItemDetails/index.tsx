@@ -26,7 +26,7 @@ function ItemDetails() {
           type="item"
         />
       </div>
-      <div className="bg-background-surface border border-border rounded-lg p-6 lg:flex block gap-6">
+      <div className="bg-background-surface dark:bg-background-dark-surface border border-border dark:border-border-dark rounded-lg p-6 lg:flex block gap-6">
         <div className="hidden lg:block w-sm">
           {/* Item Photo */}
           <IconImage
@@ -37,33 +37,37 @@ function ItemDetails() {
         </div>
         <div className="space-y-4">
           <div>
-            <h3 className="text-text-secondary text-lg font-medium mb-1">
+            <h3 className="text-text-secondary dark:text-text-dark-secondary text-lg font-medium mb-1">
               Box:
             </h3>
             <Link
               to={`/box/${item?.container.id}`}
-              className="text-text-primary"
+              className="text-text-primary dark:text-text-dark-primary"
             >
               {item?.container.name}
             </Link>
           </div>
           <div>
-            <h3 className="text-text-secondary text-lg font-medium mb-1">
+            <h3 className="text-text-secondary dark:text-text-dark-secondary text-lg font-medium mb-1">
               Qty:
             </h3>
-            <p className="text-text-primary">{item?.quantity}</p>
+            <p className="text-text-primary dark:text-text-dark-primary">
+              {item?.quantity}
+            </p>
           </div>
           <div>
-            <h3 className="text-text-secondary text-lg font-medium mb-1">
+            <h3 className="text-text-secondary dark:text-text-dark-secondary text-lg font-medium mb-1">
               Description:
             </h3>
-            <p className="text-text-primary">{item?.description}</p>
+            <p className="text-text-primary dark:text-text-dark-primary">
+              {item?.description}
+            </p>
           </div>
           <div>
-            <h3 className="text-text-secondary text-lg font-medium mb-1">
+            <h3 className="text-text-secondary dark:text-text-dark-secondary text-lg font-medium mb-1">
               Last Updated:
             </h3>
-            <p className="text-text-primary">
+            <p className="text-text-primary dark:text-text-dark-primary">
               {!!item && <DaysAgo date={item.updatedAt} />}
             </p>
           </div>

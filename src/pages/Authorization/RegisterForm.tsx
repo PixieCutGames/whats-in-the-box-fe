@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import {
   Card,
   CardDescription,
@@ -9,8 +9,10 @@ import * as Yup from "yup";
 import PasswordInput from "../../shared/components/form/PasswordInput";
 import useAuth from "./useAuth";
 import { useNavigate, useLocation } from "react-router";
-import { AlertCircle } from "lucide-react";
 import { Button } from "../../shared/components/ui/Button";
+import Label from "../../shared/components/form/Label";
+import TextField from "../../shared/components/form/TextField";
+import FormErrors from "../../shared/components/form/FormErrors";
 
 // Validation schema using Yup
 const SignUpSchema = Yup.object().shape({
@@ -38,6 +40,14 @@ function RegisterForm() {
           Start sharing files securely in minutes
         </CardDescription>
       </CardHeader>
+      {registerError && (
+        <div className="px-6">
+          <FormErrors
+            errorTitle="Registeration Failed"
+            errorMessage={registerError.message}
+          />
+        </div>
+      )}
       <Formik
         initialValues={{
           name: "",
@@ -59,69 +69,38 @@ function RegisterForm() {
           );
         }}
       >
-        {({ isSubmitting, errors, touched, isValid }) => (
+        {({ isSubmitting, isValid }) => (
           <Form className="space-y-4 px-6 last:pb-6">
             {/* Name */}
             <div className="space-y-2">
-              <label
-                htmlFor="name"
-                className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
-              >
-                Name
-              </label>
-              <Field
-                name="name"
-                placeholder="John Doe"
-                id="name"
-                className={`placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 flex h-9 w-full min-w-0 rounded-md border px-3 py-2 text-base bg-input-background transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]
-           ${
-             errors.name && touched.name
-               ? "ring-destructive/20 dark:ring-destructive/40 border-destructive"
-               : "border-input"
-           } `}
-              />
+              <Label htmlFor="name">Name</Label>
+              <TextField name="name" placeholder="John Doe" id="name" />
               <ErrorMessage
                 name="name"
                 component="p"
-                className="text-sm text-destructive"
+                className="text-sm text-destructive dark:text-destructive-dark"
               />
             </div>
 
             {/* Email */}
             <div className="space-y-2">
-              <label
-                htmlFor="email"
-                className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
-              >
-                Email
-              </label>
-              <Field
+              <Label htmlFor="email">Email</Label>
+              <TextField
                 type="email"
                 name="email"
                 placeholder="you@example.com"
                 id="email"
-                className={`placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 flex h-9 w-full min-w-0 rounded-md border px-3 py-2 text-base bg-input-background transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]
-           ${
-             errors.email && touched.email
-               ? "ring-destructive/20 dark:ring-destructive/40 border-destructive"
-               : "border-input"
-           } `}
               />
               <ErrorMessage
                 name="email"
                 component="p"
-                className="text-sm text-destructive"
+                className="text-sm text-destructive dark:text-destructive-dark"
               />
             </div>
 
             {/* Password */}
             <div className="space-y-2">
-              <label
-                htmlFor="password"
-                className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
-              >
-                Password
-              </label>
+              <Label htmlFor="password">Password</Label>
               <PasswordInput
                 name="password"
                 id="password"
@@ -130,18 +109,13 @@ function RegisterForm() {
               <ErrorMessage
                 name="password"
                 component="div"
-                className="text-sm text-destructive"
+                className="text-sm text-destructive dark:text-destructive-dark"
               />
             </div>
 
             {/* Confiem Password */}
             <div className="space-y-2">
-              <label
-                htmlFor="confirmPassword"
-                className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
-              >
-                Confirm Password
-              </label>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
               <PasswordInput
                 name="confirmPassword"
                 id="confirmPassword"
@@ -150,33 +124,31 @@ function RegisterForm() {
               <ErrorMessage
                 name="confirmPassword"
                 component="div"
-                className="text-sm text-destructive"
+                className="text-sm text-destructive dark:text-destructive-dark"
               />
             </div>
 
             {/* Submit */}
-            <div className="flex items-center">
-              <button
+            <div className="flex items-center pt-2">
+              <Button
                 type="submit"
+                className={`w-full ${!isValid ? "opacity-50" : "opacity-100"}`}
                 disabled={isSubmitting || !isValid}
-                className={`inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 w-full ${
-                  !isValid && "opacity-50"
-                }`}
               >
                 {isSubmitting ? "Creating account..." : "Create account"}
-              </button>
+              </Button>
             </div>
           </Form>
         )}
       </Formik>
       <div className="flex items-center px-6">
-        <hr className="w-100 m-0 text-border" />
-        <span className="text-muted-foreground font-medium text-nowrap mx-6">
+        <hr className="w-100 m-0 text-border dark:text-border-dark" />
+        <span className="text-muted-foreground dark:text-muted-dark-foreground font-medium text-nowrap mx-6">
           or continue with
         </span>
-        <hr className="w-100 m-0 text-border" />
+        <hr className="w-100 m-0 text-border dark:text-border-dark" />
       </div>
-      <div className={`px-6 flex gap-3 ${!registerError && "pb-6"}`}>
+      <div className={`px-6 flex gap-3 pb-6`}>
         <Button
           type="button"
           variant="outline"
@@ -208,17 +180,6 @@ function RegisterForm() {
           Google
         </Button>
       </div>
-      {!!registerError && (
-        <div
-          role="alert"
-          className="relative w-full rounded-lg border-t border-t-border px-4 py-3 text-sm flex items-center translate-y-0.5 text-destructive [&amp;&gt;svg]:text-current mt-4"
-        >
-          <AlertCircle className="size-4" />
-          <div className="text-destructive/90 text-sm leading-relaxed ml-5">
-            Error: {registerError.message}
-          </div>
-        </div>
-      )}
     </Card>
   );
 }

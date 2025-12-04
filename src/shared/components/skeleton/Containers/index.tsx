@@ -13,7 +13,7 @@ function Containers() {
       {/* Header */}
       <div className="flex items-center justify-between animate-pulse">
         {/* Title */}
-        <div className="h-8 w-28 bg-background-accent rounded" />
+        <div className="h-8 w-28 bg-background-accent dark:bg-background-accent/10 rounded" />
       </div>
       {viewMode === "grid" ? (
         <ContainerGridViewSkeleton />

@@ -17,10 +17,10 @@ function SearchButton() {
     <>
       <button
         onClick={openQuickSearchDialog}
-        className="p-2 rounded-lg hover:bg-background-accent transition-colors"
+        className="p-2 rounded-lg hover:bg-background-accent dark:hover:bg-background-accent/10 transition-colors"
         aria-label="Search"
       >
-        <Search className="h-5 w-5 text-text-primary" />
+        <Search className="h-5 w-5 text-text-primary dark:text-text-dark-primary" />
       </button>
       <QuickSearchDialog
         isOpen={searchOpen}

@@ -10,9 +10,11 @@ import { ErrorMessage, Form, Formik } from "formik";
 import PasswordInput from "../../shared/components/form/PasswordInput";
 import { Navigate, useSearchParams, useNavigate, Link } from "react-router";
 import useResetPassword from "../../shared/hooks/useResetPassword";
-import { AlertCircle, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "../../shared/components/ui/Button";
+import Label from "../../shared/components/form/Label";
+import FormErrors from "../../shared/components/form/FormErrors";
 
 // Validation schema using Yup
 const passwordSchema = Yup.object().shape({
@@ -56,8 +58,8 @@ function ResetPasswordForm() {
         {resetComplete ? (
           <Card>
             <CardHeader className="text-center">
-              <div className="mx-auto mb-4 w-20 h-20 bg-success/10 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-12 h-12 text-success" />
+              <div className="mx-auto mb-4 w-20 h-20 bg-success/10 dark:bg-success-dark/10 rounded-full flex items-center justify-center">
+                <CheckCircle className="w-12 h-12 text-success dark:text-success-dark" />
               </div>
               <CardTitle>Your password has been reset</CardTitle>
               <CardDescription>
@@ -68,7 +70,7 @@ function ResetPasswordForm() {
               <Button onClick={handleContinueToLogin} className="w-full">
                 Continue to login
               </Button>
-              <p className="text-center text-sm text-muted-foreground">
+              <p className="text-center text-sm text-muted-foreground dark:text-muted-dark-foreground">
                 Auto-redirecting in {redirectCountdown} seconds...
               </p>
             </CardContent>
@@ -78,6 +80,14 @@ function ResetPasswordForm() {
             <CardHeader>
               <CardTitle>Choose a new password</CardTitle>
             </CardHeader>
+            {resetPasswordError && (
+              <div className="px-6">
+                <FormErrors
+                  errorTitle="Reset Failed"
+                  errorMessage={resetPasswordError.message}
+                />
+              </div>
+            )}
             <Formik
               initialValues={{
                 password: "",
@@ -100,12 +110,7 @@ function ResetPasswordForm() {
                 <Form className="space-y-4 px-6 last:pb-6">
                   {/* Password */}
                   <div className="space-y-2">
-                    <label
-                      htmlFor="password"
-                      className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
-                    >
-                      Password
-                    </label>
+                    <Label htmlFor="password">Password</Label>
                     <PasswordInput
                       name="password"
                       id="password"
@@ -114,18 +119,13 @@ function ResetPasswordForm() {
                     <ErrorMessage
                       name="password"
                       component="div"
-                      className="text-sm text-destructive"
+                      className="text-sm text-destructive dark:text-destructive-dark"
                     />
                   </div>
 
                   {/* Confiem Password */}
                   <div className="space-y-2">
-                    <label
-                      htmlFor="confirmPassword"
-                      className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
-                    >
-                      Confirm Password
-                    </label>
+                    <Label htmlFor="confirmPassword">Confirm Password</Label>
                     <PasswordInput
                       name="confirmPassword"
                       id="confirmPassword"
@@ -134,26 +134,26 @@ function ResetPasswordForm() {
                     <ErrorMessage
                       name="confirmPassword"
                       component="div"
-                      className="text-sm text-destructive"
+                      className="text-sm text-destructive dark:text-destructive-dark"
                     />
                   </div>
 
                   {/* Submit */}
                   <div className="flex flex-col gap-2 pb-6">
-                    <button
+                    <Button
                       type="submit"
-                      disabled={isSubmitting || !isValid}
-                      className={`inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 w-full ${
-                        !isValid && "opacity-50"
+                      className={`w-full ${
+                        !isValid ? "opacity-50" : "opacity-100"
                       }`}
+                      disabled={isSubmitting || !isValid}
                     >
                       {isSubmitting
                         ? "Resetting password..."
                         : "Reset password"}
-                    </button>
+                    </Button>
                     <Link
                       to="/login"
-                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] text-primary underline-offset-4 h-9 py-2 has-[>svg]:px-3 px-0 text-sm"
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring dark:focus-visible:border-ring-dark focus-visible:ring-ring/50 dark:focus-visible:ring-ring-dark/50 focus-visible:ring-[3px] text-primary dark:text-primary-dark underline-offset-4 h-9 py-2 has-[>svg]:px-3 px-0 text-sm"
                       aria-label="Back to login"
                     >
                       Back to login
@@ -162,17 +162,6 @@ function ResetPasswordForm() {
                 </Form>
               )}
             </Formik>
-            {!!resetPasswordError && (
-              <div
-                role="alert"
-                className="relative w-full rounded-lg border-t border-t-border px-4 py-3 text-sm flex items-center translate-y-0.5 text-destructive [&amp;&gt;svg]:text-current mt-4"
-              >
-                <AlertCircle className="size-4" />
-                <div className="text-destructive/90 text-sm leading-relaxed ml-5">
-                  Error: {resetPasswordError.message}
-                </div>
-              </div>
-            )}
           </Card>
         )}
       </div>

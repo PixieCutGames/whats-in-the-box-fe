@@ -2,8 +2,10 @@ import * as Yup from "yup";
 import useUser from "../hooks/useUser";
 import { ErrorMessage, Form, Formik } from "formik";
 import PasswordInput from "./form/PasswordInput";
-import { AlertCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import FormErrors from "./form/FormErrors";
+import Label from "./form/Label";
+import { Button } from "./ui/Button";
 
 const validationSchema = Yup.object().shape({
   currentPassword: Yup.string().required("Current password is required"),
@@ -24,6 +26,12 @@ function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
   const navigate = useNavigate();
   return (
     <>
+      {changePasswordError && (
+        <FormErrors
+          errorTitle="Failed to Change password"
+          errorMessage={changePasswordError.message}
+        />
+      )}
       <Formik
         initialValues={{
           currentPassword: "",
@@ -49,12 +57,7 @@ function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
             {/* <FormSubmittingGuard isSubmitting={isSubmitting} /> */}
             {/* Current Password */}
             <div className="space-y-2">
-              <label
-                htmlFor="currentPassword"
-                className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
-              >
-                Current password
-              </label>
+              <Label htmlFor="currentPassword">Current password</Label>
               <PasswordInput
                 name="currentPassword"
                 id="currentPassword"
@@ -63,18 +66,13 @@ function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
               <ErrorMessage
                 name="currentPassword"
                 component="div"
-                className="text-sm text-destructive"
+                className="text-sm text-destructive dark:text-destructive-dark"
               />
             </div>
 
             {/* New Password */}
             <div className="space-y-2">
-              <label
-                htmlFor="newPassword"
-                className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
-              >
-                New password
-              </label>
+              <Label htmlFor="newPassword">New password</Label>
               <PasswordInput
                 name="newPassword"
                 id="newPassword"
@@ -83,18 +81,13 @@ function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
               <ErrorMessage
                 name="newPassword"
                 component="div"
-                className="text-sm text-destructive"
+                className="text-sm text-destructive dark:text-destructive-dark"
               />
             </div>
 
             {/* Confiem Password */}
             <div className="space-y-2">
-              <label
-                htmlFor="confirmPassword"
-                className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
-              >
-                Confirm Password
-              </label>
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
               <PasswordInput
                 name="confirmPassword"
                 id="confirmPassword"
@@ -103,54 +96,40 @@ function ChangePasswordForm({ onClose }: ChangePasswordFormProps) {
               <ErrorMessage
                 name="confirmPassword"
                 component="div"
-                className="text-sm text-destructive"
+                className="text-sm text-destructive dark:text-destructive-dark"
               />
             </div>
 
             {/* Submit */}
-            <button
+            <Button
               type="submit"
-              disabled={isSubmitting || !isValid}
-              className={`lg:hidden w-full px-6 py-3 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors disabled:pointer-events-none ${
-                !isValid && "opacity-50"
+              className={`lg:hidden w-full ${
+                !isValid ? "opacity-50" : "opacity-100"
               }`}
+              disabled={isSubmitting || !isValid}
             >
               {isSubmitting ? "Changing Password..." : "Change Password"}
-            </button>
+            </Button>
             <div className="lg:flex flex-row justify-end gap-2 hidden">
-              <button
-                type="button"
+              <Button
+                variant="outline"
                 onClick={() => {
                   if (onClose) onClose();
                 }}
-                className="px-6 py-2 border border-border hover:bg-background-accent text-text-primary rounded-lg transition-colors"
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
                 type="submit"
+                className={`${!isValid ? "opacity-50" : "opacity-100"}`}
                 disabled={isSubmitting || !isValid}
-                className={`px-6 py-2 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors disabled:pointer-events-none ${
-                  !isValid && "opacity-50"
-                }`}
               >
                 {isSubmitting ? "Changing Password..." : "Change Password"}
-              </button>
+              </Button>
             </div>
           </Form>
         )}
       </Formik>
-      {!!changePasswordError && (
-        <div
-          role="alert"
-          className="relative w-full rounded-lg border-t border-t-border px-4 py-3 text-sm flex items-center translate-y-0.5 text-destructive [&amp;&gt;svg]:text-current mt-4"
-        >
-          <AlertCircle className="size-4" />
-          <div className="text-destructive/90 text-sm leading-relaxed ml-5">
-            {changePasswordError.message}
-          </div>
-        </div>
-      )}
     </>
   );
 }

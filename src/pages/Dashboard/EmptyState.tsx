@@ -1,4 +1,5 @@
 import { Package, Plus } from "lucide-react";
+import { Button } from "../../shared/components/ui/Button";
 
 type EmptyStateProps = {
   createNewContainer: () => void;
@@ -6,25 +7,25 @@ type EmptyStateProps = {
 function EmptyState({ createNewContainer }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4">
-      <div className="h-32 w-32 rounded-full bg-primary-surface/20 flex items-center justify-center mb-6">
-        <Package className="h-16 w-16 text-primary" />
+      <div className="h-32 w-32 rounded-full bg-primary-surface/20 dark:bg-primary-dark-surface/20 flex items-center justify-center mb-6">
+        <Package className="h-16 w-16 text-primary dark:text-primary-dark" />
       </div>
-      <h2 className="text-text-primary mb-2 text-center">
+      <h2 className="text-text-primary dark:text-text-dark-primary mb-2 text-center">
         Welcome to What's in the Box!
       </h2>
-      <p className="text-text-secondary text-center mb-2 max-w-md">
+      <p className="text-text-secondary dark:text-text-dark-secondary text-center mb-2 max-w-md">
         You have no boxes yet.
       </p>
-      <p className="text-text-secondary text-center mb-8 max-w-md">
+      <p className="text-text-secondary dark:text-text-dark-secondary text-center mb-8 max-w-md">
         Start by creating your first box to add and track items.
       </p>
-      <button
+      <Button
+        className="has-[>svg]:px-6 py-3 rounded-lg text-base h-auto hover:bg-primary-hover"
         onClick={createNewContainer}
-        className="flex items-center gap-2 px-6 py-3 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors"
       >
-        <Plus className="h-5 w-5" />
+        <Plus className="h-4 w-4" />
         Create Your First Box
-      </button>
+      </Button>
     </div>
   );
 }

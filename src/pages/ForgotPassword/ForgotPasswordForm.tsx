@@ -1,4 +1,4 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import {
   Card,
   CardContent,
@@ -10,8 +10,11 @@ import * as Yup from "yup";
 import { Button } from "../../shared/components/ui/Button";
 import { Link } from "react-router-dom";
 import useResetPassword from "../../shared/hooks/useResetPassword";
-import { AlertCircle, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useEffect, useState } from "react";
+import FormErrors from "../../shared/components/form/FormErrors";
+import Label from "../../shared/components/form/Label";
+import TextField from "../../shared/components/form/TextField";
 
 // Validation schema using Yup
 const EmailSchema = Yup.object().shape({
@@ -23,6 +26,7 @@ const EmailSchema = Yup.object().shape({
 function ForgotPasswordForm() {
   const {
     generateResetPasswordLink,
+    resetPasswordError,
     forgotPasswordError,
     loadingForgotPassword,
   } = useResetPassword();
@@ -61,17 +65,27 @@ function ForgotPasswordForm() {
           {resetLinkSent ? (
             <>
               <CardHeader className="text-center">
-                <div className="mx-auto mb-4 w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Mail className="w-8 h-8 text-primary" />
+                <div className="mx-auto mb-4 w-16 h-16 bg-primary/10 dark:bg-primary-dark/10 rounded-full flex items-center justify-center">
+                  <Mail className="w-8 h-8 text-primary dark:text-primary-dark" />
                 </div>
                 <CardTitle>Reset link sent</CardTitle>
                 <CardDescription>
                   If an account exists for{" "}
-                  <span className="text-foreground">{resetEmail}</span>, you'll
-                  get a password reset link shortly.
+                  <span className="text-foreground dark:text-foreground-dark">
+                    {resetEmail}
+                  </span>
+                  , you'll get a password reset link shortly.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
+                {resetPasswordError && (
+                  <div className="px-6">
+                    <FormErrors
+                      errorTitle="Reset Failed"
+                      errorMessage="Error: Something went wrong, Please try again!"
+                    />
+                  </div>
+                )}
                 <Button
                   onClick={handleResendResetLink}
                   disabled={resendResetCooldown > 0 || loadingForgotPassword}
@@ -84,7 +98,7 @@ function ForgotPasswordForm() {
                 </Button>
                 <Link
                   to="/login"
-                  className="flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] text-primary underline-offset-4 h-9 py-2 has-[>svg]:px-3 px-0 text-sm"
+                  className="flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring dark:focus-visible:border-ring-dark focus-visible:ring-ring/50 dark:focus-visible:ring-ring-dark/50 focus-visible:ring-[3px] text-primary dark:text-primary-dark underline-offset-4 h-9 py-2 has-[>svg]:px-3 px-0 text-sm"
                   aria-label="Back to login"
                 >
                   Back to login
@@ -99,6 +113,14 @@ function ForgotPasswordForm() {
                   Enter your email and we'll send you a password reset link.
                 </CardDescription>
               </CardHeader>
+              {forgotPasswordError && (
+                <div className="px-6">
+                  <FormErrors
+                    errorTitle="Reset Failed"
+                    errorMessage="Error: Something went wrong, Please try again!"
+                  />
+                </div>
+              )}
               <Formik
                 initialValues={{
                   email: "",
@@ -116,32 +138,21 @@ function ForgotPasswordForm() {
                   );
                 }}
               >
-                {({ isSubmitting, errors, touched, isValid }) => (
+                {({ isSubmitting, isValid }) => (
                   <Form className="space-y-4 px-6 last:pb-6">
                     {/* Email */}
                     <div className="space-y-2">
-                      <label
-                        htmlFor="email"
-                        className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
-                      >
-                        Email
-                      </label>
-                      <Field
+                      <Label htmlFor="email">Email</Label>
+                      <TextField
                         type="email"
                         name="email"
                         placeholder="you@example.com"
                         id="email"
-                        className={`placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 flex h-9 w-full min-w-0 rounded-md border px-3 py-2 text-base bg-input-background transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]
-           ${
-             errors.email && touched.email
-               ? "ring-destructive/20 dark:ring-destructive/40 border-destructive"
-               : "border-input"
-           } `}
                       />
                       <ErrorMessage
                         name="email"
                         component="p"
-                        className="text-sm text-destructive"
+                        className="text-sm text-destructive dark:text-destructive-dark"
                       />
                     </div>
 
@@ -158,7 +169,7 @@ function ForgotPasswordForm() {
                       </Button>
                       <Link
                         to="/login"
-                        className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] text-primary underline-offset-4 h-9 py-2 has-[>svg]:px-3 px-0 text-sm"
+                        className="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring dark:focus-visible:border-ring-dark focus-visible:ring-ring/50 dark:focus-visible:ring-ring-dark/50 focus-visible:ring-[3px] text-primary dark:text-primary-dark underline-offset-4 h-9 py-2 has-[>svg]:px-3 px-0 text-sm"
                         aria-label="Back to login"
                       >
                         Back to login
@@ -167,17 +178,6 @@ function ForgotPasswordForm() {
                   </Form>
                 )}
               </Formik>
-              {!!forgotPasswordError && (
-                <div
-                  role="alert"
-                  className="relative w-full rounded-lg border-t border-t-border px-4 py-3 text-sm flex items-center translate-y-0.5 text-destructive [&amp;&gt;svg]:text-current mt-4"
-                >
-                  <AlertCircle className="size-4" />
-                  <div className="text-destructive/90 text-sm leading-relaxed ml-5">
-                    Error: Something went wrong, Please try again!
-                  </div>
-                </div>
-              )}
             </>
           )}
         </Card>

@@ -4,6 +4,8 @@ import useMedia from "../../hooks/useMedia";
 import { FieldHookConfig, useField } from "formik";
 import { Maybe } from "yup";
 import imageCompression from "browser-image-compression";
+import Label from "./Label";
+import { Button } from "../ui/Button";
 
 type ImageUploadProps = {
   imageUrl?: Maybe<string>;
@@ -101,29 +103,24 @@ function ImageUpload({
   };
   return (
     <div className="space-y-2">
-      <label
-        htmlFor={field.name}
-        className="flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:pointer-events-none peer-disabled:opacity-50"
-      >
-        Photo
-      </label>
+      <Label htmlFor={field.name}>Photo</Label>
       {photoPreview ? (
         <div className="relative">
           <img
             src={photoPreview ?? ""}
             alt="preview"
-            className="w-full h-48 object-cover rounded-lg border border-border"
+            className="w-full h-48 object-cover rounded-lg border border-border dark:border-border-dark"
           />
           {loadingUploadMedia ? (
             <div className="absolute inset-0 bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center rounded-lg">
-              <div className="h-8 w-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+              <div className="h-8 w-8 border-4 border-primary dark:border-primary-dark border-t-transparent rounded-full animate-spin" />
               <p className="text-white text-sm mt-2">Uploading...</p>
             </div>
           ) : (
             <button
               type="button"
               onClick={handleRemovePhoto}
-              className="absolute top-2 right-2 p-1 bg-background-surface rounded-full border border-border hover:bg-background-accent transition-colors"
+              className="absolute top-2 right-2 p-1 bg-background-surface rounded-full border border-border dark:border-border-dark hover:bg-background-accent transition-colors"
             >
               <X className="h-4 w-4 text-text-primary" />
             </button>
@@ -136,21 +133,24 @@ function ImageUpload({
           onDrop={handleDrop}
           className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
             isDragging
-              ? "border-primary bg-primary-surface"
-              : "border-border bg-background-accent"
+              ? "border-primary dark:border-primary-dark bg-primary-surface dark:bg-primary-dark-surface"
+              : "border-border dark:border-border-dark bg-background-accent dark:bg-input/5"
           }`}
         >
-          <Upload className="h-12 w-12 text-text-secondary mx-auto mb-4" />
+          <Upload className="h-12 w-12 text-text-secondary dark:text-text-dark-secondary mx-auto mb-4" />
           <div className="space-y-2">
-            <button
-              type="button"
+            <Button
               onClick={() => fileInputRef.current?.click()}
-              className="px-4 py-2 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors"
+              className="hover:bg-primary-hover"
             >
               Upload Photo
-            </button>
-            <p className="text-text-secondary">or drag & drop</p>
-            <p className="text-text-secondary">Max size 20MB</p>
+            </Button>
+            <p className="text-text-secondary dark:text-text-dark-secondary">
+              or drag & drop
+            </p>
+            <p className="text-text-secondary dark:text-text-dark-secondary">
+              Max size 20MB
+            </p>
           </div>
           <input
             ref={fileInputRef}

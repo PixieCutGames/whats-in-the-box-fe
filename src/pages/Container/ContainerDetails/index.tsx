@@ -1,4 +1,4 @@
-import { Grid3x3, List, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useParams, useNavigate } from "react-router";
 import useContainerDetails from "./useContainerDetails";
 import DaysAgo from "../../../shared/components/ui/DaysAgo";
@@ -13,6 +13,8 @@ import ErrorState from "./ErrorState";
 import AddEditDialog from "../../../shared/components/AddEditDialog";
 import { useState } from "react";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import ViewToggleButtons from "../../../shared/components/Layout/ViewToggleButtons";
+import { Button } from "../../../shared/components/ui/Button";
 
 function ContainerDetails() {
   const navigate = useNavigate();
@@ -52,7 +54,7 @@ function ContainerDetails() {
           type="container"
         />
       </div>
-      <div className="bg-background-surface border border-border rounded-lg p-6 lg:flex block gap-6">
+      <div className="bg-background-surface dark:bg-background-dark-surface border border-border dark:border-border-dark rounded-lg p-6 lg:flex block gap-6">
         <div className="hidden lg:block w-sm">
           {/* Box Photo */}
           <ContainerImage
@@ -63,66 +65,52 @@ function ContainerDetails() {
         </div>
         <div className="space-y-4">
           <div>
-            <h3 className="text-text-secondary text-lg font-medium mb-1">
+            <h3 className="text-text-secondary dark:text-text-dark-secondary text-lg font-medium mb-1">
               Location:
             </h3>
-            <p className="text-text-primary">{container?.location}</p>
+            <p className="text-text-primary dark:text-text-dark-primary">
+              {container?.location}
+            </p>
           </div>
           <div>
-            <h3 className="text-text-secondary text-lg font-medium mb-1">
+            <h3 className="text-text-secondary dark:text-text-dark-secondary text-lg font-medium mb-1">
               Description:
             </h3>
-            <p className="text-text-primary">{container?.description}</p>
+            <p className="text-text-primary dark:text-text-dark-primary">
+              {container?.description}
+            </p>
           </div>
           <div>
-            <h3 className="text-text-secondary text-lg font-medium mb-1">
+            <h3 className="text-text-secondary dark:text-text-dark-secondary text-lg font-medium mb-1">
               Last Updated:
             </h3>
-            <p className="text-text-primary">
+            <p className="text-text-primary dark:text-text-dark-primary">
               {!!container && <DaysAgo date={container.updatedAt} />}
             </p>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-border pt-6">
+      <div className="border-t border-border dark:border-border-dark pt-6">
         {/* Items Section Header */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-text-primary">Items</h2>
+          <h2 className="text-text-primary dark:text-text-dark-primary">
+            Items
+          </h2>
           {!!container?.items.length && (
             <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1 bg-background-surface border border-border rounded-lg p-1">
-                <button
-                  onClick={() => setViewMode("grid")}
-                  className={`p-2 rounded-md transition-colors ${
-                    viewMode === "grid"
-                      ? "bg-primary-surface text-primary"
-                      : "text-text-secondary hover:text-text-primary hover:bg-background-accent"
-                  }`}
-                  aria-label="Grid view"
-                >
-                  <Grid3x3 className="h-4 w-4" />
-                </button>
-                <button
-                  onClick={() => setViewMode("list")}
-                  className={`p-2 rounded-md transition-colors ${
-                    viewMode === "list"
-                      ? "bg-primary-surface text-primary"
-                      : "text-text-secondary hover:text-text-primary hover:bg-background-accent"
-                  }`}
-                  aria-label="List view"
-                >
-                  <List className="h-4 w-4" />
-                </button>
-              </div>
+              <ViewToggleButtons
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+              />
               {/* Add Button */}
-              <button
-                className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors"
+              <Button
                 onClick={createNewItem}
+                className="hover:bg-primary-hover py-5"
               >
                 <Plus className="h-4 w-4" />
                 <span className="hidden sm:inline">Add Item</span>
-              </button>
+              </Button>
             </div>
           )}
         </div>

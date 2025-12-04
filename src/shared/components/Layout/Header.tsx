@@ -12,8 +12,10 @@ import MobileSidebar from "./MobileSideBar";
 import { useMediaQuery } from "@uidotdev/usehooks";
 
 import Logo from "/assets/Logo.png";
+import WhiteLogo from "/assets/white-logo.png";
 import SearchButton from "./SearchButton";
 import useUser from "../../hooks/useUser";
+import DarkModeButton from "./DarkModeButton";
 
 export const NESTED_ROUTES = [
   { path: "/box/new", title: "Create New Box" },
@@ -43,22 +45,24 @@ function Header({ navigationItems, pathname }: HeaderProps) {
 
   if (notDesktop && nestedRoute) {
     return (
-      <div className="bg-background-surface border-b border-border px-4 py-4">
+      <div className="bg-background-surface dark:bg-background-dark-surface border-b border-border dark:border-border-dark px-4 py-4">
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate(-1)}
-            className="p-2 -ml-2 hover:bg-background-accent rounded-lg transition-colors"
+            className="p-2 -ml-2 hover:bg-background-accent dark:hover:bg-background-accent/10 rounded-lg transition-colors"
           >
-            <ArrowLeft className="h-5 w-5 text-text-primary" />
+            <ArrowLeft className="h-5 w-5 text-text-primary dark:text-text-dark-primary" />
           </button>
-          <h1 className="text-text-primary">{nestedRoute.title}</h1>
+          <h1 className="text-text-primary dark:text-text-dark-primary">
+            {nestedRoute.title}
+          </h1>
         </div>
       </div>
     );
   }
 
   return (
-    <nav className="bg-background-surface border-b border-border sticky top-0 z-50">
+    <nav className="bg-background-surface dark:bg-background-dark-surface border-b border-border dark:border-border-dark sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Left Section: Mobile Menu + Logo + Nav Links */}
@@ -66,10 +70,10 @@ function Header({ navigationItems, pathname }: HeaderProps) {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg hover:bg-background-accent transition-colors"
+              className="lg:hidden p-2 rounded-lg hover:bg-background-accent dark:hover:bg-background-accent/10 transition-colors"
               aria-label="Toggle menu"
             >
-              <MenuIcon className="h-5 w-5 text-text-primary" />
+              <MenuIcon className="h-5 w-5 text-text-primary dark:text-text-dark-primary" />
             </button>
             <MobileSidebar
               isOpen={mobileMenuOpen}
@@ -82,9 +86,14 @@ function Header({ navigationItems, pathname }: HeaderProps) {
             <div className="flex items-center">
               <Link
                 to="/"
-                className="rounded-lg bg-primary flex items-center justify-center"
+                className="rounded-lg bg-primary dark:bg-transparent flex items-center justify-center"
               >
-                <img src={Logo} alt="Logo" className="h-8" />
+                <img src={Logo} alt="Logo" className="h-8 dark:hidden" />
+                <img
+                  src={WhiteLogo}
+                  alt="Logo"
+                  className="h-8 dark:block hidden"
+                />
               </Link>
             </div>
 
@@ -96,8 +105,8 @@ function Header({ navigationItems, pathname }: HeaderProps) {
                   to={item.href}
                   className={`px-4 py-2 rounded-lg transition-colors no-underline ${
                     pathname === item.href
-                      ? "bg-primary-surface text-primary"
-                      : "text-text-secondary hover:text-text-primary hover:bg-background-accent"
+                      ? "bg-primary-surface dark:bg-primary-dark-foreground/10 text-primary dark:text-primary-dark-foreground"
+                      : "text-text-secondary dark:text-text-dark-secondary hover:text-text-primary dark:hover:text-text-dark-primary hover:bg-background-accent dark:hover:bg-background-accent/10"
                   }`}
                 >
                   {item.label}
@@ -109,35 +118,37 @@ function Header({ navigationItems, pathname }: HeaderProps) {
           <div className="flex items-center gap-3">
             {/* Search  */}
             <SearchButton />
+            {/* Dark Mode Toggle */}
+            <DarkModeButton />
             {/* Profile Dropdown */}
             <div className="relative">
               <Menu>
-                <MenuButton className="flex items-center gap-2 p-2 rounded-lg hover:bg-background-accent transition-colors">
-                  <div className="h-8 w-8 rounded-full bg-primary-surface flex items-center justify-center">
-                    <span className="text-primary uppercase">
+                <MenuButton className="flex items-center gap-2 p-2 rounded-lg hover:bg-background-accent dark:hover:bg-background-accent/10 transition-colors">
+                  <div className="h-8 w-8 rounded-full bg-primary-surface dark:bg-primary-dark-foreground/10 flex items-center justify-center">
+                    <span className="text-primary dark:text-primary-dark-foreground uppercase">
                       {(
                         userDetails?.user.name ?? userDetails?.user.email
                       )?.charAt(0)}
                     </span>
                   </div>
-                  <ChevronDown className="h-4 w-4 text-text-secondary hidden sm:block" />
+                  <ChevronDown className="h-4 w-4 text-text-secondary dark:text-text-dark-secondary hidden sm:block" />
                 </MenuButton>
                 <MenuItems
                   anchor="bottom end"
-                  className="mt-2 w-48 bg-background-surface border border-border rounded-lg shadow-lg py-1 focus:outline-none"
+                  className="mt-2 w-48 bg-background-surface dark:bg-background-dark-surface border border-border dark:border-border-dark rounded-lg shadow-lg py-1 focus:outline-none"
                 >
                   <MenuItem>
                     <Link
-                      className="block px-4 py-2 text-text-secondary hover:bg-background-accent hover:text-text-primary transition-colors no-underline"
+                      className="block px-4 py-2 text-text-secondary dark:text-text-dark-secondary hover:bg-background-accent dark:hover:bg-background-accent/10 hover:text-text-primary dark:hover:text-text-dark-primary transition-colors no-underline"
                       to="/profile"
                     >
                       Your Profile
                     </Link>
                   </MenuItem>
-                  <MenuSeparator className="my-1 h-px border-t border-border" />
+                  <MenuSeparator className="my-1 h-px border-t border-border dark:border-border-dark" />
                   <MenuItem>
                     <Link
-                      className="block px-4 py-2 text-text-secondary hover:bg-background-accent hover:text-text-primary transition-colors no-underline"
+                      className="block px-4 py-2 text-text-secondary dark:text-text-dark-secondary hover:bg-background-accent dark:hover:bg-background-accent/10 hover:text-text-primary dark:hover:text-text-dark-primary transition-colors no-underline"
                       to="/logout"
                     >
                       Sign out
