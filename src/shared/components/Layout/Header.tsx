@@ -120,7 +120,7 @@ function Header({ navigationItems, pathname }: HeaderProps) {
             {/* Dark Mode Toggle */}
             <button
               // onClick={toggleDarkMode}
-              className="p-2 rounded-lg hover:bg-background-accent transition-colors"
+              className="p-2 rounded-lg hover:bg-background-accent dark:hover:bg-background-accent/10 transition-colors"
               aria-label="Toggle dark mode"
             >
               <Sun className="h-5 w-5 text-text-dark-primary" />

@@ -13,6 +13,8 @@ import ContainerGridViewSkeleton from "../../shared/components/skeleton/Containe
 import DashboardSkeleton from "../../shared/components/skeleton/Dashboard";
 import EmptyState from "./EmptyState";
 import ErrorState from "./ErrorState";
+import { Button } from "../../shared/components/ui/Button";
+import { Card } from "../../shared/components/ui/Card";
 
 function Dashboard() {
   const { userDetails } = useUser();
@@ -50,18 +52,18 @@ function Dashboard() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-text-primary text-2xl font-medium">
+        <h1 className="text-text-primary dark:text-text-dark-primary text-2xl font-medium">
           Welcome {userDetails?.user.name ?? userDetails?.user.email}
         </h1>
         {/* Add Button */}
         {!!stats?.containers && (
-          <button
-            className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-hover text-text-inverse rounded-lg transition-colors"
+          <Button
             onClick={createNewContainer}
+            className="hover:bg-primary-hover"
           >
             <Plus className="h-4 w-4" />
             <span className="hidden sm:inline">Add Box</span>
-          </button>
+          </Button>
         )}
       </div>
       {/* Empty State Content */}
@@ -88,15 +90,15 @@ function Dashboard() {
           {containersError ? (
             <ErrorState refetch={refetchContainers} />
           ) : (
-            <div className="bg-background-surface border border-border rounded-lg p-6">
+            <Card className="rounded-lg p-6 block">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-text-primary text-xl font-medium">
+                <h2 className="text-text-primary dark:text-text-dark-primary text-xl font-medium">
                   Your Boxes
                   <span className="max-md:hidden ml-1">(Recently Updated)</span>
                 </h2>
                 <Link
                   to="/boxes"
-                  className="text-primary-default hover:text-primary-hover transition-colors flex items-center gap-1"
+                  className="text-primary dark:text-text-dark-primary hover:text-primary-hover dark:hover:text-primary-dark/90 transition-colors flex items-center gap-1"
                 >
                   <span>View All</span>
                   <ChevronRight className="h-4 w-4" />
@@ -107,7 +109,7 @@ function Dashboard() {
               ) : (
                 <GridView containers={containersDetails?.containers ?? []} />
               )}
-            </div>
+            </Card>
           )}
         </>
       )}
