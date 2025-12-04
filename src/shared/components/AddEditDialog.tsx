@@ -53,17 +53,17 @@ function AddEditDialog({
             leaveFrom="translate-y-0 opacity-100"
             leaveTo="translate-y-full opacity-0"
           >
-            <DialogPanel className="bg-background-surface border-border max-w-xl max-h-[90vh] overflow-y-auto w-full rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg gap-4 flex flex-col">
+            <DialogPanel className="bg-background-surface dark:bg-background-dark-surface border-border dark:border-border-dark max-w-xl max-h-[90vh] overflow-y-auto w-full rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg gap-4 flex flex-col">
               <div className="flex justify-between gap-2">
                 {/* TITLE */}
-                <DialogTitle className="text-lg leading-none font-semibold text-text-primary">
+                <DialogTitle className="text-lg leading-none font-semibold text-text-primary dark:text-text-dark-primary">
                   Create New {type === "container" ? "Box" : "Item"}
                 </DialogTitle>
                 <button
                   onClick={() => {
                     if (onClose) onClose();
                   }}
-                  className="text-foreground rounded-xs opacity-70 transition-opacity hover:opacity-100 ring-offset-background focus:ring-ring focus:ring-2 focus:ring-offset-2 focus:outline-hidden"
+                  className="text-foreground dark:text-foreground-dark rounded-xs opacity-70 transition-opacity hover:opacity-100 ring-offset-background dark:ring-offset-background-dark focus:ring-ring dark:focus:ring-ring-dark focus:ring-2 focus:ring-offset-2 focus:outline-hidden"
                 >
                   <XIcon className="size-4" />
                   <span className="sr-only">Close</span>
