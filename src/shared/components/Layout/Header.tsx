@@ -5,7 +5,7 @@ import {
   MenuItems,
   MenuSeparator,
 } from "@headlessui/react";
-import { ArrowLeft, ChevronDown, Menu as MenuIcon, Sun } from "lucide-react";
+import { ArrowLeft, ChevronDown, Menu as MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import MobileSidebar from "./MobileSideBar";
@@ -15,6 +15,7 @@ import Logo from "/assets/Logo.png";
 import WhiteLogo from "/assets/white-logo.png";
 import SearchButton from "./SearchButton";
 import useUser from "../../hooks/useUser";
+import DarkModeButton from "./DarkModeButton";
 
 export const NESTED_ROUTES = [
   { path: "/box/new", title: "Create New Box" },
@@ -118,18 +119,7 @@ function Header({ navigationItems, pathname }: HeaderProps) {
             {/* Search  */}
             <SearchButton />
             {/* Dark Mode Toggle */}
-            <button
-              // onClick={toggleDarkMode}
-              className="p-2 rounded-lg hover:bg-background-accent dark:hover:bg-background-accent/10 transition-colors"
-              aria-label="Toggle dark mode"
-            >
-              <Sun className="h-5 w-5 text-text-dark-primary" />
-              {/* {darkMode ? (
-                    <Sun className="h-5 w-5 text-text-primary" />
-                  ) : (
-                    <Moon className="h-5 w-5 text-text-primary" />
-                  )} */}
-            </button>
+            <DarkModeButton />
             {/* Profile Dropdown */}
             <div className="relative">
               <Menu>

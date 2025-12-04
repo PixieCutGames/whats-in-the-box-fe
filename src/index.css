@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   button:not(:disabled),
   a:not(:disabled) {
@@ -130,74 +132,3 @@
   --color-toaster-border-error: #fdcccc;
   --color-toaster-background-error: #feeced;
 }
-
-/* .dark {
-  --background-base: #0F172A;
-  --background-surface: #1E293B;
-  --background-surface-hover: #334155;
-  
-  --text-primary: #F8FAFC;
-  --text-secondary: #CBD5E1;
-  --text-inverse: #0F172A;
-  
-  --border-default: #334155;
-  --border-light: #475569;
-  
-  --primary-default: #3B82F6;
-  --primary-hover: #60A5FA;
-  --primary-active: #2563EB;
-  --primary-surface: #1E3A8A;
-  
-  --success-default: #22C55E;
-  --success-hover: #16A34A;
-  
-  --warning-default: #EAB308;
-  --warning-hover: #CA8A04;
-  
-  --error-default: #F87171;
-  --error-hover: #EF4444;
-  
-  --neutral-50: #0F172A;
-  --neutral-100: #1E293B;
-  --neutral-200: #334155;
-  --neutral-300: #475569;
-  --neutral-400: #64748B;
-  --neutral-500: #94A3B8;
-  --neutral-600: #CBD5E1;
-  --neutral-700: #E2E8F0;
-  --neutral-800: #F1F5F9;
-  --neutral-900: #F8FAFC;
-  
-  --background: #0F172A;
-  --foreground: #F8FAFC;
-  --card: #1E293B;
-  --card-foreground: #F8FAFC;
-  --popover: #1E293B;
-  --popover-foreground: #F8FAFC;
-  --primary: #3B82F6;
-  --primary-foreground: #F8FAFC;
-  --secondary: #334155;
-  --secondary-foreground: #F8FAFC;
-  --muted: #334155;
-  --muted-foreground: #94A3B8;
-  --accent: #1E3A8A;
-  --accent-foreground: #F8FAFC;
-  --destructive: #F87171;
-  --destructive-foreground: #0F172A;
-  --border: #334155;
-  --input: #334155;
-  --ring: #60A5FA;
-  --chart-1: #3B82F6;
-  --chart-2: #22C55E;
-  --chart-3: #EAB308;
-  --chart-4: #F87171;
-  --chart-5: #A78BFA;
-  --sidebar: #1E293B;
-  --sidebar-foreground: #F8FAFC;
-  --sidebar-primary: #3B82F6;
-  --sidebar-primary-foreground: #F8FAFC;
-  --sidebar-accent: #334155;
-  --sidebar-accent-foreground: #F8FAFC;
-  --sidebar-border: #334155;
-  --sidebar-ring: #60A5FA;
-} */
