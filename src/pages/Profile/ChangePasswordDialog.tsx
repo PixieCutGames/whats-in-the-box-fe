@@ -21,7 +21,7 @@ const ChangePasswordDialog: React.FC<ChangePasswordDialogProps> = ({
           {/* TITLE */}
           <DialogTitle>Change password</DialogTitle>
         </DialogHeader>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground dark:text-muted-dark-foreground text-sm">
           Enter your current password and choose a new password.
         </p>
         <div className="mt-4">
