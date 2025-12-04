@@ -59,7 +59,7 @@ function Dashboard() {
         {!!stats?.containers && (
           <Button
             onClick={createNewContainer}
-            className="hover:bg-primary-hover"
+            className="hover:bg-primary-hover py-5"
           >
             <Plus className="h-4 w-4" />
             <span className="hidden sm:inline">Add Box</span>
