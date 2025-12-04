@@ -29,7 +29,9 @@ function QuickSearch({ onClose }: QuickSearchProps) {
   const getContainersList = (containers: Container[]) => {
     return containers.length > 0 ? (
       <>
-        <h3 className="text-text-secondary mb-3">Boxes</h3>
+        <h3 className="text-text-secondary dark:text-text-dark-secondary mb-3">
+          Boxes
+        </h3>
         <div className="space-y-1">
           {containers.map((result) => {
             return (
@@ -37,13 +39,13 @@ function QuickSearch({ onClose }: QuickSearchProps) {
                 key={result.id}
                 to={`/box/${result.id}`}
                 onClick={closeDialog}
-                className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent text-text-primary no-underline`}
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent dark:hover:bg-background-accent/10 text-text-primary dark:text-text-dark-primary no-underline`}
               >
                 <Package className="h-5 w-5 shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div>{result.name}</div>
                   {result.location && (
-                    <div className="text-text-secondary">
+                    <div className="text-text-secondary dark:text-text-dark-secondary">
                       (in {result.location})
                     </div>
                   )}
@@ -59,7 +61,9 @@ function QuickSearch({ onClose }: QuickSearchProps) {
   const getItemsList = (items: Item[]) => {
     return items.length > 0 ? (
       <div>
-        <h3 className="text-text-secondary mb-3">Items</h3>
+        <h3 className="text-text-secondary dark:text-text-dark-secondary mb-3">
+          Items
+        </h3>
         <div className="space-y-1">
           {items.map((result) => {
             return (
@@ -67,13 +71,13 @@ function QuickSearch({ onClose }: QuickSearchProps) {
                 key={result.id}
                 to={`/item/${result.id}`}
                 onClick={closeDialog}
-                className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent text-text-primary no-underline`}
+                className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg transition-colors text-left hover:bg-background-accent dark:hover:bg-background-accent/10 text-text-primary dark:text-text-dark-primary no-underline`}
               >
                 <Blocks className="h-5 w-5 shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div>{result.name}</div>
                   {result.container.name && (
-                    <div className="text-text-secondary">
+                    <div className="text-text-secondary dark:text-text-dark-secondary">
                       (in {result.container.name})
                     </div>
                   )}
@@ -110,12 +114,12 @@ function QuickSearch({ onClose }: QuickSearchProps) {
             }}
           >
             <div className="my-4 relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary dark:text-text-dark-secondary" />
               <Field
                 name="query"
                 placeholder="Search by box or item"
                 id="query"
-                className="w-full pl-10 pr-4 py-3 bg-background-surface border border-border rounded-lg text-text-primary placeholder:text-text-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full pl-10 pr-4 py-3 bg-background-surface dark:bg-background-dark-surface border border-border dark:border-border-dark rounded-lg text-text-primary dark:text-text-dark-primary placeholder:text-text-secondary dark:placeholder:text-text-dark-secondary focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-primary-dark focus:border-transparent"
               />
             </div>
           </Form>
@@ -123,7 +127,9 @@ function QuickSearch({ onClose }: QuickSearchProps) {
       </Formik>
       {searchFieldEmpty && recentSearches.length ? (
         <div>
-          <h3 className="text-text-secondary mb-3">Recent searches:</h3>
+          <h3 className="text-text-secondary dark:text-text-dark-secondary mb-3">
+            Recent searches:
+          </h3>
           <div className="space-y-2">
             {recentSearches.map((search) => (
               <button
@@ -132,7 +138,7 @@ function QuickSearch({ onClose }: QuickSearchProps) {
                   setSearchTerm(search);
                   setSearchFieldEmpty(false);
                 }}
-                className="block w-full text-left px-3 py-2 text-text-primary hover:bg-background-accent rounded-lg transition-colors"
+                className="block w-full text-left px-3 py-2 text-text-primary dark:text-text-dark-primary hover:bg-background-accent dark:hover:bg-background-accent/10 rounded-lg transition-colors"
               >
                 {search}
               </button>

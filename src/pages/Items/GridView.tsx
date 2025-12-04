@@ -13,10 +13,10 @@ function GridView({ items }: GridViewProps) {
         <Link
           to={`/item/${items.id}`}
           key={items.id}
-          className="bg-background-surface border border-border rounded-lg overflow-hidden hover:shadow-lg transition-all cursor-pointer group no-underline"
+          className="bg-background-surface dark:bg-background-dark-surface border border-border dark:border-border-dark rounded-lg overflow-hidden hover:shadow-lg transition-all cursor-pointer group no-underline"
         >
           {/* Image/Icon */}
-          <div className="aspect-square bg-background-accent flex items-center justify-center group-hover:bg-primary-surface/20 transition-colors">
+          <div className="aspect-square bg-background-accent dark:bg-background-accent/10 flex items-center justify-center group-hover:bg-primary-surface/20 dark:group-hover:bg-primary-dark-surface/10 transition-colors">
             {items.imageUrl ? (
               <img
                 src={items.imageUrl}
@@ -24,18 +24,22 @@ function GridView({ items }: GridViewProps) {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <Blocks className="h-16 w-16 text-text-secondary group-hover:text-primary transition-colors" />
+              <Blocks className="h-16 w-16 text-text-secondary dark:text-text-dark-secondary group-hover:text-primary dark:group-hover:text-primary-dark transition-colors" />
             )}
           </div>
 
           {/* Content */}
           <div className="p-4 space-y-1">
-            <h3 className="text-text-primary text-lg font-medium">
+            <h3 className="text-text-primary dark:text-text-dark-primary text-lg font-medium">
               {items.name}
             </h3>
-            <p className="text-text-secondary">Box: {items.container.name}</p>
-            <p className="text-text-secondary">Qty: {items.quantity}</p>
-            <p className="text-text-secondary">
+            <p className="text-text-secondary dark:text-text-dark-secondary">
+              Box: {items.container.name}
+            </p>
+            <p className="text-text-secondary dark:text-text-dark-secondary">
+              Qty: {items.quantity}
+            </p>
+            <p className="text-text-secondary dark:text-text-dark-secondary">
               Updated: <DaysAgo date={items.updatedAt} />
             </p>
           </div>

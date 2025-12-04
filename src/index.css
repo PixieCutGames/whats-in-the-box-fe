@@ -33,6 +33,10 @@
 
   --color-popover: #ffffff;
   --color-popover-foreground: #0f172a;
+
+  --color-popover-dark: #1e293b;
+  --color-popover-dark-foreground: #f8fafc;
+
   --color-primary: #3b82f6;
   --color-primary-foreground: #ffffff;
   --color-primary-hover: #2563eb;
