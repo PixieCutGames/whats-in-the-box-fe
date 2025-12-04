@@ -121,6 +121,9 @@
   --color-error: #ef4444;
   --color-error-hover: #dc2626;
 
+  --color-error-dark: #f87171;
+  --color-error-dark-hover: #ef4444;
+
   --color-toaster-border-success: #c1f9b9;
   --color-toaster-background-success: #ecf8ef;
 

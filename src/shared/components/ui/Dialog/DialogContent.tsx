@@ -23,7 +23,7 @@ function DialogContent({
       >
         <DialogPanel
           className={cn(
-            "bg-background-surface border-border max-w-xl max-h-[90vh] overflow-y-auto w-full rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg gap-4 flex flex-col",
+            "bg-background-surface dark:bg-background-dark-surface border-border dark:border-border-dark max-w-xl max-h-[90vh] overflow-y-auto w-full rounded-lg border p-6 shadow-lg duration-200 sm:max-w-lg gap-4 flex flex-col",
             className
           )}
         >

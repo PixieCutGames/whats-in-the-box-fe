@@ -12,7 +12,7 @@ function DialogTitle({
   return (
     <HeadlessDialogTitle
       className={cn(
-        "text-lg leading-none font-semibold text-text-primary sm:text-start text-center",
+        "text-lg leading-none font-semibold text-text-primary dark:text-text-dark-primary sm:text-start text-center",
         className
       )}
     >
