@@ -13,6 +13,7 @@ import VerficationPage from "./pages/Verfication";
 import ResetPasswordPage from "./pages/ResetPassword";
 import Toaster from "./shared/components/Toaster";
 import SocialSuccess from "./shared/components/SocialSuccess";
+import NotFound from "./pages/NotFound";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const ContainersPage = lazy(() => import("./pages/Containers"));
@@ -55,6 +56,7 @@ function App() {
             <Route path="/register" element={<AuthorizationPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/social-success" element={<SocialSuccess />} />
           </Route>
           <Route path="/verification" element={<VerficationPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
@@ -163,11 +165,10 @@ function App() {
                 </Suspense>
               }
             />
+            <Route path="/not-found" element={<NotFound />} />
             <Route path="/logout" element={<Logout />} />
           </Route>
-          <Route path="/social-success" element={<SocialSuccess />} />
-          {/* TODO: add 404 page */}
-          <Route path="/*" element={<Navigate to="/" replace />} />
+          <Route path="/*" element={<Navigate to="/not-found" replace />} />
         </Routes>
       </BrowserRouter>
       <Toaster />

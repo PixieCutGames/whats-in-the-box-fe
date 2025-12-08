@@ -140,7 +140,11 @@ function ImageUpload({
           <Upload className="h-12 w-12 text-text-secondary dark:text-text-dark-secondary mx-auto mb-4" />
           <div className="space-y-2">
             <Button
-              onClick={() => fileInputRef.current?.click()}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                fileInputRef.current?.click();
+              }}
               className="hover:bg-primary-hover"
             >
               Upload Photo
@@ -159,7 +163,11 @@ function ImageUpload({
             value={field.value ?? ""}
             type="file"
             accept="image/*"
-            onChange={(e) => handleFileChange(e.target.files?.[0] || null)}
+            onChange={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleFileChange(e.target.files?.[0] || null);
+            }}
             className="hidden"
           />
         </div>
