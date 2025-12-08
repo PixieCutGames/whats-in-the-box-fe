@@ -97,6 +97,7 @@ function QuickSearch({ onClose }: QuickSearchProps) {
           query: "",
         }}
         onSubmit={({ query }, { setSubmitting }) => {
+          // TODO: prevent submitting empty or short queries
           navigate(`/search?query=${query}`);
           setSubmitting(false);
           closeDialog();
