@@ -57,7 +57,9 @@ function ContainersPage() {
     <div className="space-y-6">
       {/* Header with View Controls */}
       <div className="flex items-center justify-between">
-        <h1 className="text-text-primary text-2xl font-medium">Boxes</h1>
+        <h1 className="text-text-primary dark:text-text-dark-primary text-2xl font-medium">
+          Boxes
+        </h1>
         {!!containersDetails?.containers.length && (
           <div className="flex items-center gap-2">
             {/* View Toggle Buttons */}

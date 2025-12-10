@@ -75,7 +75,9 @@ function Items() {
     <div className="space-y-6">
       {/* Header with View Controls */}
       <div className="flex items-center justify-between">
-        <h1 className="text-text-primary text-2xl font-medium">Items</h1>
+        <h1 className="text-text-primary dark:text-text-dark-primary text-2xl font-medium">
+          Items
+        </h1>
         {!!itemsDetails?.items.length && (
           <div className="flex items-center gap-2">
             {/* View Toggle Buttons */}
