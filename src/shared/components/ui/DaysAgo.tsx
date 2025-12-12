@@ -5,7 +5,6 @@ type DaysAgoProps = {
   date: Date;
 };
 function DaysAgo({ date }: DaysAgoProps) {
-  // FIXME: component not calculating days correctly
   const [calcDays, setCalcDays] = useState<number>();
   useEffect(() => {
     const days = calculateDays(date, new Date());

@@ -15,6 +15,7 @@ import EmptyState from "./EmptyState";
 import ErrorState from "./ErrorState";
 import { Button } from "../../shared/components/ui/Button";
 import { Card } from "../../shared/components/ui/Card";
+import PinnedContainers from "./PinnedContainers";
 
 function Dashboard() {
   const { userDetails } = useUser();
@@ -37,7 +38,7 @@ function Dashboard() {
     containersIsLoading,
     containersError,
     refetchContainers,
-  } = useContainers(4);
+  } = useContainers({ limit: 4 }, "-recent");
 
   const createNewContainer = () => {
     if (notDesktop) {
@@ -79,6 +80,8 @@ function Dashboard() {
             isError={!!statsError}
             refetch={refetchStats}
           />
+          {/* Pinned Containers */}
+          <PinnedContainers />
           {/* Recent Activity */}
           <RecentActivities
             logs={logs}
@@ -94,7 +97,9 @@ function Dashboard() {
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-text-primary dark:text-text-dark-primary text-xl font-medium">
                   Your Boxes
-                  <span className="max-md:hidden ml-1">(Recently Updated)</span>
+                  <span className="max-md:block max-md:mt-1 max-md:text-sm md:ml-1">
+                    (Recently Updated)
+                  </span>
                 </h2>
                 <Link
                   to="/boxes"

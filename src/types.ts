@@ -9,6 +9,11 @@ export type User = {
   isVerified: boolean;
 };
 
+export type ContainersSearchQuery = {
+  limit?: number;
+  pinned?: boolean;
+};
+
 export type CreateContainerProps = {
   name: string;
   description?: string;
@@ -24,6 +29,7 @@ export type Container = {
   description?: string;
   location?: string;
   imageUrl: Yup.Maybe<string>;
+  pinned: boolean;
   updatedAt: Date;
   createdAt: Date;
   itemsCount: number;

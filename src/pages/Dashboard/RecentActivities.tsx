@@ -22,7 +22,7 @@ function RecentActivities({
       <ErrorState refetch={refetchLogs} />;
       <RecentActivitySkeleton />
       <Card data-data className="rounded-lg p-6 block">
-        <h2 className="text-text-primary dark:text-text-dark-primary mb-4">
+        <h2 className="text-text-primary dark:text-text-dark-primary text-xl font-medium mb-4">
           Recent Activity
         </h2>
         <div className="space-y-3">

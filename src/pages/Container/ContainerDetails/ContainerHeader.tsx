@@ -12,6 +12,7 @@ import toast from "react-hot-toast";
 import { Button } from "../../../shared/components/ui/Button";
 import MenuItems from "../../../shared/components/ui/Menu/MenuItems";
 import MenuItemButton from "../../../shared/components/ui/Menu/MenuItemButton";
+import PinIcon from "../../../shared/components/PinIcon";
 
 type ContainerHeaderProps = {
   container: Maybe<Container>;
@@ -65,6 +66,8 @@ function ContainerHeader({ container }: ContainerHeaderProps) {
         <h1 className="text-text-primary dark:text-text-dark-primary truncate">
           {container?.name}
         </h1>
+        {/* Star Button */}
+        {!!container && <PinIcon container={container} size="lg" />}
       </div>
 
       {/* Button group */}
