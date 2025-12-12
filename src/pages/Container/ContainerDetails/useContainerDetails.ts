@@ -3,7 +3,7 @@ import { apiClient } from "../../../lib/apiClient";
 import { Container } from "../../../types";
 
 function useContainerDetails(id?: string) {
-  const { data, error, isLoading, isRefetching, refetch } = useQuery({
+  const { data, error, isLoading, refetch } = useQuery({
     queryKey: ["getContainer", id],
     queryFn: async () => {
       return apiClient<{ container: Container }>(`/container/${id}`);
@@ -13,7 +13,7 @@ function useContainerDetails(id?: string) {
   return {
     container: data?.container,
     error,
-    isLoading: isLoading || isRefetching,
+    isLoading,
     refetch,
   };
 }

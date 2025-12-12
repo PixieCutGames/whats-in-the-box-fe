@@ -2,6 +2,7 @@ import { Package } from "lucide-react";
 import { Container } from "../../types";
 import DaysAgo from "../../shared/components/ui/DaysAgo";
 import { Link } from "react-router-dom";
+import PinIcon from "../../shared/components/PinIcon";
 
 type GridViewProps = {
   containers: Container[];
@@ -13,8 +14,10 @@ function GridView({ containers }: GridViewProps) {
         <Link
           to={`/box/${container.id}`}
           key={container.id}
-          className="bg-background-surface dark:bg-background-dark-surface border border-border dark:border-border-dark rounded-lg overflow-hidden hover:shadow-lg transition-all cursor-pointer group no-underline"
+          className="bg-background-surface dark:bg-background-dark-surface border border-border dark:border-border-dark rounded-lg overflow-hidden hover:shadow-lg transition-all cursor-pointer group no-underline relative"
         >
+          {/* Star Button */}
+          <PinIcon container={container} className="absolute top-2 right-2" />
           {/* Image/Icon */}
           <div className="aspect-square bg-background-accent dark:bg-background-accent/10 flex items-center justify-center group-hover:bg-primary-surface/20 dark:group-hover:bg-primary-dark-surface/10 transition-colors">
             {container.imageUrl ? (
