@@ -51,7 +51,7 @@ const Branding = () => {
       </div>
       <div className="lg:hidden p-8 bg-primary dark:bg-background-dark-surface text-primary-foreground dark:text-text-dark-primary flex justify-center">
         <div className="flex items-center gap-3">
-          <img src="/assets/Logo.png" alt="Logo" className="h-10" />
+          <img src={Logo} alt="Logo" className="h-10" />
           <h1 className="text-3xl">Whats in the box</h1>
         </div>
       </div>
